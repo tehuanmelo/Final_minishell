@@ -6,7 +6,7 @@
 /*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 22:26:41 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/04/27 14:12:33 by tde-melo         ###   ########.fr       */
+/*   Updated: 2023/04/27 14:35:14 by tde-melo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		
-		print_t_data(&data);
+		// print_t_data(&data);
 		// printf(COLOR_RED "I am string %s\n", str);
 		if (_readline_(&str))
 		{
@@ -37,7 +37,7 @@ int	main(int argc, char **argv, char **env)
 			set_data(&data, str);
 			expand_env(&data);
 			init_shell(&data);
-			print_t_data(&data);
+			// print_t_data(&data);
 			// printf("Executing command...\n");
 			int execute_result = execute(&data);
 			if (execute_result != 0) {

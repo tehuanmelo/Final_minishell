@@ -25,3 +25,14 @@
         2 - free cmd list
     ERROR HANDLING
         1 - Ctrl-C must work only in the current proccess
+
+27/03/2023
+
+ TASKS
+    IMPLEMENTATION
+        1 - Handle signals in the child and parent process
+        2 - Echo $? expansion 
+        3 - Fix the damn readline (Maaz)
+        4- Minishell within minishell signals process needs to be seen
+    ERROR HANDLING
+        1 - Ctrl-C must work only in the current proccess

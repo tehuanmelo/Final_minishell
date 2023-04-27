@@ -6,7 +6,7 @@
 /*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 13:16:07 by tde-melo          #+#    #+#             */
-/*   Updated: 2023/04/27 13:15:12 by tde-melo         ###   ########.fr       */
+/*   Updated: 2023/04/27 14:28:02 by tde-melo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int execute_heredoc(char *delimiter)
     int status;
     t_data *data_ = &data;
 
-    data_->heredoc_fd = open("/tmp/.here_doc", O_WRONLY | O_CREAT | O_TRUNC, 0777);
+    data_->heredoc_fd = open("/tmp/.here_do.c", O_WRONLY | O_CREAT | O_TRUNC, 0777);
     if (data_->heredoc_fd == -1)
         return (EXIT_FAILURE);
     while (1)
