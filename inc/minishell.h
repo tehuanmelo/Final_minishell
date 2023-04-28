@@ -6,7 +6,7 @@
 /*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 10:03:35 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/04/27 14:11:43 by tde-melo         ###   ########.fr       */
+/*   Updated: 2023/04/28 14:23:07 by tde-melo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ enum e_type
     DREDIR_OUT,
     EMPTY,
     WORD,
+    EXIT_STATUS,
 };
 
 enum e_state

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
+/*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:10:33 by tde-melo          #+#    #+#             */
-/*   Updated: 2023/04/25 22:00:21 by tehuanmelo       ###   ########.fr       */
+/*   Updated: 2023/04/28 14:28:19 by tde-melo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,37 @@ void	check_here_doc_variable(t_data *data)
 	}
 }
 
+void check_exit_variable(t_data *data)
+{
+	t_elem *head;
+	char *tmp;
+	char *env_exit;
+
+	head = data->tokens;
+	while (head)
+	{
+		if (head->type == ENV)
+		{
+			if (!ft_strcmp(head->content, "$?"))
+			{
+				tmp = head->content;
+				env_exit = ft_strdup(ft_itoa(data->exit_code));
+				head->content = env_exit;
+				head->type = EXIT_STATUS;
+				head->len = ft_strlen(env_exit);
+				free(tmp);
+			}
+		}
+		head = head->next;
+	}
+}
+
 void expand_env(t_data *data)
 {
 	t_elem	*head;
 
 	check_here_doc_variable(data);
+	check_exit_variable(data);
 	head = data->tokens;
 	while (head)
 	{

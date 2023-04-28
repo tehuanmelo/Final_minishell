@@ -1,8 +1,8 @@
 
 // Do not forget to delete this file before submit the project
 
-#include "../inc/minishell.h"
-#include "../inc/parsing.h"
+#include "../../inc/minishell.h"
+
 
 void print_tokens(t_elem *list)
 {
@@ -10,7 +10,7 @@ void print_tokens(t_elem *list)
     printf("%*s-----------------------------------------------------\n", 10, " ");
     while (list)
     {
-        int padding = 15 - list->len;
+        int padding = 20 - list->len;
         printf("%*s::%s::", padding, " ", list->content);
         printf("%9d", list->len);
         switch (list->type)
@@ -47,6 +47,9 @@ void print_tokens(t_elem *list)
             break;
             case EMPTY:
             printf("%20s", "EMPTY");
+            break;
+            case EXIT_STATUS:
+            printf("%20s", "EXIT_STATUS");
             break;
         default:
             break;

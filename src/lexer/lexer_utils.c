@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
+/*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 23:05:22 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/04/25 22:00:21 by tehuanmelo       ###   ########.fr       */
+/*   Updated: 2023/04/28 14:05:16 by tde-melo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	is_env(char *input)
 {
 	if (ft_strlen(input) > 1)
 	{
-		if (ft_isalpha(*(++input)) || *input == '_')
+		if (ft_isalpha(*(++input)) || *input == '_' || *input == '?')
 			return (ENV);
 	}
 	return (0);
