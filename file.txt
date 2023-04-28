@@ -1,1 +1,11 @@
-[33;49;3mheredoc~> [0m;49;3mheredoc~> m
+CC = gcc
+	$(CC) $(CFLAGS) $^ -o $@ $(LIBFT)/libft.a $(READLINE_LIB)
+	$(CC) $(CFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS) -c -o $@ $<

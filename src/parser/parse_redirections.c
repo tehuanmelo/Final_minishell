@@ -1,7 +1,6 @@
 #include "../../inc/minishell.h"
 
-
-
+t_data data;
 
 void handle_outfile_redirection(t_cmd *cmd, int index)
 {
@@ -43,7 +42,8 @@ void handle_infile_redirection(t_cmd *cmd, int index)
         printf("minishell: syntax error near unexpected token `newline'\n");
         return;
     }
-
+    if (cmd->io_fds->fd_out != STDOUT_FILENO)
+    close(cmd->io_fds->fd_out);
     cmd->io_fds->fd_in = open(cmd->args[index + 1], O_RDONLY);
     if (cmd->io_fds->fd_in == -1)
     {

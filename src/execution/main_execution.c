@@ -36,11 +36,13 @@ static int	get_children(t_data *data)
 */
 static int	create_children(t_data *data)
 {
+	fprintf(stderr, "Create Children\n");
 	t_cmd	*cmd;
 
 	cmd = data->cmd_lst;
 	while (data->pid != 0 && cmd)
 	{
+		printf("Starting the fork process\n");
 		data->pid = fork();
 		if (data->pid == -1)
 			return (error_msg_commad("fork", NULL, strerror(errno), EXIT_FAILURE));
@@ -116,11 +118,15 @@ int execute(t_data *data)
     }
 
     printf("Inside execute: create_children case...\n");
-    ret = create_children(data);
+		ret = create_children(data);
 
     // Add the following line to restore standard input and output after executing the last command in the pipeline
     restore_io(data->cmd_lst->io_fds);
 
+	if (data->cmd_lst->io_fds->fd_in != STDIN_FILENO)
+		close(data->cmd_lst->io_fds->fd_in);
+	if (data->cmd_lst->io_fds->fd_out != STDOUT_FILENO)
+		close(data->cmd_lst->io_fds->fd_out);
     return (ret);
 }
 

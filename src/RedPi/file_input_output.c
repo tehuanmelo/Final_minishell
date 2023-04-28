@@ -35,24 +35,31 @@ bool	check_infile_outfile(t_io_fds *io)
 	return (true);
 }
 
-bool	redirect_io(t_io_fds *io)
+bool redirect_io(t_io_fds *io)
 {
-	int	ret;
+    int ret;
 
-	ret = true;
-	if (!io)
-		return (ret);
-	io->stdin_backup = dup(STDIN_FILENO);
-	if (io->stdin_backup == -1)
-		ret = error_msg_commad("dup", "stdin backup", strerror(errno), false);
-	io->stdout_backup = dup(STDOUT_FILENO);
-	if (io->stdout_backup == -1)
-		ret = error_msg_commad("dup", "stdout backup", strerror(errno), false);
-	if (io->fd_in != -1)
-		if (dup2(io->fd_in, STDIN_FILENO) == -1)
-			ret = error_msg_commad("dup2", io->infile, strerror(errno), false);
-	if (io->fd_out != -1)
-		if (dup2(io->fd_out, STDOUT_FILENO) == -1)
-			ret = error_msg_commad("dup2", io->outfile, strerror(errno), false);
-	return (ret);
+    ret = true;
+    if (!io)
+        return (ret);
+    io->stdin_backup = dup(STDIN_FILENO);
+    if (io->stdin_backup == -1)
+        ret = error_msg_commad("dup", "stdin backup", strerror(errno), false);
+    io->stdout_backup = dup(STDOUT_FILENO);
+    if (io->stdout_backup == -1)
+        ret = error_msg_commad("dup", "stdout backup", strerror(errno), false);
+    if (io->fd_in != -1)
+        if (dup2(io->fd_in, STDIN_FILENO) == -1)
+            ret = error_msg_commad("dup2", io->infile, strerror(errno), false);
+    if (io->fd_out != -1)
+        if (dup2(io->fd_out, STDOUT_FILENO) == -1)
+            ret = error_msg_commad("dup2", io->outfile, strerror(errno), false);
+
+    if (io->fd_in != -1)
+        close(io->fd_in);
+    if (io->fd_out != -1)
+        close(io->fd_out);
+
+    return (ret);
 }
+
