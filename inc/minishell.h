@@ -114,9 +114,7 @@ typedef struct s_data
 	pid_t		pid;
 } t_data;
 
-t_data data;
-
-
+extern t_data data;
 
 
 // -------------- minishell --------------

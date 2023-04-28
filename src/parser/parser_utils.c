@@ -21,8 +21,14 @@ t_cmd	*new_command(void)
 	new = malloc(sizeof(t_cmd));
 	if (!new)
 		return (NULL);
-	new->prev = NULL;
-	new->next = NULL;
+	new->args = NULL;
+    new->command = NULL;
+    new->path = NULL;
+    new->pipe_fd[0] = -1;
+    new->pipe_fd[1] = -1;
+    new->io_fds = NULL;
+    new->prev = NULL;
+    new->next = NULL;
 	return (new);
 }
 

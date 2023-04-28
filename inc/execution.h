@@ -35,7 +35,7 @@
 // int     count_env_variables(char **env);
 // char    *fetch_env_variable_char(char **env, char *var);
 // int     fetch_env_variable_index(char **env, char *var);
-// bool    create_the_new_env_var(t_data *data, \
+// bool    create_the_new_env_var(t_data *data, 
 //         char *env_key, char *value);
 // bool    check_for_the_env_key(char *var);
 // bool    delete_the_env_variables(t_data *data, int index);
@@ -69,7 +69,7 @@
 // //# ----------------------------------------------
 // //# ~~~~~~~~~~~~~ FREES & CLEANUPS ~~~~~~~~~~~~~
 // //# ----------------------------------------------
-// int	    error_msg_commad(char *command, char *detail, \
+// int	    error_msg_commad(char *command, char *detail, 
 //         char *error_message, int error_nb);
 // void	free_ptr(void *ptr);
 // void	free_str_tab(char **tab);
