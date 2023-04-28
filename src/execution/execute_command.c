@@ -34,7 +34,7 @@ static int execute_system_binaries(t_data *data, t_cmd *cmd)
 
     if(!cmd->command || cmd->command[0] == '\0')
         return(COMMAND_NOT_FOUND);
-    here_doc(cmd->args);
+    // here_doc(cmd->args);
     if(cmd_is_dir(cmd->command))
         return (COMMAND_NOT_FOUND);
     cmd->path = fetch_command_path(data, cmd->command);

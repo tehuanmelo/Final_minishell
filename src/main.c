@@ -6,12 +6,11 @@
 /*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 22:26:41 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/04/27 14:35:14 by tde-melo         ###   ########.fr       */
+/*   Updated: 2023/04/28 14:44:09 by tde-melo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-#include "../inc/parsing.h"
 #include "../inc/execution.h"
 
 int	main(int argc, char **argv, char **env)

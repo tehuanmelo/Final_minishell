@@ -31,8 +31,7 @@
  TASKS
     IMPLEMENTATION
         1 - Handle signals in the child and parent process
-        2 - Echo $? expansion 
+        2 - Echo $? expansion ***(DONE)***
         3 - Fix the damn readline (Maaz)
         4- Minishell within minishell signals process needs to be seen
     ERROR HANDLING
-        1 - Ctrl-C must work only in the current proccess
