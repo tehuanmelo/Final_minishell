@@ -51,7 +51,7 @@ char	**get_args(t_elem **counter, t_elem **head)
 
 t_cmd	*parser(t_data *data)
 {
-t_cmd	*new;
+	t_cmd	*new;
 	t_cmd	*head;
 	t_elem	*head_counter;
 	t_elem	*tmp;

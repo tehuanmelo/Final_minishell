@@ -60,26 +60,54 @@ static int execute_local_bin(t_data *data, t_cmd *cmd)
     return (EXIT_FAILURE);
 }
 
+char **remove_heredoc_args(char **args)
+{
+    char **new_args;
+    int i, j;
+
+    i = 0;
+    while (args[i] != NULL)
+        i++;
+
+    new_args = (char **)malloc((i + 1) * sizeof(char *));
+    i = 0;
+    j = 0;
+
+    while (args[i] != NULL)
+    {
+        if (ft_strcmp(args[i], "<<") != 0 && (i == 0 || ft_strcmp(args[i - 1], "<<") != 0))
+        {
+            new_args[j] = args[i];
+            j++;
+        }
+        i++;
+    }
+    new_args[j] = NULL;
+
+    return new_args;
+}
+
 int execute_commands(t_data *data, t_cmd *cmd)
 {
     int ret;
     printf(COLOR_GREEN " ~~~~~~ Entered the executeve commands ~~~~~~~~\n");
 
+    // if (!check_here_doc(cmd->args))
+    //     {
+    //         here_doc(cmd->args);
+    //         cmd->args = remove_heredoc_args(cmd->args);
+    //     }
+    
     redirect_io(cmd->io_fds);
     set_pipe_fds(data->cmd_lst, cmd);
-    // close_fds(data->cmd_lst, false);
+    close_fds(data->cmd_lst, false);
 
-    // Add the following debug print statements
     fprintf(stderr, "cmd->command: %s\n", cmd->command);
     fprintf(stderr, "ft_strchr result: %p\n", ft_strchr(cmd->command, '/'));
-    // End of debug print statements
 
     ret = execute_built_ins(data, cmd);
     if (ret != COMMAND_NOT_FOUND)
-    {
-        fprintf(stderr," ~~~~~~ Leaving the executeve commands ~~~~~~~~\n" COLOR_RESET);
-        exit(ret); // Make sure to exit the child process after executing a built-in command
-    }
+        exit(ret); 
     if (ft_strchr(cmd->command, '/') == NULL)
         ret = execute_system_binaries(data, cmd);
     else
@@ -87,7 +115,6 @@ int execute_commands(t_data *data, t_cmd *cmd)
     ret = execute_local_bin(data, cmd);
 
     fprintf(stderr, " ~~~~~~ Leaving the executeve commands ~~~~~~~~\n" COLOR_RESET);
-    // exit(ret); // Make sure to exit the child process after executing a command
     return (ret);
 }
 
