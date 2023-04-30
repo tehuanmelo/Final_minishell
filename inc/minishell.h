@@ -162,6 +162,7 @@ void parse_redirection(t_cmd *cmd);
 
 // ------------- here-doc ---------------
 int check_here_doc(char **args);
+char **remove_heredoc_args(char **args);
 void here_doc(char **input);
 
 // #######################################
