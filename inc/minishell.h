@@ -164,6 +164,7 @@ void parse_redirection(t_cmd *cmd);
 int check_here_doc(char **args);
 char **remove_heredoc_args(char **args);
 void here_doc(char **input);
+void print_file_contents(const char *filename);
 
 // #######################################
 //              SIGNALS-DIR
@@ -258,6 +259,8 @@ void	free_ptr(void *ptr);
 void	free_str_tab(char **tab);
 void	close_pipe_fds(t_cmd *cmds, t_cmd *skip_cmd);
 void	close_fds(t_cmd *cmds, bool close_backups);
+void close_child_fds(t_cmd *cmds);
+void close_parent_fds(t_cmd *cmds);
 void	exit_shell(t_data *data, int exno);
 
 #endif

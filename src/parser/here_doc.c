@@ -86,6 +86,9 @@ void here_doc(char **args)
     {
         signal(SIGINT, sigint_handler_heredoc);
         delimiter = get_delimiter(args);
+        fprintf(stderr, "Heredoc file contents:\n");
+        print_file_contents("/tmp/.here_do.c");
+        fprintf(stderr, "\n");
         if (execute_heredoc(delimiter))
             exit(EXIT_FAILURE);
         exit(EXIT_SUCCESS);

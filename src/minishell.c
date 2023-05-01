@@ -47,7 +47,6 @@ void set_data(t_data *data, char *str)
 
 int _readline_(char **input)
 {
-	fprintf(stderr, " Hello I am working \n");
 	*input = readline(MINI_PROMPT);
 	if (!*input)
 	{

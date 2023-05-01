@@ -49,8 +49,6 @@ void handle_infile_redirection(t_cmd *cmd, int index)
     {
         perror("minishell");
     }
-
-    // Remove the redirection operator and file name from args
     free(cmd->args[index]);
     free(cmd->args[index + 1]);
     cmd->args[index] = NULL;

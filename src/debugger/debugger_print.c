@@ -112,3 +112,22 @@ void print_t_data(t_data *data) {
 
 // Assuming print_t_elem and print_t_cmd functions are already defined
 
+void print_file_contents(const char *filename)
+{
+    FILE *file;
+    int c;
+
+    file = fopen(filename, "r");
+    if (file == NULL)
+    {
+        fprintf(stderr, "Error: unable to open file %s\n", filename);
+        return;
+    }
+
+    while ((c = fgetc(file)) != EOF)
+    {
+        putchar(c);
+    }
+
+    fclose(file);
+}
