@@ -30,18 +30,21 @@ static int execute_system_binaries(t_data *data, t_cmd *cmd)
 {
     // Add the following debug print statement
     fprintf(stderr, "Inside execute_system_binaries function...\n");
+    fprintf(stderr, "Input file descriptor: %d\n", cmd->io_fds->fd_in);
     // End of debug print statement
 
     if(!cmd->command || cmd->command[0] == '\0')
         return(COMMAND_NOT_FOUND);
-    // here_doc(cmd->args);
     if(cmd_is_dir(cmd->command))
         return (COMMAND_NOT_FOUND);
     cmd->path = fetch_command_path(data, cmd->command);
     if(!cmd->path)
         return (COMMAND_NOT_FOUND);
     if(execve(cmd->path, cmd->args, data->env) == -1)
+       {
+        fprintf(stderr, "execve failed: %s\n", strerror(errno));
         error_msg_commad("execve: ", NULL, strerror(errno), errno);
+       }
     return (EXIT_FAILURE);
 }
 
@@ -91,16 +94,20 @@ int execute_commands(t_data *data, t_cmd *cmd)
 {
     int ret;
     printf(COLOR_GREEN " ~~~~~~ Entered the executeve commands ~~~~~~~~\n");
-
-    // if (!check_here_doc(cmd->args))
-    //     {
-    //         here_doc(cmd->args);
-    //         cmd->args = remove_heredoc_args(cmd->args);
-    //     }
     
-    redirect_io(cmd->io_fds);
+     if (!check_here_doc(cmd->args))
+    {
+        here_doc(cmd->args);
+        cmd->args = remove_heredoc_args(cmd->args);
+        cmd->io_fds->fd_in = open("/tmp/.here_do.c", O_RDONLY);
+        if (cmd->io_fds->fd_in < 0) // Add this block
+        {
+            perror("open");
+            exit(EXIT_FAILURE);
+        }
+    }
     set_pipe_fds(data->cmd_lst, cmd);
-    close_fds(data->cmd_lst, false);
+    redirect_io(cmd->io_fds);
 
     fprintf(stderr, "cmd->command: %s\n", cmd->command);
     fprintf(stderr, "ft_strchr result: %p\n", ft_strchr(cmd->command, '/'));
@@ -113,7 +120,7 @@ int execute_commands(t_data *data, t_cmd *cmd)
     else
         cmd->path = cmd->command;
     ret = execute_local_bin(data, cmd);
-
+    
     fprintf(stderr, " ~~~~~~ Leaving the executeve commands ~~~~~~~~\n" COLOR_RESET);
     return (ret);
 }

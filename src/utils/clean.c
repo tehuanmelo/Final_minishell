@@ -45,6 +45,31 @@ void	close_fds(t_cmd *cmds, bool close_backups)
 	close_pipe_fds(cmds, NULL);
 }
 
+void close_child_fds(t_cmd *cmds)
+{
+    if (cmds->io_fds)
+    {
+        if (cmds->io_fds->fd_in != -1)
+            close(cmds->io_fds->fd_in);
+        if (cmds->io_fds->fd_out != -1)
+            close(cmds->io_fds->fd_out);
+    }
+    close_pipe_fds(cmds, NULL);
+}
+
+void close_parent_fds(t_cmd *cmds)
+{
+    if (cmds->io_fds)
+    {
+        if (cmds->io_fds->stdin_backup != -1)
+            close(cmds->io_fds->stdin_backup);
+        if (cmds->io_fds->stdout_backup != -1)
+            close(cmds->io_fds->stdout_backup);
+        restore_io(cmds->io_fds); // Add this line
+    }
+}
+
+
 void	free_io(t_io_fds *io)
 {
 	if (!io)

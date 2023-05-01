@@ -100,7 +100,6 @@ int execute(t_data *data)
     ret = prep_for_exec(data);
     if (ret != COMMAND_NOT_FOUND) 
         return (ret);
-
     if (!data->cmd_lst->next && !data->cmd_lst->prev
         && check_infile_outfile(data->cmd_lst->io_fds))
     {
@@ -115,23 +114,12 @@ int execute(t_data *data)
         }
     }
 
-	 if (!check_here_doc(data->cmd_lst->args))
-    {
-        here_doc(data->cmd_lst->args);
-        data->cmd_lst->args = remove_heredoc_args(data->cmd_lst->args);
-		data->cmd_lst->io_fds->fd_in = open("/tmp/.here_do.c", O_RDONLY);
-    }
-
     printf("Inside execute: create_children case...\n");
 	ret = create_children(data);
 
     // Add the following line to restore standard input and output after executing the last command in the pipeline
     restore_io(data->cmd_lst->io_fds);
-
-	if (data->cmd_lst->io_fds->fd_in != STDIN_FILENO)
-		close(data->cmd_lst->io_fds->fd_in);
-	if (data->cmd_lst->io_fds->fd_out != STDOUT_FILENO)
-		close(data->cmd_lst->io_fds->fd_out);
+	close_fds(data->cmd_lst, true);
     return (ret);
 }
 

@@ -1,0 +1,16 @@
+--- Errors Management for Heredoc 
+1. Issue with the implementation of heredoc files --> {✅}
+2. Heredoc failing without the pipes ➡️ {✔}
+3. Heredoc failing with the "cat << EOF | grep Hello" methodology  ➡️ {✔} 
+Notes: 
+    1. Close Fd is the cause of it. -> ✔
+    2. Test with the pipe and without the pipe  -> ✔️
+    3. Check redirections -> ✔
+4. Precedence of heredoc has to be taken into account  ➡️ {}
+Test: 
+    1. 
+    2. 
+    3. 
+--- Errors with failue of command function 
+1. Fails when the command doesnt exsist -> 
+2. 
