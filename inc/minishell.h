@@ -212,6 +212,7 @@ int	ft_env_built_in(t_data *data, char **args);
 int ft_export_built_in(t_data *data, char **args);
 int ft_pwd_built_in(t_data *data, char **args);
 int ft_unset_built_in(t_data *data, char **args); 
+int	ft_exit_built_in(t_data *data, char **args); 
 
 //# ----------------------------------------------
 //# ~~~~~~~~~~~~~ ENV MANIPUlATION ~~~~~~~~~~~~~

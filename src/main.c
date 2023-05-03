@@ -35,10 +35,7 @@ int	main(int argc, char **argv, char **env)
 			// print_t_data(&data);
 			// printf("Executing command...\n");
 			data.exit_code = execute(&data);
-			if (data.exit_code != 0) {
-				// Handle the result of the execute function if necessary
-				return (0);
-			}
+			printf("Hello !\n");
 			free(str);
 			free(data.input);
 			free_tokens_list(data.tokens);

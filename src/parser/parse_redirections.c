@@ -23,12 +23,12 @@ void handle_outfile_redirection(t_cmd *cmd, int index)
     cmd->io_fds->fd_out = open(cmd->args[index + 1], flags, 0644);
     if (cmd->io_fds->fd_out == -1)
         perror("minishell");
-
+    fprintf(stderr, "Fds_outptut --->  %d\n", cmd->io_fds->fd_out);
     // Remove the redirection operator and file name from args
     free(cmd->args[index]);
-    free(cmd->args[index + 1]);
+    // free(cmd->args[index + 1]);
     cmd->args[index] = NULL;
-    cmd->args[index + 1] = NULL;
+    // cmd->args[index + 1] = NULL;
 }
 
 void handle_infile_redirection(t_cmd *cmd, int index)
@@ -42,17 +42,16 @@ void handle_infile_redirection(t_cmd *cmd, int index)
         printf("minishell: syntax error near unexpected token `newline'\n");
         return;
     }
-    if (cmd->io_fds->fd_out != STDOUT_FILENO)
+    // if (cmd->io_fds->fd_out != STDOUT_FILENO)
     close(cmd->io_fds->fd_out);
     cmd->io_fds->fd_in = open(cmd->args[index + 1], O_RDONLY);
     if (cmd->io_fds->fd_in == -1)
     {
         perror("minishell");
     }
+    fprintf(stderr, "Fds_input --->  %d\n", cmd->io_fds->fd_out);
     free(cmd->args[index]);
-    free(cmd->args[index + 1]);
     cmd->args[index] = NULL;
-    cmd->args[index + 1] = NULL;
 }
 
 void parse_redirection(t_cmd *cmd)
@@ -64,6 +63,7 @@ void parse_redirection(t_cmd *cmd)
 
     while (cmd->args[i]) 
     {
+        printf("commands ---> %s\n", cmd->args[i]);
         if (ft_strcmp(cmd->args[i], ">") == 0 || ft_strcmp(cmd->args[i], ">>") == 0)
             handle_outfile_redirection(cmd, i);
         else if (strcmp(cmd->args[i], "<") == 0) 
