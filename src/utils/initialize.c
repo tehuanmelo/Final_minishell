@@ -72,9 +72,10 @@ bool	init_data(t_data *data, char **env)
 			1);
 		return (false);
 	}
-	// data->tokens = NULL;
-	// data->input = NULL;
-	// data->cmd_lst = NULL;
+	data->tokens = NULL;
+	data->input = NULL;
+	data->cmd_lst = NULL;
+	data->heredoc_fd = -1;
 	data->pid = -1;
 	data->exit_code= 0;
 	return (true);

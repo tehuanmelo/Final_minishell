@@ -1,4 +1,22 @@
-line
-fsd
-fds
-fs
+commands ---> ls
+Inside prep_for_exec: COMMAND_NOT_FOUND case
+Inside execute: Built-in command case...
+Inside execute: create_children case...
+Create Children
+Starting the fork process
+I have taken your child
+Inside create_children, calling execute_commands...
+ ~~~~~~ Entered the executeve commands ~~~~~~~~
+cmd->command: ls
+ft_strchr result: (nil)
+Inside execute_system_binaries function...
+Input file descriptor: -1
+I AM NOT GOING ANYWHERE BITCHES
+We are getting the command path /usr/bin/ls
+Casdasasd
+file.txt  inc  Makefile  minishell  obj  output.txt  README.md  src
+STATUS FOR MY KIDS 0
+I was called
+I was called 2
+I was called 3
+Hello !

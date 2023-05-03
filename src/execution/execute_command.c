@@ -21,8 +21,8 @@ int execute_built_ins(t_data *data, t_cmd *check_cmd)
         {
             result = ft_unset_built_in(data, check_cmd->args);
         }
-    // else if(ft_strncmp(check_cmd->command, "exit", 5) == 0) // --> exit built in to be made
-    //     result = ft_pwd_built_in(data, check_cmd->args);
+    else if(ft_strncmp(check_cmd->command, "exit", 5) == 0) // --> exit built in to be made
+        result = ft_exit_built_in(data, check_cmd->args);
     return(result);
 }
 
@@ -32,19 +32,31 @@ static int execute_system_binaries(t_data *data, t_cmd *cmd)
     fprintf(stderr, "Inside execute_system_binaries function...\n");
     fprintf(stderr, "Input file descriptor: %d\n", cmd->io_fds->fd_in);
     // End of debug print statement
-
+    printf("I AM NOT GOING ANYWHERE BITCHES\n");
     if(!cmd->command || cmd->command[0] == '\0')
-        return(COMMAND_NOT_FOUND);
+        {
+            printf("CALLED\n");
+            return(COMMAND_NOT_FOUND);
+        }
     if(cmd_is_dir(cmd->command))
-        return (COMMAND_NOT_FOUND);
+        {
+            printf("CALLED2\n");
+            return (COMMAND_NOT_FOUND);
+        }
     cmd->path = fetch_command_path(data, cmd->command);
+    printf("We are getting the command path %s\n", cmd->path);
     if(!cmd->path)
-        return (COMMAND_NOT_FOUND);
+        {
+            printf("CALLED3\n");
+            return (COMMAND_NOT_FOUND);
+        }
+    printf("Casdasasd\n");
     if(execve(cmd->path, cmd->args, data->env) == -1)
        {
         fprintf(stderr, "execve failed: %s\n", strerror(errno));
         error_msg_commad("execve: ", NULL, strerror(errno), errno);
        }
+    printf("CALLED 4\n");
     return (EXIT_FAILURE);
 }
 
@@ -56,10 +68,15 @@ static int execute_local_bin(t_data *data, t_cmd *cmd)
     printf("cmd->path: %s\n", cmd->path);
 
     result = check_command_not_found(data, cmd);
+    printf("LMAFO----2\n");
     if(result != 0)
-        return (result);
+        exit (result);
+    printf("LMAFO\n");
     if(execve(cmd->path, cmd->args, data->env) == -1)
-        error_msg_commad("execve: ", NULL, strerror(errno), errno);
+        {
+            printf("LOL\n");
+            error_msg_commad("execve: ", NULL, strerror(errno), errno);
+        }
     return (EXIT_FAILURE);
 }
 
@@ -108,18 +125,24 @@ int execute_commands(t_data *data, t_cmd *cmd)
     }
     set_pipe_fds(data->cmd_lst, cmd);
     redirect_io(cmd->io_fds);
+    close_fds(cmd, false);
 
     fprintf(stderr, "cmd->command: %s\n", cmd->command);
     fprintf(stderr, "ft_strchr result: %p\n", ft_strchr(cmd->command, '/'));
 
     ret = execute_built_ins(data, cmd);
     if (ret != COMMAND_NOT_FOUND)
-        exit(ret); 
+        {
+            printf("WHAT THE FUCK \n");
+            exit(ret); 
+        }
     if (ft_strchr(cmd->command, '/') == NULL)
         ret = execute_system_binaries(data, cmd);
     else
         cmd->path = cmd->command;
+    printf("Data pid before local bin %d\n", data->pid);
     ret = execute_local_bin(data, cmd);
+    printf("Data pid before return %d\n", data->pid);
     
     fprintf(stderr, " ~~~~~~ Leaving the executeve commands ~~~~~~~~\n" COLOR_RESET);
     return (ret);

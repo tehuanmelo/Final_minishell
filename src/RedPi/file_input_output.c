@@ -55,11 +55,6 @@ bool redirect_io(t_io_fds *io)
         if (dup2(io->fd_out, STDOUT_FILENO) == -1)
             ret = error_msg_commad("dup2", io->outfile, strerror(errno), false);
 
-    if (io->fd_in != -1)
-        close(io->fd_in);
-    if (io->fd_out != -1)
-        close(io->fd_out);
-
     return (ret);
 }
 
