@@ -23,7 +23,7 @@ static int	get_children(t_data *data)
 		status = WEXITSTATUS(save_status);
 	else
 		status = save_status;
-	printf("STATUS FOR MY KIDS %d\n", status);
+	// printf("STATUS FOR MY KIDS %d\n", status);
 	return (status);
 }
 
@@ -37,25 +37,18 @@ static int	get_children(t_data *data)
 */
 static int	create_children(t_data *data)
 {
-	fprintf(stderr, "Create Children\n");
 	t_cmd	*cmd;
 
 	cmd = data->cmd_lst;
-	printf("ID FOR MY KIDS %d\n", data->pid);
 	while (data->pid != 0 && cmd)
 	{
-		printf("Starting the fork process\n");
 		data->pid = fork();
 		if (data->pid == -1)
 			return (error_msg_commad("fork", NULL, strerror(errno), EXIT_FAILURE));
-		else if (data->pid == 0){
-            printf("Inside create_children, calling execute_commands...\n"); // Add this line
+		else if (data->pid == 0)
 			execute_commands(data, cmd);
-        }
 		cmd = cmd->next;
 	}
-	printf("DATA PID %d\n", data->pid);
-	printf("I have taken your child\n");
 	return (get_children(data));
 }
 
@@ -68,26 +61,16 @@ static int	create_children(t_data *data)
 static int	prep_for_exec(t_data *data)
 {
 	if (!data || !data->cmd_lst)
-	{
-		// printf("Inside prep_for_exec: No data or cmd_lst\n");
 		return (EXIT_SUCCESS);
-	}
 	if (!data->cmd_lst->command)
 	{
-		// printf("Inside prep_for_exec: No command\n");
 		if (data->cmd_lst->io_fds && !check_infile_outfile(data->cmd_lst->io_fds))
-		{
-			// printf("Inside prep_for_exec: IO Error\n");
 			return (EXIT_FAILURE);
-		}
 		return (EXIT_SUCCESS);
 	}
 	if (!create_pipes(data))
-	{
-		printf("Inside prep_for_exec: Pipe creation failure\n");
 		return (EXIT_FAILURE);
-	}
-	printf("Inside prep_for_exec: COMMAND_NOT_FOUND case\n");
+
 	return (COMMAND_NOT_FOUND);
 }
 
@@ -107,26 +90,15 @@ int execute(t_data *data)
     if (!data->cmd_lst->next && !data->cmd_lst->prev
         && check_infile_outfile(data->cmd_lst->io_fds))
     {
-        printf("Inside execute: Built-in command case...\n");
         redirect_io(data->cmd_lst->io_fds);
         ret = execute_built_ins(data, data->cmd_lst);
         restore_io(data->cmd_lst->io_fds);
-
-        if (ret != COMMAND_NOT_FOUND) {
-            printf("Returning from built-in command case...\n");
+        if (ret != COMMAND_NOT_FOUND)
             return (ret);
-        }
     }
-
-    printf("Inside execute: create_children case...\n");
 	ret = create_children(data);
-
-	printf("I was called\n");
-    // Add the following line to restore standard input and output after executing the last command in the pipeline
     restore_io(data->cmd_lst->io_fds);
-	printf("I was called 2\n");
 	close_fds(data->cmd_lst, true);
-	printf("I was called 3\n");
     return (ret);
 }
 

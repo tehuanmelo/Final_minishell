@@ -120,7 +120,7 @@ void print_file_contents(const char *filename)
     file = fopen(filename, "r");
     if (file == NULL)
     {
-        fprintf(stderr, "Error: unable to open file %s\n", filename);
+        //fprintf(stderr, "Error: unable to open file %s\n", filename);
         return;
     }
 

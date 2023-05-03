@@ -12,30 +12,30 @@
 
 #include "../inc/minishell.h"
 
-void run_cmd(t_data *data)
-{
-	int pid;
-	char **args;
-	int status;
+// void run_cmd(t_data *data)
+// {
+// 	int pid;
+// 	char **args;
+// 	int status;
 
-	args = data->cmd_lst->args;
-	if (!check_here_doc(args))
-		here_doc(args);
-	pid = fork();
-	if (pid == 0)
-	{
-		if (ft_strcmp(*args, "echo") == 0)
-			execv("/bin/echo", args);
-		else if (ft_strcmp(*args, "pwd") == 0)
-			execv("/bin/pwd", args);
-	}
-	else
-	{
-		signal(SIGINT, SIG_IGN);
-		waitpid(pid, &status, 0);
-		init_signals();
-	}
-}
+// 	args = data->cmd_lst->args;
+// 	if (!check_here_doc(args))
+// 		here_doc(args);
+// 	pid = fork();
+// 	if (pid == 0)
+// 	{
+// 		if (ft_strcmp(*args, "echo") == 0)
+// 			execv("/bin/echo", args);
+// 		else if (ft_strcmp(*args, "pwd") == 0)
+// 			execv("/bin/pwd", args);
+// 	}
+// 	else
+// 	{
+// 		signal(SIGINT, SIG_IGN);
+// 		waitpid(pid, &status, 0);
+// 		init_signals();
+// 	}
+// }
 
 void set_data(t_data *data, char *str)
 {
@@ -50,7 +50,7 @@ int _readline_(char **input)
 	*input = readline(MINI_PROMPT);
 	if (!*input)
 	{
-		fprintf(stderr, "Input: %s\n", *input);
+		//fprintf(stderr, "Input: %s\n", *input);
 		ft_putstr("exittttt\n");
 		exit(1);
 	}
