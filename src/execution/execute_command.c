@@ -29,34 +29,34 @@ int execute_built_ins(t_data *data, t_cmd *check_cmd)
 static int execute_system_binaries(t_data *data, t_cmd *cmd)
 {
     // Add the following debug print statement
-    fprintf(stderr, "Inside execute_system_binaries function...\n");
-    fprintf(stderr, "Input file descriptor: %d\n", cmd->io_fds->fd_in);
+    //frprintf(stderr, "Inside execute_system_binaries function...\n");
+    //frprintf(stderr, "Input file descriptor: %d\n", cmd->io_fds->fd_in);
     // End of debug print statement
-    printf("I AM NOT GOING ANYWHERE BITCHES\n");
+    // printf("I AM NOT GOING ANYWHERE BITCHES\n");
     if(!cmd->command || cmd->command[0] == '\0')
         {
-            printf("CALLED\n");
+            // printf("CALLED\n");
             return(COMMAND_NOT_FOUND);
         }
     if(cmd_is_dir(cmd->command))
         {
-            printf("CALLED2\n");
+            // printf("CALLED2\n");
             return (COMMAND_NOT_FOUND);
         }
     cmd->path = fetch_command_path(data, cmd->command);
-    printf("We are getting the command path %s\n", cmd->path);
+    // printf("We are getting the command path %s\n", cmd->path);
     if(!cmd->path)
         {
-            printf("CALLED3\n");
+            // printf("CALLED3\n");
             return (COMMAND_NOT_FOUND);
         }
-    printf("Casdasasd\n");
+    // printf("Casdasasd\n");
     if(execve(cmd->path, cmd->args, data->env) == -1)
        {
-        fprintf(stderr, "execve failed: %s\n", strerror(errno));
+        //frprintf(stderr, "execve failed: %s\n", strerror(errno));
         error_msg_commad("execve: ", NULL, strerror(errno), errno);
        }
-    printf("CALLED 4\n");
+    // printf("CALLED 4\n");
     return (EXIT_FAILURE);
 }
 
@@ -64,17 +64,17 @@ static int execute_system_binaries(t_data *data, t_cmd *cmd)
 static int execute_local_bin(t_data *data, t_cmd *cmd)
 {
     int result; 
-    printf("Inside execute_local_bin function...\n");
-    printf("cmd->path: %s\n", cmd->path);
+    // printf("Inside execute_local_bin function...\n");
+    // printf("cmd->path: %s\n", cmd->path);
 
     result = check_command_not_found(data, cmd);
-    printf("LMAFO----2\n");
+    // printf("LMAFO----2\n");
     if(result != 0)
         exit (result);
-    printf("LMAFO\n");
+    // printf("LMAFO\n");
     if(execve(cmd->path, cmd->args, data->env) == -1)
         {
-            printf("LOL\n");
+            // printf("LOL\n");
             error_msg_commad("execve: ", NULL, strerror(errno), errno);
         }
     return (EXIT_FAILURE);
@@ -110,7 +110,7 @@ char **remove_heredoc_args(char **args)
 int execute_commands(t_data *data, t_cmd *cmd)
 {
     int ret;
-    printf(COLOR_GREEN " ~~~~~~ Entered the executeve commands ~~~~~~~~\n");
+    // printf(COLOR_GREEN " ~~~~~~ Entered the executeve commands ~~~~~~~~\n");
     
      if (!check_here_doc(cmd->args))
     {
@@ -127,24 +127,24 @@ int execute_commands(t_data *data, t_cmd *cmd)
     redirect_io(cmd->io_fds);
     close_fds(cmd, false);
 
-    fprintf(stderr, "cmd->command: %s\n", cmd->command);
-    fprintf(stderr, "ft_strchr result: %p\n", ft_strchr(cmd->command, '/'));
+    //frprintf(stderr, "cmd->command: %s\n", cmd->command);
+    //frprintf(stderr, "ft_strchr result: %p\n", ft_strchr(cmd->command, '/'));
 
     ret = execute_built_ins(data, cmd);
     if (ret != COMMAND_NOT_FOUND)
         {
-            printf("WHAT THE FUCK \n");
+            // printf("WHAT THE FUCK \n");
             exit(ret); 
         }
     if (ft_strchr(cmd->command, '/') == NULL)
         ret = execute_system_binaries(data, cmd);
     else
         cmd->path = cmd->command;
-    printf("Data pid before local bin %d\n", data->pid);
+    // printf("Data pid before local bin %d\n", data->pid);
     ret = execute_local_bin(data, cmd);
-    printf("Data pid before return %d\n", data->pid);
+    // printf("Data pid before return %d\n", data->pid);
     
-    fprintf(stderr, " ~~~~~~ Leaving the executeve commands ~~~~~~~~\n" COLOR_RESET);
+    //frprintf(stderr, " ~~~~~~ Leaving the executeve commands ~~~~~~~~\n" COLOR_RESET);
     return (ret);
 }
 
