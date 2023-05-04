@@ -6,7 +6,7 @@
 /*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 12:27:07 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/04/25 22:00:21 by tehuanmelo       ###   ########.fr       */
+/*   Updated: 2023/05/04 18:56:29 by tehuanmelo       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 
 int	check_quotes(t_elem **tokens, enum e_type type)
 {
+	if (!(*tokens)->prev)
+	{
+		ft_putstr("minishel: command not found\n");
+		return(EXIT_FAILURE);
+	}
 	*tokens = (*tokens)->next;
 	while (*tokens)
 	{
