@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 10:03:35 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/04/28 14:23:07 by tde-melo         ###   ########.fr       */
+/*   Updated: 2023/05/05 12:01:14 by tehuanmelo       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,7 @@ int count_args(t_elem **head);
 int count_commands(t_data *data);
 void append_command(t_cmd **head, t_cmd *new);
 t_cmd *new_command();
+void free_commands(t_cmd *cmds);
 void parse_redirection(t_cmd *cmd);
 
 // ------------- here-doc ---------------

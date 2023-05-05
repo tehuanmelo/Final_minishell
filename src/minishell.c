@@ -40,7 +40,5 @@ void init_shell(t_data *data)
 {
 	if (!sintax_error(data))
 		data->cmd_lst = parser(data);
-		// here_doc(data.cmd_lst->args);
-		// run_cmd(data);
 }
 

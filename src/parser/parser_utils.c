@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 21:07:15 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/04/27 12:44:56 by tde-melo         ###   ########.fr       */
+/*   Updated: 2023/05/05 14:05:36 by tehuanmelo       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-
 
 t_cmd	*new_command(void)
 {
@@ -78,4 +76,21 @@ int	count_args(t_elem **head)
 		*head = (*head)->next;
 	}
 	return (i);
+}
+
+void free_commands(t_cmd *cmds)
+{
+	t_cmd *tmp_cmd;
+	char **tmp_str;
+	
+	while (cmds)
+	{
+		tmp_cmd = cmds;
+		tmp_str = cmds->args;
+		while (*(cmds->args))
+			free(*(cmds->args)++);
+		free(tmp_str);
+		cmds = cmds->next;
+		free(tmp_cmd);
+	}
 }

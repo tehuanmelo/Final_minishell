@@ -6,7 +6,7 @@
 /*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 21:07:15 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/04 18:42:55 by tehuanmelo       ###   ########.fr       */
+/*   Updated: 2023/05/05 14:09:25 by tehuanmelo       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ t_cmd	*parser(t_data *data)
 		new = new_command();
 		new->args = get_args(&head_counter, &tmp);
 		new->command = new->args[0];
-        init_io(new);
-		parse_redirection(new);
+        // init_io(new);
+		// parse_redirection(new);
 		append_command(&head, new);
 		// printf("Inside parser: command = %s\n", new->command); 
 	}
