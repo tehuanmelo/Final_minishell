@@ -6,7 +6,7 @@
 /*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 22:26:41 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/05 13:15:39 by tehuanmelo       ###   ########.fr       */
+/*   Updated: 2023/05/05 22:11:08 by tehuanmelo       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,13 @@ int main(int argc, char **argv, char **env)
 		{
 			set_data(&data, str);
 			expand_env(&data);
-			init_shell(&data);
+			print_tokens(data.tokens);
+			// init_shell(&data);
 			// data.exit_code = execute(&data);
-			free(str);
-			free(data.input);
-			free_tokens_list(data.tokens);
-			free_commands(data.cmd_lst);
+			// free(str);
+			// free(data.input);
+			// free_tokens_list(data.tokens);
+			// free_commands(data.cmd_lst);
 		}
 	}
 	return (0);
