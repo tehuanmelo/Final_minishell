@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 23:05:22 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/04/28 14:05:16 by tde-melo         ###   ########.fr       */
+/*   Updated: 2023/05/04 19:17:33 by tehuanmelo       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,10 @@ void	check_quotes_flag(char input, int *d_quotes_flag, int *s_quotes_flag)
 int	get_env_len(char *input, int len)
 {
 	len++;
-	if (!ft_isalpha(input[len]) && input[len] != '_')
-	{
-		len++;
+	if (input[len] == '?')
+		return ++len;
+	else if (!ft_isalpha(input[len]) && input[len] != '_')
 		return (len);
-	}
 	else
 	{
 		while (ft_isalnum(input[len]) || input[len] == '_')

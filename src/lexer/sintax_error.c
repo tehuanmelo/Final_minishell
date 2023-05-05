@@ -6,7 +6,7 @@
 /*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 12:27:07 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/04 18:56:29 by tehuanmelo       ###   ########.fr       */
+/*   Updated: 2023/05/04 19:35:56 by tehuanmelo       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	check_quotes(t_elem **tokens, enum e_type type)
 {
 	if (!(*tokens)->prev)
 	{
-		ft_putstr("minishel: command not found\n");
+		ft_putstr("minishell: command not found\n");
 		return(EXIT_FAILURE);
 	}
 	*tokens = (*tokens)->next;
@@ -29,7 +29,7 @@ int	check_quotes(t_elem **tokens, enum e_type type)
 	}
 	if (!*tokens)
 	{
-		ft_putstr("minishel: sintax error `unclosed quotes'\n");
+		ft_putstr("minishell: sintax error `unclosed quotes'\n");
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
@@ -59,7 +59,7 @@ int	check_redir(t_elem *tokens)
 			&& (tmp_next->type == WORD || tmp_next->type == ENV))
 			return (EXIT_SUCCESS);
 	}
-	ft_putstr("minishel: sintax error near `redirection'\n");
+	ft_putstr("minishell: sintax error near `redirection'\n");
 	return (EXIT_FAILURE);
 }
 
@@ -87,7 +87,7 @@ int	check_pipe(t_elem *tokens)
 			&& (tmp_next->type == WORD || tmp_next->type == ENV))
 			return (EXIT_SUCCESS);
 	}
-	ft_putstr("minishel: sintax error near `pipe'\n");
+	ft_putstr("minishell: sintax error near `pipe'\n");
 	return (EXIT_FAILURE);
 }
 
