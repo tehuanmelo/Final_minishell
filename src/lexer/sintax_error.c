@@ -6,7 +6,7 @@
 /*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 12:27:07 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/05 21:00:17 by tehuanmelo       ###   ########.fr       */
+/*   Updated: 2023/05/06 10:30:07 by tehuanmelo       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ int check_redir(t_elem *tokens)
 	}
 	if (tmp_next && tmp_prev)
 	{
-		if ((tmp_prev->type == WORD || tmp_prev->type == ENV) && (tmp_next->type == WORD || tmp_next->type == ENV))
+		if ((tmp_prev->type == WORD || tmp_prev->type == ENV  || tmp_prev->type == PIPE) && \
+		(tmp_next->type == WORD || tmp_next->type == ENV))
 			return (EXIT_SUCCESS);
 	}
 	ft_putstr("minishell: sintax error near `redirection'\n");
@@ -70,14 +71,17 @@ int check_pipe(t_elem *tokens)
 	{
 		tmp_prev = tokens->prev;
 		tmp_next = tokens->next;
-		while (tmp_prev && (tmp_prev->type == WHITE_SPACE || is_quote(tmp_prev->type) || tmp_prev->type == EMPTY))
+		while (tmp_prev && (tmp_prev->type == WHITE_SPACE || \
+		is_quote(tmp_prev->type) || tmp_prev->type == EMPTY))
 			tmp_prev = tmp_prev->prev;
-		while (tmp_next && (tmp_next->type == WHITE_SPACE || is_quote(tmp_prev->type) || tmp_next->type == EMPTY))
+		while (tmp_next && (tmp_next->type == WHITE_SPACE || \
+		is_quote(tmp_next->type) || tmp_next->type == EMPTY))
 			tmp_next = tmp_next->next;
 	}
 	if (tmp_next && tmp_prev)
 	{
-		if ((tmp_prev->type == WORD || tmp_prev->type == ENV) && (tmp_next->type == WORD || tmp_next->type == ENV))
+		if ((tmp_prev->type == WORD || tmp_prev->type == ENV) && \
+		(tmp_next->type == WORD || tmp_next->type == ENV || is_redir(tmp_next->type)))
 			return (EXIT_SUCCESS);
 	}
 	ft_putstr("minishell: sintax error near `pipe'\n");
