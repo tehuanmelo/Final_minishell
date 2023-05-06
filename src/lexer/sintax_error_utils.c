@@ -6,7 +6,7 @@
 /*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 12:27:07 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/06 11:22:17 by tehuanmelo       ###   ########.fr       */
+/*   Updated: 2023/05/06 13:02:59 by tehuanmelo       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void syntax_error_message(char *str)
 	ft_putstr("minishell: syntax error near unexpected token ");
 	if (!ft_strcmp(str, "|"))
 		ft_putstr("`|'\n");
-	if (!ft_strcmp(str, ">"))
+	else if (!ft_strcmp(str, ">"))
 		ft_putstr("`>'\n");
 	else if (!ft_strcmp(str, "<"))
 		ft_putstr("`<'\n");

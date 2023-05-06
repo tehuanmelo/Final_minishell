@@ -6,7 +6,7 @@
 /*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 12:27:07 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/06 11:21:01 by tehuanmelo       ###   ########.fr       */
+/*   Updated: 2023/05/06 13:01:16 by tehuanmelo       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int check_redir(t_elem *tokens)
 	if (tmp_next && tmp_prev)
 	{
 		if ((tmp_prev->type == WORD || tmp_prev->type == ENV  || tmp_prev->type == PIPE) && \
-		(tmp_next->type == WORD || tmp_next->type == ENV))
+		(tmp_next->type == WORD || tmp_next->type == ENV || tmp_next->type == PIPE))
 			return (EXIT_SUCCESS);
 	}
 	syntax_error_message(tokens->content);
@@ -82,7 +82,7 @@ int check_pipe(t_elem *tokens)
 	}
 	if (tmp_next && tmp_prev)
 	{
-		if ((tmp_prev->type == WORD || tmp_prev->type == ENV) && \
+		if ((tmp_prev->type == WORD || tmp_prev->type == ENV || (is_redir(tmp_prev->type) && tmp_prev->next->type == PIPE)) && \
 		(tmp_next->type == WORD || tmp_next->type == ENV || is_redir(tmp_next->type)))
 			return (EXIT_SUCCESS);
 	}
