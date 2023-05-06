@@ -6,7 +6,7 @@
 /*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 23:05:22 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/05 17:51:01 by tehuanmelo       ###   ########.fr       */
+/*   Updated: 2023/05/06 08:51:05 by tehuanmelo       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int get_str_length(char *input)
 	int len;
 
 	len = 0;
-	if (*input == WHITE_SPACE || *input == D_QUOTE || *input == S_QUOTE)
+	if (*input == WHITE_SPACE || *input == D_QUOTE || *input == S_QUOTE || *input == PIPE)
 		len = 1;
 	else if (input[len] == ENV)
 		len = get_env_len(input, len);
@@ -76,7 +76,8 @@ int get_str_length(char *input)
 		len = get_redir_len(input, len);
 	else
 	{
-		while (input[len] && input[len] != ENV && input[len] != WHITE_SPACE && input[len] != D_QUOTE && input[len] != S_QUOTE && !is_redir(input[len]))
+		while (input[len] && input[len] != ENV && input[len] != WHITE_SPACE && \
+		input[len] != PIPE && !is_quote(input[len]) && !is_redir(input[len]))
 			len++;
 	}
 	return (len);
