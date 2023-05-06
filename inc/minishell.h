@@ -6,7 +6,7 @@
 /*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 10:03:35 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/05 12:01:14 by tehuanmelo       ###   ########.fr       */
+/*   Updated: 2023/05/06 11:19:48 by tehuanmelo       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ int is_in_quotes(enum e_state state);
 int is_redir(enum e_type type);
 int is_quote(enum e_type type);
 int is_pipe(enum e_type type);
+void syntax_error_message(char *str);
 
 // ------------ free list ----------------
 void free_tokens_list(t_elem *tokens);
