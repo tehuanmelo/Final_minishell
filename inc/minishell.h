@@ -6,7 +6,7 @@
 /*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 10:03:35 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/06 11:19:48 by tehuanmelo       ###   ########.fr       */
+/*   Updated: 2023/05/07 14:16:25 by tehuanmelo       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ void append_command(t_cmd **head, t_cmd *new);
 t_cmd *new_command();
 void free_commands(t_cmd *cmds);
 void parse_redirection(t_cmd *cmd);
+char	*join_string(char *s1, char *s2);
 
 // ------------- here-doc ---------------
 int check_here_doc(char **args);

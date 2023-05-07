@@ -42,6 +42,7 @@ void init_shell(t_data *data)
 	{
 		data->cmd_lst = parser(data);
 		data->exit_code = execute(data);
+		free_commands(data->cmd_lst);
 	}
 	else	
 		return;
