@@ -7,6 +7,8 @@ static int	get_children(t_data *data)
 	int		status;
 	int		save_status;
 	
+	if(data->exit_code != EXIT_SUCCESS)
+		return (data->exit_code);
 	close_fds(data->cmd_lst, false);
 	save_status = 0;
 	wpid = 0;
