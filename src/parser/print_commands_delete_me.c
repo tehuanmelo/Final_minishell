@@ -11,6 +11,7 @@ void print_comands()
     {
         printf("command %d\n", i++);
         int i = 0;
+        // printf("arg %d = %s\n", i++, *(head->args));
         while (*(head->args))
         {
             printf("arg %d = %s\n", i++, *(head->args));

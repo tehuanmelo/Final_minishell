@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+ /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
@@ -11,31 +11,6 @@
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-// void run_cmd(t_data *data)
-// {
-// 	int pid;
-// 	char **args;
-// 	int status;
-
-// 	args = data->cmd_lst->args;
-// 	if (!check_here_doc(args))
-// 		here_doc(args);
-// 	pid = fork();
-// 	if (pid == 0)
-// 	{
-// 		if (ft_strcmp(*args, "echo") == 0)
-// 			execv("/bin/echo", args);
-// 		else if (ft_strcmp(*args, "pwd") == 0)
-// 			execv("/bin/pwd", args);
-// 	}
-// 	else
-// 	{
-// 		signal(SIGINT, SIG_IGN);
-// 		waitpid(pid, &status, 0);
-// 		init_signals();
-// 	}
-// }
 
 void set_data(t_data *data, char *str)
 {
@@ -64,8 +39,11 @@ int _readline_(char **input)
 void init_shell(t_data *data)
 {
 	if (!sintax_error(data))
+	{
 		data->cmd_lst = parser(data);
-		// here_doc(data.cmd_lst->args);
-		// run_cmd(data);
+		data->exit_code = execute(data);
+	}
+	else	
+		return;
 }
 

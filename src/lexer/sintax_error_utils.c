@@ -6,7 +6,7 @@
 /*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 12:27:07 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/04/25 22:00:21 by tehuanmelo       ###   ########.fr       */
+/*   Updated: 2023/05/07 11:16:01 by tehuanmelo       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,20 @@ int	is_in_quotes(enum e_state state)
 int	is_pipe(enum e_type type)
 {
 	return (type == PIPE);
+}
+
+void syntax_error_message(char *str)
+{
+	data.exit_code = 258;
+	ft_putstr("minishell: syntax error near unexpected token ");
+	if (!ft_strcmp(str, "|"))
+		ft_putstr("`|'\n");
+	else if (!ft_strcmp(str, ">"))
+		ft_putstr("`>'\n");
+	else if (!ft_strcmp(str, "<"))
+		ft_putstr("`<'\n");
+	else if (!ft_strcmp(str, ">>"))
+		ft_putstr("`>>'\n");
+	else 
+		ft_putstr("`<<'\n");
 }

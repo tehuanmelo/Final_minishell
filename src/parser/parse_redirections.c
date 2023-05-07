@@ -31,28 +31,44 @@ void handle_outfile_redirection(t_cmd *cmd, int index)
     // cmd->args[index + 1] = NULL;
 }
 
-void handle_infile_redirection(t_cmd *cmd, int index)
+int handle_infile_redirection(t_cmd *cmd, int index)
 {
     if (!cmd || !cmd->args || !cmd->io_fds || index < 0)
-        return;
+        return (COMMAND_NOT_FOUND);
 
     if (cmd->args[index + 1] == NULL)
     {
         // Handle missing file name after '<'
         printf("minishell: syntax error near unexpected token `newline'\n");
-        return;
+        return (EXIT_FAILURE);
     }
-    // if (cmd->io_fds->fd_out != STDOUT_FILENO)
     close(cmd->io_fds->fd_out);
     cmd->io_fds->fd_in = open(cmd->args[index + 1], O_RDONLY);
     if (cmd->io_fds->fd_in == -1)
     {
-        perror("minishell");
+        // Save the cmd->args[index] value
+        char *arg_index = strdup(cmd->args[index]);
+
+        // Free and remove all the args
+        for (int i = 0; cmd->args[i] != NULL; i++)
+        {
+            free(cmd->args[i]);
+            cmd->args[i] = NULL;
+        }
+
+        // Call the error_msg_commad function with the saved arg_index value
+        data.exit_code =error_msg_commad(arg_index, NULL, strerror(errno), 1);
+
+        // Free the arg_index value
+        free(arg_index);
+
+        return (data.exit_code);
     }
-    //frprintf(stderr, "Fds_input --->  %d\n", cmd->io_fds->fd_out);
     free(cmd->args[index]);
     cmd->args[index] = NULL;
+    return (EXIT_SUCCESS);
 }
+
 
 void parse_redirection(t_cmd *cmd)
 {
@@ -67,8 +83,9 @@ void parse_redirection(t_cmd *cmd)
         if (ft_strcmp(cmd->args[i], ">") == 0 || ft_strcmp(cmd->args[i], ">>") == 0)
             handle_outfile_redirection(cmd, i);
         else if (strcmp(cmd->args[i], "<") == 0) 
-            handle_infile_redirection(cmd, i);
+            data.exit_code = handle_infile_redirection(cmd, i);
+        if (data.exit_code != EXIT_SUCCESS)
+            return;
         i++;
     }
 }
-
