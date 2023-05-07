@@ -39,6 +39,11 @@ int _readline_(char **input)
 void init_shell(t_data *data)
 {
 	if (!sintax_error(data))
+	{
 		data->cmd_lst = parser(data);
+		data->exit_code = execute(data);
+	}
+	else	
+		return;
 }
 

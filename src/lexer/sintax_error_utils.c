@@ -6,7 +6,7 @@
 /*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 12:27:07 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/06 13:02:59 by tehuanmelo       ###   ########.fr       */
+/*   Updated: 2023/05/07 11:16:01 by tehuanmelo       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	is_pipe(enum e_type type)
 
 void syntax_error_message(char *str)
 {
+	data.exit_code = 258;
 	ft_putstr("minishell: syntax error near unexpected token ");
 	if (!ft_strcmp(str, "|"))
 		ft_putstr("`|'\n");

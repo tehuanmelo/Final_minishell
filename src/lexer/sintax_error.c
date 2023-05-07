@@ -6,7 +6,7 @@
 /*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 12:27:07 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/06 13:01:16 by tehuanmelo       ###   ########.fr       */
+/*   Updated: 2023/05/07 11:48:16 by tehuanmelo       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int check_quotes(t_elem **tokens, enum e_type type)
 {
 	if (!(*tokens)->prev)
 	{
+		data.exit_code = 127;
 		ft_putstr("minishell: : command not found\n");
 		return (EXIT_FAILURE);
 	}
@@ -28,6 +29,7 @@ int check_quotes(t_elem **tokens, enum e_type type)
 	}
 	if (!*tokens)
 	{
+		data.exit_code = 127;
 		ft_putstr("minishell: sintax error `unclosed quotes'\n");
 		return (EXIT_FAILURE);
 	}
