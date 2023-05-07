@@ -6,7 +6,7 @@ static int	get_children(t_data *data)
 	pid_t	wpid;
 	int		status;
 	int		save_status;
-
+	
 	close_fds(data->cmd_lst, false);
 	save_status = 0;
 	wpid = 0;
