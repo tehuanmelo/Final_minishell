@@ -28,45 +28,47 @@ int execute_built_ins(t_data *data, t_cmd *check_cmd)
 
 static int execute_system_binaries(t_data *data, t_cmd *cmd)
 {
-    if(!cmd->command || cmd->command[0] == '\0')
-         return(COMMAND_NOT_FOUND);
-    if(cmd_is_dir(cmd->command))
+    if (!cmd->command || cmd->command[0] == '\0')
+        return (COMMAND_NOT_FOUND);
+    if (cmd_is_dir(cmd->command))
         return (COMMAND_NOT_FOUND);
     cmd->path = fetch_command_path(data, cmd->command);
-    // printf("We are getting the command path %s\n", cmd->path);
-    if(!cmd->path)
-        {
-            // printf("CALLED3\n");
-            return (COMMAND_NOT_FOUND);
-        }
-    // printf("Casdasasd\n");
-    if(execve(cmd->path, cmd->args, data->env) == -1)
-       {
-        //frprintf(stderr, "execve failed: %s\n", strerror(errno));
+    if (!cmd->path)
+        return (COMMAND_NOT_FOUND);
+
+    // printf("execute_system_binaries: Trying to execute: %s\n", cmd->path); // Add this line
+    if (execve(cmd->path, cmd->args, data->env) == -1)
+    {
         error_msg_commad("execve: ", NULL, strerror(errno), errno);
-       }
-    // printf("CALLED 4\n");
+    }
     return (EXIT_FAILURE);
 }
-
 
 static int execute_local_bin(t_data *data, t_cmd *cmd)
 {
-    int result; 
-    // Check if the previous function returned an error.
-    if (data->exit_code != EXIT_SUCCESS)
-    {
-        result = check_command_not_found(data, cmd);
-        if(result != 0)
-            exit(result);
-    }
+    int result;
 
-    if(execve(cmd->path, cmd->args, data->env) == -1)
+    // printf("Command is %s\n", cmd->command);
+    // if (data->exit_code != EXIT_SUCCESS)
+    // {
+        result = check_command_not_found(data, cmd);
+        if (result != 0)
+            exit(result);
+    // }
+    // if (cmd->path == NULL)
+    // {
+    //     result = error_msg_commad(cmd->command, NULL, "command not found", COMMAND_NOT_FOUND);
+    //     exit(COMMAND_NOT_FOUND);
+    // }
+    // printf("execute_local_bin: Trying to execute: %s\n", cmd->path);
+    if (execve(cmd->path, cmd->args, data->env) == -1)
     {
         error_msg_commad("execve: ", NULL, strerror(errno), errno);
     }
     return (EXIT_FAILURE);
 }
+
+
 
 
 char **remove_heredoc_args(char **args)
@@ -98,6 +100,7 @@ char **remove_heredoc_args(char **args)
 
 int execute_commands(t_data *data, t_cmd *cmd)
 {
+    // printf("The command reached execute commands %s\n", cmd->command);
     int ret;
     if (data->exit_code != EXIT_SUCCESS)
         exit(data->exit_code);
@@ -115,9 +118,7 @@ int execute_commands(t_data *data, t_cmd *cmd)
     set_pipe_fds(data->cmd_lst, cmd);
     redirect_io(cmd->io_fds);
     close_fds(cmd, false);
-    // printf("execute_commands: before execute_built_ins. cmd->command: %s\n", cmd->command);
     ret = execute_built_ins(data, cmd);
-    // printf("execute_commands: execute_built_ins ret: %d\n", ret); // Add this line
     if (ret != COMMAND_NOT_FOUND)
     {
         exit(ret);

@@ -86,7 +86,7 @@ int ft_cd_built_in(t_data *data, char **args)
         return(!change_dir(data, path));
     }
     if(args[2])
-        return(error_msg_commad("cd", NULL, "too many arguments passed", EXIT_FAILURE));
+        return(error_msg_commad("cd", NULL, "too many arguments", EXIT_FAILURE));
     if(strncmp(args[1], "-", 2) == 0)
     {
         path = fetch_env_variable_char(data->env, "OLDPWD");

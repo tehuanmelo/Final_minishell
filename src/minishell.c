@@ -43,11 +43,6 @@ void init_shell(t_data *data)
         data->cmd_lst = parser(data);
         data->exit_code = execute(data);
     }
-    else
-    {
-        printf("init_shell: sintax_error found\n");
-        return;
-    }
 }
 
 

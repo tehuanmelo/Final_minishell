@@ -8,23 +8,12 @@ int is_redirection_operator(const char *s)
 }
 
 
-// int is_redirection_operator(const char *s)
-// {
-//     return (ft_strcmp(s, ">") == 0 || ft_strcmp(s, ">>") == 0 || ft_strcmp(s, "<") == 0);
-// }
-
 int handle_outfile_redirection(t_cmd *cmd, int index)
 {
     int open_flag;
 
     if (!cmd || !cmd->args || !cmd->io_fds || index < 0)
         return (COMMAND_NOT_FOUND);
-
-    if (cmd->args[index + 1] == NULL)
-    {
-        printf("minishell: syntax error near unexpected token `newline'\n");
-        return (EXIT_FAILURE);
-    }
 
     open_flag = (ft_strcmp(cmd->args[index], ">>") == 0) ? O_APPEND : O_TRUNC;
     close(cmd->io_fds->fd_out);
@@ -79,6 +68,7 @@ int handle_infile_redirection(t_cmd *cmd, int index)
     cmd->args[index] = NULL;
     return (EXIT_SUCCESS);
 }
+
 int parse_redirection(t_cmd *cmd)
 {
     int i = 0;
@@ -86,15 +76,22 @@ int parse_redirection(t_cmd *cmd)
     int last_redirection_operator = -1;
     int redirection_count = 0;
 
+    // printf("parse_redirection: entering function\n");
+
     while (cmd->args[i])
     {
+        // printf("parse_redirection: checking cmd->args[%d]: %s\n", i, cmd->args[i]);
+
         if (ft_strcmp(cmd->args[i], ">") == 0 || ft_strcmp(cmd->args[i], ">>") == 0)
         {
+            // printf("parse_redirection: found redirection operator at index %d\n", i);
             last_redirection_operator = i;
             redirection_count++;
         }
         else if (ft_strcmp(cmd->args[i], "<") == 0)
         {
+            // printf("parse_redirection: found input redirection operator at index %d\n", i);
+
             if (handle_infile_redirection(cmd, i) != EXIT_SUCCESS)
             {
                 error_occurred = 1;
@@ -103,6 +100,9 @@ int parse_redirection(t_cmd *cmd)
         }
         i++;
     }
+
+    // printf("parse_redirection: last_redirection_operator: %d\n", last_redirection_operator);
+    // printf("parse_redirection: redirection_count: %d\n", redirection_count);
 
     if (last_redirection_operator != -1)
     {
@@ -118,11 +118,16 @@ int parse_redirection(t_cmd *cmd)
         {
             if (ft_strcmp(cmd->args[i], ">") == 0 || ft_strcmp(cmd->args[i], ">>") == 0)
             {
+                // printf("parse_redirection: removing extra redirection operator at index %d\n", i);
                 free(cmd->args[i]);
                 cmd->args[i] = NULL;
             }
         }
     }
 
+    // printf("parse_redirection: error_occurred: %d\n", error_occurred);
+    // printf("parse_redirection: exiting function\n");
+
     return error_occurred;
 }
+

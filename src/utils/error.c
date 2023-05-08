@@ -28,6 +28,7 @@ static bool	add_detail_quotes(char *command)
 
 int	error_msg_commad(char *command, char *detail, char *error_message, int error_nb)
 {
+	// printf("I was called ------\n");
 	char	*msg;
 	bool	detail_quotes;
 
