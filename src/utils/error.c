@@ -33,7 +33,7 @@ int	error_msg_commad(char *command, char *detail, char *error_message, int error
 
 	detail_quotes = add_detail_quotes(command);
 	msg = ft_strdup("minishell: ");
-	if (command != NULL)
+	if (command != NULL && command[0] != '\0') // Check if command is not empty
 	{
 		msg = ft_join_string(msg, command);
 		msg = ft_join_string(msg, ": ");
@@ -52,6 +52,7 @@ int	error_msg_commad(char *command, char *detail, char *error_message, int error
 	free_ptr(msg);
 	return (error_nb);
 }
+
 
 void	errmsg(char *errmsg, char *detail, int quotes)
 {

@@ -82,7 +82,6 @@ bool delete_the_env_variables(t_data *data, int index)
     int i;
     int count;
 
-    printf(COLOR_CYAN "Deleting the env \n");
     if(index > count_env_variables(data->env))
         return (false);
     free(data->env[index]);

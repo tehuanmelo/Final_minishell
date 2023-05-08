@@ -35,6 +35,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 #include "parsing.h"
+#include <execinfo.h>
 #include "../src/libft/inc/libft.h"
 
 
@@ -109,6 +110,9 @@ typedef struct s_data
 	char		*current_dir;
 	char		*old_working_dir;
     int         heredoc_fd;
+    bool        redirection_output;
+    bool        redirection_append;
+    bool        redirection_infile;
     t_elem      *tokens;
     t_cmd       *cmd_lst;
 	pid_t		pid;
@@ -160,7 +164,7 @@ int count_commands(t_data *data);
 void append_command(t_cmd **head, t_cmd *new);
 t_cmd *new_command();
 void free_commands(t_cmd *cmds);
-void parse_redirection(t_cmd *cmd);
+int parse_redirection(t_cmd *cmd);
 
 // ------------- here-doc ---------------
 int check_here_doc(char **args);
@@ -182,7 +186,7 @@ void sigint_handler_heredoc(int sig);
 // #######################################
 void print_tokens(t_elem *list);
 void print_comands();
-
+void print_t_cmd(t_cmd *cmd);
 
 
 

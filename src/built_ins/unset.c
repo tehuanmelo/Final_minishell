@@ -20,7 +20,6 @@ int ft_unset_built_in(t_data *data, char **args)
         else
         {
             idx = fetch_env_variable_index(data->env, args[j]);
-            printf("I am unsetting %s ---- %d\n", args[j], idx);
             if(idx != -1)
                 delete_the_env_variables(data, idx);
         }

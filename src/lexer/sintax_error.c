@@ -111,10 +111,11 @@ int sintax_error(t_data *data)
 		}
 		else if (is_quote(tmp->type))
 		{
+			// printf("sintax_error: before check_quotes\n");
 			if (check_quotes(&tmp, tmp->type))
 				return (EXIT_FAILURE);
 		}
-		tmp = tmp->next;
+		tmp = tmp->next;	
 	}
 	return (EXIT_SUCCESS);
 }

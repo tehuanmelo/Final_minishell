@@ -15,7 +15,6 @@
 
 int	ft_env_built_in(t_data *data, char **args)
 {
-	printf(COLOR_BLUE "I am inside the env--built in \n");
 	int	i;
 	(void)args;
 
