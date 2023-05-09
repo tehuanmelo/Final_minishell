@@ -14,12 +14,6 @@
 
 int check_quotes(t_elem **tokens, enum e_type type)
 {
-	if (!(*tokens)->prev)
-	{
-		data.exit_code = 127;
-		ft_putstr("command not found\n");
-		return (EXIT_FAILURE);
-	}
 	*tokens = (*tokens)->next;
 	while (*tokens)
 	{

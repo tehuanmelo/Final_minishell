@@ -47,17 +47,29 @@ int handle_outfile_redirection(t_cmd *cmd, int index)
 }
 
 
+char *remove_double_quotes(const char *str)
+{
+    if (!str)
+        return NULL;
 
+    size_t len = ft_strlen(str);
+    if (len < 2)
+        return ft_strdup(str);
+
+    if (str[0] == '\"' && str[len - 1] == '\"')
+    {
+        char *new_str = ft_substr(str, 1, len - 2);
+        return new_str;
+    }
+    return ft_strdup(str);
+}
+    
 
 int handle_infile_redirection(t_cmd *cmd, int index)
 {
     if (!cmd || !cmd->args || !cmd->io_fds || index < 0)
         return (COMMAND_NOT_FOUND);
-    // if (cmd->args[index + 1] == NULL)
-    // {
-    //     printf("minishell: syntax error near unexpected token `newline'\n");
-    //     return (EXIT_FAILURE);
-    // }
+
     close(cmd->io_fds->fd_out);
     data.redirection_infile = true;
     cmd->io_fds->fd_in = open(cmd->args[index + 1], O_RDONLY);
