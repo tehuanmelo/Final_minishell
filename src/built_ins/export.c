@@ -1,5 +1,24 @@
 #include "../../inc/minishell.h"
 
+void print_export_function_only_once(char **env)
+{
+    int i;
+    const char *key;
+    const char *value;
+
+    i = 0;
+    while(env[i])
+    {
+        key = env[i];
+        value = ft_strchr(env[i], '=');
+        if (value) 
+        {
+            printf("declare -x %.*s=\"%s\"\n", (int)(value - key), key, value + 1);
+        }
+        i++;
+    }
+
+}
 
 static char **get_key_value_pair(char *arg)
 {
@@ -23,13 +42,16 @@ int ft_export_built_in(t_data *data, char **args)
     result = EXIT_SUCCESS;
     i = 1;
     if(!args[i])
-        return(ft_env_built_in(data, NULL));
+        {
+          print_export_function_only_once(data->env);
+          return (result);
+        }
     while(args[i])
     {
         if(!check_for_the_env_key(args[i]))
         {
             error_msg_commad(COLOR_RED "export:", args[i], "not a valid identifier", false);
-            result = EXIT_FAILURE;
+            result = (EXIT_FAILURE);
         }
         else if(ft_strchr(args[i], '=') != NULL)
         {
