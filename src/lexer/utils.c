@@ -6,7 +6,7 @@
 /*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 14:35:24 by tde-melo          #+#    #+#             */
-/*   Updated: 2023/05/07 14:08:44 by tehuanmelo       ###   ########.fr       */
+/*   Updated: 2023/05/09 17:35:56 by tehuanmelo       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	free_tokens_list(t_elem *tokens)
 	while (tmp)
 	{
 		tmp = tmp->next;
-		if (tokens->type != ENV && tokens->type != EMPTY)
+		if (tokens->type != EMPTY)
 			free(tokens->content);
 		free(tokens);
 		tokens = tmp;

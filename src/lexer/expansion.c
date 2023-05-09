@@ -6,11 +6,31 @@
 /*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:10:33 by tde-melo          #+#    #+#             */
-/*   Updated: 2023/05/09 14:18:35 by tehuanmelo       ###   ########.fr       */
+/*   Updated: 2023/05/09 17:08:21 by tehuanmelo       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+char *get_env_var(char *content)
+{
+	char **env;
+	char *str;
+	int len;
+	int i;
+
+	env = data.env;
+	str = NULL;
+	len = ft_strlen(content);
+	i = 0;
+	while (env[i])
+	{
+		if (ft_strncmp(content, env[i], len) == 0 && env[i][len] == '=')
+			str = ft_strdup(&env[i][len+1]);
+		env++;
+	}
+	return (str);
+}
 
 
 void	get_env_value(t_elem *tokens)
@@ -19,11 +39,11 @@ void	get_env_value(t_elem *tokens)
 	char	*content;
 
 	content = tokens->content;
-	if ((!ft_isalpha(*(++content)) && *content != '_'))
+	if ((!ft_isalpha(content[1]) && content[1] != '_'))
 		tokens->type = WORD;
 	else
 	{
-		str = getenv(content);
+		str = get_env_var(&content[1]);
 		if (str)
 		{
 			tokens->content = str;
@@ -36,7 +56,7 @@ void	get_env_value(t_elem *tokens)
 			tokens->type = EMPTY;
 		}
 	}
-	free(--content);
+	free(content);
 }
 
 void	check_here_doc_variable(t_data *data)
