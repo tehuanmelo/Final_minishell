@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:10:33 by tde-melo          #+#    #+#             */
-/*   Updated: 2023/04/28 14:28:19 by tde-melo         ###   ########.fr       */
+/*   Updated: 2023/05/09 14:18:35 by tehuanmelo       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void check_exit_variable(t_data *data)
 	}
 }
 
-void expand_env(t_data *data)
+void  expand_env(t_data *data)
 {
 	t_elem	*head;
 

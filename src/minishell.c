@@ -15,22 +15,28 @@
 void set_data(t_data *data, char *str)
 {
 	data->nb_cmd = 0;
-	data->input = ft_strtrim(str, " ");
+	data->input = str;
 	data->tokens = get_tokens_list(data->input);
 	data->heredoc_fd = -1;
 }
 
 int _readline_(char **input)
 {
-	*input = readline(MINI_PROMPT);
+	char *tmp;
+	
+	tmp = readline(MINI_PROMPT);
+	*input = ft_strtrim(tmp, " ");
+	free(tmp);
 	if (!*input)
 	{
-		//frprintf(stderr, "Input: %s\n", *input);
 		ft_putstr("exit\n");
 		exit(1);
 	}
 	if (strcmp(*input, "") == 0)
+	{
+		free(*input);
 		return (1);
+	}
 	if (strlen(*input) > 0)
 		add_history(*input);
 	return (0);
