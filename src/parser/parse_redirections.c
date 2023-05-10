@@ -46,34 +46,22 @@ int handle_outfile_redirection(t_cmd *cmd, int index)
     return (EXIT_SUCCESS);
 }
 
-
-char *remove_double_quotes(const char *str)
-{
-    if (!str)
-        return NULL;
-
-    size_t len = ft_strlen(str);
-    if (len < 2)
-        return ft_strdup(str);
-
-    if (str[0] == '\"' && str[len - 1] == '\"')
-    {
-        char *new_str = ft_substr(str, 1, len - 2);
-        return new_str;
-    }
-    return ft_strdup(str);
-}
-    
-
 int handle_infile_redirection(t_cmd *cmd, int index)
 {
+    static int last_fd_in = -1;
+
     if (!cmd || !cmd->args || !cmd->io_fds || index < 0)
         return (COMMAND_NOT_FOUND);
 
-    close(cmd->io_fds->fd_out);
-    data.redirection_infile = true;
-    cmd->io_fds->fd_in = open(cmd->args[index + 1], O_RDONLY);
-    if (cmd->io_fds->fd_in == -1)
+    if (last_fd_in != -1)
+        close(last_fd_in);
+
+    if (cmd->args[index + 2] && !is_redirection_operator(cmd->args[index + 2]))
+        last_fd_in = open(cmd->args[index + 2], O_RDONLY);
+    else
+        last_fd_in = open(cmd->args[index + 1], O_RDONLY);
+
+    if (last_fd_in == -1)
     {
         char *missing_filename = ft_strdup(cmd->args[index + 1]);
         for (int i = 0; cmd->args[i] != NULL; i++)
@@ -85,10 +73,15 @@ int handle_infile_redirection(t_cmd *cmd, int index)
         free(missing_filename);
         return (data.exit_code);
     }
+    cmd->io_fds->fd_in = last_fd_in;
+
     free(cmd->args[index]);
     cmd->args[index] = NULL;
     return (EXIT_SUCCESS);
 }
+
+
+
 
 int parse_redirection(t_cmd *cmd)
 {
@@ -104,6 +97,7 @@ int parse_redirection(t_cmd *cmd)
                 error_occurred = 1;
                 break;
             }
+            i += 2;
         }
         else if (ft_strcmp(cmd->args[i], "<") == 0)
         {
@@ -112,10 +106,22 @@ int parse_redirection(t_cmd *cmd)
                 error_occurred = 1;
                 break;
             }
+            if (cmd->args[i + 2] && !is_redirection_operator(cmd->args[i + 2]))
+            {
+                i += 3;
+            }
+            else
+            {
+                i += 2;
+            }
         }
-        i++;
+        else
+        {
+            i++;
+        }
     }
 
     return error_occurred;
 }
+
 
