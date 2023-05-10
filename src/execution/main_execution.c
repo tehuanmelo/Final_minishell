@@ -43,21 +43,19 @@ static int	create_children(t_data *data)
 	t_cmd	*cmd;
 
 	cmd = data->cmd_lst;
-	// printf("ID FOR MY KIDS %d\n", data->pid);
+
 	while (data->pid != 0 && cmd)
 	{
-		// printf("Starting the fork process\n");
+		//  printf("Forking for command: %s\n", cmd->command);
 		data->pid = fork();
 		if (data->pid == -1)
 			return (error_msg_commad("fork", NULL, strerror(errno), EXIT_FAILURE));
 		else if (data->pid == 0){
-            // printf("Inside create_children, calling execute_commands...\n"); // Add this line
+			// printf("Child process for command: %s\n", cmd->command);
 			execute_commands(data, cmd);
         }
 		cmd = cmd->next;
 	}
-	// printf("DATA PID %d\n", data->pid);
-	// printf("I have taken your child\n");
 	return (get_children(data));
 }
 
@@ -102,7 +100,8 @@ static int	execution_prep(t_data *data)
 int execute(t_data *data)
 {
     int ret;
-
+	// printf("The command reached execute %s\n", data->cmd_lst->command);
+	// print_t_data(data);
     ret = execution_prep(data);
     if (ret != COMMAND_NOT_FOUND) 
         return (ret);
@@ -123,10 +122,8 @@ int execute(t_data *data)
     // printf("Inside execute: create_children case...\n");
 	ret = create_children(data);
 
-	// printf("I was called\n");
     // Add the following line to restore standard input and output after executing the last command in the pipeline
     restore_io(data->cmd_lst->io_fds);
-	// printf("I was called 2\n");
 	close_fds(data->cmd_lst, true);
 	// printf("I was called 3\n");
     return (ret);

@@ -14,12 +14,6 @@
 
 int check_quotes(t_elem **tokens, enum e_type type)
 {
-	if (!(*tokens)->prev)
-	{
-		data.exit_code = 127;
-		ft_putstr("minishell: : command not found\n");
-		return (EXIT_FAILURE);
-	}
 	*tokens = (*tokens)->next;
 	while (*tokens)
 	{
@@ -111,10 +105,11 @@ int sintax_error(t_data *data)
 		}
 		else if (is_quote(tmp->type))
 		{
+			// printf("sintax_error: before check_quotes\n");
 			if (check_quotes(&tmp, tmp->type))
 				return (EXIT_FAILURE);
 		}
-		tmp = tmp->next;
+		tmp = tmp->next;	
 	}
 	return (EXIT_SUCCESS);
 }

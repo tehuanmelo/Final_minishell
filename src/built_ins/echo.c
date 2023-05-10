@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   echo.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/10 12:12:58 by mbin-nas          #+#    #+#             */
+/*   Updated: 2023/05/10 12:28:17 by mbin-nas         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
- void	print_echo_args(char **args, bool n_flag, int i)
+void	print_echo_args(char **args, bool n_flag, int i)
 {
 	if (!args[i])
 	{
@@ -36,9 +48,11 @@ bool	check_for_n(char *arg)
 	return (flag_for_n);
 }
 
-
 /* ft_echo_built_in:
-*	@brief: prints the given strings and adds a \n character or not depending on the -n option.
+#	@brief: 
+* prints the given strings and adds a \n character or not depending on the 
+*  -n option.
+# 	@return:
 *	Returns 1 on completion.
 */
 int	ft_echo_built_in(t_data *data, char **args)

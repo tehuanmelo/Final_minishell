@@ -78,6 +78,9 @@ bool	init_data(t_data *data, char **env)
 	data->heredoc_fd = -1;
 	data->pid = -1;
 	data->exit_code= 0;
+	data->redirection_append = false;
+	data->redirection_infile = false;
+	data->redirection_output = false;
 	return (true);
 }
 

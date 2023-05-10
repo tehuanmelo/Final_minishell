@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 10:03:35 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/07 14:16:25 by tehuanmelo       ###   ########.fr       */
+/*   Updated: 2023/05/10 14:30:40 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 #include "parsing.h"
+#include <execinfo.h>
 #include "../src/libft/inc/libft.h"
 
 
@@ -109,6 +110,9 @@ typedef struct s_data
 	char		*current_dir;
 	char		*old_working_dir;
     int         heredoc_fd;
+    bool        redirection_output;
+    bool        redirection_append;
+    bool        redirection_infile;
     t_elem      *tokens;
     t_cmd       *cmd_lst;
 	pid_t		pid;
@@ -160,7 +164,7 @@ int count_commands(t_data *data);
 void append_command(t_cmd **head, t_cmd *new);
 t_cmd *new_command();
 void free_commands(t_cmd *cmds);
-void parse_redirection(t_cmd *cmd);
+int parse_redirection(t_cmd *cmd);
 char	*join_string(char *s1, char *s2);
 
 // ------------- here-doc ---------------
@@ -183,7 +187,7 @@ void sigint_handler_heredoc(int sig);
 // #######################################
 void print_tokens(t_elem *list);
 void print_comands();
-
+void print_t_cmd(t_cmd *cmd);
 
 
 
