@@ -35,8 +35,6 @@ static int execute_system_binaries(t_data *data, t_cmd *cmd)
     cmd->path = fetch_command_path(data, cmd->command);
     if (!cmd->path)
         return (COMMAND_NOT_FOUND);
-
-    // printf("execute_system_binaries: Trying to execute: %s\n", cmd->path); // Add this line
     if (execve(cmd->path, cmd->args, data->env) == -1)
     {
         error_msg_commad("execve: ", NULL, strerror(errno), errno);
@@ -48,28 +46,15 @@ static int execute_local_bin(t_data *data, t_cmd *cmd)
 {
     int result;
 
-    // printf("Command is %s\n", cmd->command);
-    // if (data->exit_code != EXIT_SUCCESS)
-    // {
         result = check_command_not_found(data, cmd);
         if (result != 0)
             exit(result);
-    // }
-    // if (cmd->path == NULL)
-    // {
-    //     result = error_msg_commad(cmd->command, NULL, "command not found", COMMAND_NOT_FOUND);
-    //     exit(COMMAND_NOT_FOUND);
-    // }
-    // printf("execute_local_bin: Trying to execute: %s\n", cmd->path);
     if (execve(cmd->path, cmd->args, data->env) == -1)
     {
         error_msg_commad("execve: ", NULL, strerror(errno), errno);
     }
     return (EXIT_FAILURE);
 }
-
-
-
 
 char **remove_heredoc_args(char **args)
 {
