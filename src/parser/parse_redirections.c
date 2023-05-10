@@ -29,7 +29,7 @@ int handle_outfile_redirection(t_cmd *cmd, int index)
     
     if (cmd->io_fds->fd_out == -1)
     {
-        data.exit_code = error_msg_commad(cmd->args[index], NULL, strerror(errno), 1);
+        data.exit_code = error_msg_commad(cmd->args[index + 1], NULL, strerror(errno), 1);
         return (data.exit_code);
     }
 

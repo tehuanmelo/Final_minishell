@@ -1,1 +1,11 @@
-GG
+Makefile
+README.md
+check_leaks.sh
+file.txt
+inc
+lol.txt
+minishell
+minishell_tester
+obj
+src
+valgrind_readline_leaks_ignore.txt
