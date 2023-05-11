@@ -268,8 +268,12 @@ void	free_str_tab(char **tab);
 void	close_pipe_fds(t_cmd *cmds, t_cmd *skip_cmd);
 void	close_fds(t_cmd *cmds, bool close_backups);
 void    close_child_fds(t_cmd *cmds);
+void*	free_io(t_io_fds *io);
 void    close_parent_fds(t_cmd *cmds);
 void	exit_shell(t_data *data, int exno);
 void    free_commands2(t_cmd *cmds); 
 void	exit_shell2(t_data *data, int exno);
+void	exit_shell3(t_data *data, int exno);
+void	lstclear_token(t_elem **lst, void (*del)(void *));
+
 #endif

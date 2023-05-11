@@ -98,7 +98,7 @@ void check_exit_variable(t_data *data)
 			if (!ft_strcmp(head->content, "$?"))
 			{
 				tmp = head->content;
-				env_exit = ft_strdup(ft_itoa(data->exit_code));
+				env_exit = ft_itoa(data->exit_code);
 				head->content = env_exit;
 				head->type = EXIT_STATUS;
 				head->len = ft_strlen(env_exit);

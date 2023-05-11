@@ -53,7 +53,7 @@ vpath %.c src
 OBJPATH = obj/
 OBJ = $(patsubst %.c, $(OBJPATH)%.o, $(SRCFILES))
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g
 
 .SILENT:
 

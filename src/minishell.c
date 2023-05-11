@@ -30,7 +30,7 @@ int _readline_(char **input)
 	if (!*input)
 	{
 		ft_putstr("exit\n");
-		exit(1);
+		exit_shell3(&data, data.exit_code);
 	}
 	if (strcmp(*input, "") == 0)
 	{
