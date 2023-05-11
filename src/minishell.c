@@ -53,7 +53,10 @@ void init_shell(t_data *data)
 		free_commands(data->cmd_lst);
     }
 	else
-		return ;
+		{
+			free(data->input);
+			return ;
+		}
 	
 }
 

@@ -149,7 +149,10 @@ void free_commands(t_cmd *cmds)
 		tmp_str = cmds->args;
 		int i =0;
 		while (cmds->args[i])
+		{
+   			 printf("Commands %s\n", cmds->args[i]);
 			free(cmds->args[i++]);
+		}
 		free(cmds->args[i]);
 		free(tmp_str);
 		cmds = cmds->next;
