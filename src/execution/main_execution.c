@@ -100,8 +100,6 @@ static int	execution_prep(t_data *data)
 int execute(t_data *data)
 {
     int ret;
-	// printf("The command reached execute %s\n", data->cmd_lst->command);
-	// print_t_data(data);
     ret = execution_prep(data);
     if (ret != COMMAND_NOT_FOUND) 
         return (ret);

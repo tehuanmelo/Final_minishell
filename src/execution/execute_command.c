@@ -48,7 +48,7 @@ static int execute_local_bin(t_data *data, t_cmd *cmd)
 
         result = check_command_not_found(data, cmd);
         if (result != 0)
-            exit(result);
+            exit_shell2(data, result);
     if (execve(cmd->path, cmd->args, data->env) == -1)
     {
         error_msg_commad("execve: ", NULL, strerror(errno), errno);
@@ -122,7 +122,7 @@ int execute_commands(t_data *data, t_cmd *cmd)
     // printf("The command reached execute commands %s\n", cmd->command);
     int ret;
     if (data->exit_code != EXIT_SUCCESS)
-        exit(data->exit_code);
+        exit_shell(data, data->exit_code);
     if (!check_here_doc(cmd->args))
     {
         here_doc(cmd->args);

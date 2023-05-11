@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 13:08:12 by tde-melo          #+#    #+#             */
-/*   Updated: 2023/04/27 13:15:38 by tde-melo         ###   ########.fr       */
+/*   Updated: 2023/05/11 14:57:56 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void sigint_handler_heredoc(int sig)
 		unlink("/tmp/.here_doc");
 		ft_putstr_fd("\n", STDOUT_FILENO);
     }
-	exit(EXIT_FAILURE);
+	exit_shell(&data, EXIT_FAILURE);
 }
 
 void init_signals(void)

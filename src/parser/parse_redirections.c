@@ -40,6 +40,8 @@ int handle_outfile_redirection(t_cmd *cmd, int index)
         cmd->args[index + 2] = NULL;
     }
 
+    // printf("Commands %s\n", cmd->args[index]);
+    // printf("Commands %s\n", cmd->args[index + 1]);
     free(cmd->args[index]);
     cmd->args[index] = NULL;
 

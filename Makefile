@@ -11,7 +11,7 @@ UTILS =  clean.c error.c exit_shell.c initialize.c
 MAIN = main.c  minishell.c 
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -I/usr/local/cellar/readline/8.1/include
+CFLAGS = -Wall -Werror -Wextra -g -I/usr/local/cellar/readline/8.1/include
 READLINE_LIB =  -L/usr/local/cellar/readline/8.1/lib -lreadline
 # CFLAGS = -Wall -Werror -Wextra -I/usr/local/cellar/readline/8.1.1/include
 # READLINE_LIB =  -L/usr/local/cellar/readline/8.1.1/lib -lreadline

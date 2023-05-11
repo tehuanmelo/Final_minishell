@@ -112,6 +112,18 @@ void	lstclear_token(t_elem **lst, void (*del)(void *))
 	}
 }
 
+void free_commands2(t_cmd *cmds)
+{
+	t_cmd *tmp_cmd;
+	// char **tmp_str;
+	
+	while (cmds)
+	{
+		tmp_cmd = cmds;
+		cmds = cmds->next;
+		free(tmp_cmd);
+	}
+}
 
 void free_commands(t_cmd *cmds)
 {
@@ -126,6 +138,8 @@ void free_commands(t_cmd *cmds)
 		tmp_str = cmds->args;
 		while (*(cmds->args))
 			free(*(cmds->args)++);
+		free(*(cmds->args));
+		free(cmds->args);
 		free(tmp_str);
 		cmds = cmds->next;
 		free(tmp_cmd);
@@ -136,6 +150,7 @@ void free_commands(t_cmd *cmds)
 void free_data(t_data *data, t_cmd *cmds, bool flag)
 {
     t_cmd *temp;
+
 
     if (data && data->input)
     {

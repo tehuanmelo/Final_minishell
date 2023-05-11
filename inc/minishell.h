@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 10:03:35 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/10 14:30:40 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/11 16:00:37 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,11 +263,13 @@ int	    error_msg_commad(char *command, char *detail, \
         char *error_message, int error_nb);
 void	free_ptr(void *ptr);
 void    free_data(t_data *data, t_cmd *cmds, bool flag);
+// char    *ft_join_string(char *str, char *add);
 void	free_str_tab(char **tab);
 void	close_pipe_fds(t_cmd *cmds, t_cmd *skip_cmd);
 void	close_fds(t_cmd *cmds, bool close_backups);
 void    close_child_fds(t_cmd *cmds);
 void    close_parent_fds(t_cmd *cmds);
 void	exit_shell(t_data *data, int exno);
-
+void    free_commands2(t_cmd *cmds); 
+void	exit_shell2(t_data *data, int exno);
 #endif

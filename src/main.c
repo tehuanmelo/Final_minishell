@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 22:26:41 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/09 14:18:19 by tehuanmelo       ###   ########.fr       */
+/*   Updated: 2023/05/11 16:43:42 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ int main(int argc, char **argv, char **env)
 			continue;
 		else
 		{
-			set_data(&data, str);       
+			set_data(&data, str);    
 			expand_env(&data);
-			init_shell(&data);
+			init_shell(&data);   
 			free(str);
 			free_tokens_list(data.tokens);
 		}
