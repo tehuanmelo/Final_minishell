@@ -82,8 +82,6 @@ typedef struct s_io_fds
 {
 	char	*infile;
 	char	*outfile;
-	char	*heredoc_delimiter;
-	bool	heredoc_quotes;
 	int		fd_in;
 	int		fd_out;
 	int		stdin_backup;
@@ -264,11 +262,12 @@ int	    execute(t_data *data);
 int	    error_msg_commad(char *command, char *detail, \
         char *error_message, int error_nb);
 void	free_ptr(void *ptr);
+void    free_data(t_data *data, t_cmd *cmds, bool flag);
 void	free_str_tab(char **tab);
 void	close_pipe_fds(t_cmd *cmds, t_cmd *skip_cmd);
 void	close_fds(t_cmd *cmds, bool close_backups);
-void close_child_fds(t_cmd *cmds);
-void close_parent_fds(t_cmd *cmds);
+void    close_child_fds(t_cmd *cmds);
+void    close_parent_fds(t_cmd *cmds);
 void	exit_shell(t_data *data, int exno);
 
 #endif

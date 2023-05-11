@@ -75,11 +75,6 @@ void	free_io(t_io_fds *io)
 	if (!io)
 		return ;
 	restore_io(io);
-	if (io->heredoc_delimiter)
-	{
-		unlink(io->infile);
-		free_ptr(io->heredoc_delimiter);
-	}
 	if (io->infile)
 		free_ptr(io->infile);
 	if (io->outfile)
@@ -89,3 +84,84 @@ void	free_io(t_io_fds *io)
 }
 
 //free data ---> pending
+
+void	lstdelone_token(t_elem *lst, void (*del)(void *))
+{
+	if (del && lst && lst->content)
+	{	
+		(*del)(lst->content);
+		lst->content = NULL;
+	}
+	if (lst->prev)
+		lst->prev->next = lst->next;
+	if (lst->next)
+		lst->next->prev = lst->prev;
+	free_ptr(lst);
+}
+
+void	lstclear_token(t_elem **lst, void (*del)(void *))
+{
+	t_elem	*tmp;
+
+	tmp = NULL;
+	while (*lst != NULL)
+	{
+		tmp = (*lst)->next;
+		lstdelone_token(*lst, del);
+		*lst = tmp;
+	}
+}
+
+
+void free_commands(t_cmd *cmds)
+{
+	t_cmd *tmp_cmd;
+	char **tmp_str;
+	
+	if(cmds->io_fds)
+		free_io(cmds->io_fds);
+	while (cmds)
+	{
+		tmp_cmd = cmds;
+		tmp_str = cmds->args;
+		while (*(cmds->args))
+			free(*(cmds->args)++);
+		free(tmp_str);
+		cmds = cmds->next;
+		free(tmp_cmd);
+	}
+}
+
+
+void free_data(t_data *data, t_cmd *cmds, bool flag)
+{
+    t_cmd *temp;
+
+    if (data && data->input)
+    {
+        free(data->input);
+        data->input = NULL;
+    }
+    if (data && data->tokens)
+        lstclear_token(&data->tokens, &free_ptr);
+
+    // Add the loop here to free io_fds for each command
+    while (cmds)
+    {
+        free_io(cmds->io_fds);
+        temp = cmds;
+        cmds = cmds->next;
+        free(temp);
+    }
+
+    if (flag == true)
+    {
+        if (data && data->current_dir)
+            free_ptr(data->current_dir);
+        if (data && data->old_working_dir)
+            free_ptr(data->old_working_dir);
+        if (data && data->env)
+            free_str_tab(data->env);
+        rl_clear_history();
+    }
+}

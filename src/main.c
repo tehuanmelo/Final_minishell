@@ -13,6 +13,18 @@
 #include "../inc/minishell.h"
 #include "../inc/execution.h"
 
+void free_env(char **env) {
+    int i;
+
+    if (env == NULL)
+        return;
+
+    for (i = 0; env[i] != NULL; i++) {
+        free(env[i]);
+    }
+    free(env);
+}
+
 int main(int argc, char **argv, char **env)
 {
 	char *str;

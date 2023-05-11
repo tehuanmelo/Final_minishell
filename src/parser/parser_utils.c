@@ -78,19 +78,19 @@ int	count_args(t_elem **head)
 	return (i);
 }
 
-void free_commands(t_cmd *cmds)
-{
-	t_cmd *tmp_cmd;
-	char **tmp_str;
+// void free_commands(t_cmd *cmds)
+// {
+// 	t_cmd *tmp_cmd;
+// 	char **tmp_str;
 	
-	while (cmds)
-	{
-		tmp_cmd = cmds;
-		tmp_str = cmds->args;
-		while (*(cmds->args))
-			free(*(cmds->args)++);
-		free(tmp_str);
-		cmds = cmds->next;
-		free(tmp_cmd);
-	}
-}
+// 	while (cmds)
+// 	{
+// 		tmp_cmd = cmds;
+// 		tmp_str = cmds->args;
+// 		while (*(cmds->args))
+// 			free(*(cmds->args)++);
+// 		free(tmp_str);
+// 		cmds = cmds->next;
+// 		free(tmp_cmd);
+// 	}
+// }

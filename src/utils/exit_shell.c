@@ -11,7 +11,7 @@ void	exit_shell(t_data *data, int exno)
 	{
 		if (data->cmd_lst && data->cmd_lst->io_fds)
 			close_fds(data->cmd_lst, true);
-		// free_data(data, true);
+		free_data(data, data->cmd_lst, true);
 	}
 	exit(exno);
 }

@@ -83,6 +83,40 @@ char **remove_heredoc_args(char **args)
     return new_args;
 }
 
+// int execute_commands(t_data *data, t_cmd *cmd)
+// {
+//     // printf("The command reached execute commands %s\n", cmd->command);
+//     int ret;
+//     if (data->exit_code != EXIT_SUCCESS)
+//         exit(data->exit_code);
+//     if (!check_here_doc(cmd->args))
+//     {
+//         here_doc(cmd->args);
+//         cmd->args = remove_heredoc_args(cmd->args);
+//         cmd->io_fds->fd_in = open("/tmp/.here_do.c", O_RDONLY);
+//         if (cmd->io_fds->fd_in < 0)
+//         {
+//             perror("open");
+//             exit(EXIT_FAILURE);
+//         }
+//     }
+//     set_pipe_fds(data->cmd_lst, cmd);
+//     redirect_io(cmd->io_fds);
+//     close_fds(cmd, false);
+//     ret = execute_built_ins(data, cmd);
+//     if (ret != COMMAND_NOT_FOUND)
+//     {
+//         exit(ret);
+//     }
+//     if (ft_strchr(cmd->command, '/') == NULL)
+//         ret = execute_system_binaries(data, cmd);
+//     else
+//         cmd->path = cmd->command;
+//     ret = execute_local_bin(data, cmd);
+//     exit_shell(data, ret);
+//     return (ret);
+// }
+
 int execute_commands(t_data *data, t_cmd *cmd)
 {
     // printf("The command reached execute commands %s\n", cmd->command);
@@ -100,19 +134,29 @@ int execute_commands(t_data *data, t_cmd *cmd)
             exit(EXIT_FAILURE);
         }
     }
+    if(!check_infile_outfile(cmd->io_fds))
+        exit_shell(data, EXIT_FAILURE);
     set_pipe_fds(data->cmd_lst, cmd);
     redirect_io(cmd->io_fds);
     close_fds(cmd, false);
     ret = execute_built_ins(data, cmd);
     if (ret != COMMAND_NOT_FOUND)
-    {
-        exit(ret);
-    }
+        exit_shell(data, ret);
     if (ft_strchr(cmd->command, '/') == NULL)
         ret = execute_system_binaries(data, cmd);
     else
         cmd->path = cmd->command;
     ret = execute_local_bin(data, cmd);
+    exit_shell(data, ret);
+    // Close fd_in after the command has been executed
+    // if (cmd->io_fds->fd_in >= 0)
+    // {
+    //     if (close(cmd->io_fds->fd_in) < 0)
+    //     {
+    //         perror("close");
+    //         exit(EXIT_FAILURE);
+    //     }
+    // }
     return (ret);
 }
 
