@@ -42,7 +42,6 @@ int main(int argc, char **argv, char **env)
 			set_data(&data, str);    
 			expand_env(&data);
 			init_shell(&data);   
-			free(str);
 			free_tokens_list(data.tokens);
 		}
 	}

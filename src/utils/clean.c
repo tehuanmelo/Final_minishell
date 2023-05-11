@@ -70,10 +70,10 @@ void close_parent_fds(t_cmd *cmds)
 }
 
 
-void	free_io(t_io_fds *io)
+void*	free_io(t_io_fds *io)
 {
 	if (!io)
-		return ;
+		return NULL;
 	restore_io(io);
 	if (io->infile)
 		free_ptr(io->infile);
@@ -81,6 +81,7 @@ void	free_io(t_io_fds *io)
 		free_ptr(io->outfile);
 	if (io)
 		free_ptr(io);
+	return NULL;
 }
 
 //free data ---> pending
@@ -115,11 +116,20 @@ void	lstclear_token(t_elem **lst, void (*del)(void *))
 void free_commands2(t_cmd *cmds)
 {
 	t_cmd *tmp_cmd;
-	// char **tmp_str;
+	char **tmp_str;
+	
 	
 	while (cmds)
 	{
+		if(cmds->io_fds)
+			cmds->io_fds = free_io(cmds->io_fds);
 		tmp_cmd = cmds;
+		tmp_str = cmds->args;
+		int i =0;
+		while (cmds->args[i])
+			free(cmds->args[i++]);
+		free(cmds->args[i]);
+		free(tmp_str);
 		cmds = cmds->next;
 		free(tmp_cmd);
 	}
@@ -130,16 +140,17 @@ void free_commands(t_cmd *cmds)
 	t_cmd *tmp_cmd;
 	char **tmp_str;
 	
-	if(cmds->io_fds)
-		free_io(cmds->io_fds);
+
 	while (cmds)
 	{
+		if(cmds->io_fds)
+			cmds->io_fds = free_io(cmds->io_fds);
 		tmp_cmd = cmds;
 		tmp_str = cmds->args;
-		while (*(cmds->args))
-			free(*(cmds->args)++);
-		free(*(cmds->args));
-		free(cmds->args);
+		int i =0;
+		while (cmds->args[i])
+			free(cmds->args[i++]);
+		free(cmds->args[i]);
 		free(tmp_str);
 		cmds = cmds->next;
 		free(tmp_cmd);
@@ -149,7 +160,7 @@ void free_commands(t_cmd *cmds)
 
 void free_data(t_data *data, t_cmd *cmds, bool flag)
 {
-    t_cmd *temp;
+    // t_cmd *temp;
 
 
     if (data && data->input)
@@ -161,13 +172,7 @@ void free_data(t_data *data, t_cmd *cmds, bool flag)
         lstclear_token(&data->tokens, &free_ptr);
 
     // Add the loop here to free io_fds for each command
-    while (cmds)
-    {
-        free_io(cmds->io_fds);
-        temp = cmds;
-        cmds = cmds->next;
-        free(temp);
-    }
+	cmds->io_fds = free_io(cmds->io_fds);
 
     if (flag == true)
     {

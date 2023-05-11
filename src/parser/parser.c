@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 21:07:15 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/11 16:35:22 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/07 15:33:59 by tehuanmelo       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ t_cmd *parser(t_data *data)
     head_counter = data->tokens;
     tmp = data->tokens;
     nbr_commands = count_commands(data);
+
 
     while (nbr_commands--)
     {
