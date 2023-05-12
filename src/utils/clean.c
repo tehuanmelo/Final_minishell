@@ -150,7 +150,7 @@ void free_commands(t_cmd *cmds)
 		int i =0;
 		while (cmds->args[i])
 		{
-   			 printf("Commands %s\n", cmds->args[i]);
+   			//  printf("Commands %s\n", cmds->args[i]);
 			free(cmds->args[i++]);
 		}
 		free(cmds->args[i]);
@@ -171,7 +171,7 @@ void free_data(t_data *data, t_cmd *cmds, bool flag)
         free(data->input);
         data->input = NULL;
     }
-    if (data && data->tokens)
+    if (data && data->tokens && data->tokens->type != EMPTY)
         lstclear_token(&data->tokens, &free_ptr);
 
     // Add the loop here to free io_fds for each command

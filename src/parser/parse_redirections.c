@@ -39,9 +39,9 @@ int handle_outfile_redirection(t_cmd *cmd, int index)
         free(cmd->args[index + 2]);
         cmd->args[index + 2] = NULL;
     }
-    printf("Added a null %s\n", cmd->args[index]);
-    printf("Added a null %s\n", cmd->args[index + 1]);
-    printf("Added a null %s\n", cmd->args[index + 2]);
+    // printf("Added a null %s\n", cmd->args[index]);
+    // printf("Added a null %s\n", cmd->args[index + 1]);
+    // printf("Added a null %s\n", cmd->args[index + 2]);
     // while(cmd->args[])
     free(cmd->args[index]);
     cmd->args[index] = NULL;
