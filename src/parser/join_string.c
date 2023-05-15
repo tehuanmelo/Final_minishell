@@ -1,30 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   join_string.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/13 14:35:24 by tde-melo          #+#    #+#             */
-/*   Updated: 2023/05/09 17:35:56 by tehuanmelo       ###   ########.fr       */
+/*   Created: 2023/05/07 14:08:49 by tehuanmelo        #+#    #+#             */
+/*   Updated: 2023/05/07 15:29:01 by tehuanmelo       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-
-void	free_tokens_list(t_elem *tokens)
+char	*join_string(char *s1, char *s2)
 {
-	t_elem	*tmp;
+	char	*new;
+	int		i;
 
-	tmp = tokens;
-	while (tmp)
+	if (!s1)
+		s1 = ft_calloc(sizeof(char), 1);
+	new = malloc(((ft_strlen(s1) + ft_strlen(s2)) + 1) * sizeof(char));
+	if (!new)
+		return (NULL);
+	i = 0;
+	while (s1[i])
 	{
-		tmp = tmp->next;
-		if (tokens->type != EMPTY)
-			free(tokens->content);
-		free(tokens);
-		tokens = tmp;
+		new[i] = s1[i];
+		i++;
 	}
+	while (*s2)
+		new[i++] = *s2++;
+	new[i] = 0;
+	free(s1);
+	return (new);
 }
-

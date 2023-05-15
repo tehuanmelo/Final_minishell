@@ -68,9 +68,15 @@ bool	set_pipe_fds(t_cmd *cmds, t_cmd *c)
 	if (!c)
 		return (false);
 	if (c->prev)
-			dup2(c->prev->pipe_fd[0], STDIN_FILENO);
+			{
+				dup2(c->prev->pipe_fd[0], STDIN_FILENO);
+				close(c->prev->pipe_fd[1]);
+			}
 	if (c->next)
-			dup2(c->pipe_fd[1], STDOUT_FILENO);
+			{
+				dup2(c->pipe_fd[1], STDOUT_FILENO);
+				close(c->pipe_fd[0]);
+			}
 	close_pipe_fds(cmds, c);
 	return (true);
 }

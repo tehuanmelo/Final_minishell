@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/10 12:12:09 by mbin-nas          #+#    #+#             */
+/*   Updated: 2023/05/10 12:32:52 by mbin-nas         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 /* check_out_of_range:
@@ -6,8 +18,8 @@
 */
 static bool	check_out_of_range(int neg, unsigned long long num, bool *error)
 {
-	if ((neg == 1 && num > LONG_MAX)
-		|| (neg == -1 && num > -(unsigned long)LONG_MIN))
+	if ((neg == 1 && num > LONG_MAX) || (neg == -1 && num
+			> -(unsigned long)LONG_MIN))
 		*error = true;
 	return (*error);
 }
@@ -94,10 +106,12 @@ static bool	is_quiet_mode(t_data *data)
 }
 
 /* exit_builtin:
+# 	@brief:
 *	Executes the exit builtin.
 *	If alone, prints exit and exits the shell with the provided exit code, or 0.
-*	If piped, exits the child process with the provided exit code and does not exit
-*	minishell.
+*	If piped, exits the child process with the provided exit code and 
+* 	does not exit minishell.
+#	@return: 
 *	In case of failure due to invalid arguments, does not exit the shell
 *	and returns an error exit code (1 or 2) instead.
 */
@@ -118,7 +132,7 @@ int	ft_exit_built_in(t_data *data, char **args)
 		exit_code = get_exit_code(args[1], &error);
 		if (error)
 			exit_code = error_msg_commad("exit", args[1],
-					"numeric argument required", 2);
+					"numeric argument required", 255);
 		else if (args[2])
 			return (error_msg_commad("exit", NULL, "too many arguments", 1));
 	}

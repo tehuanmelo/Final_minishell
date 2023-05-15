@@ -70,22 +70,121 @@ void close_parent_fds(t_cmd *cmds)
 }
 
 
-void	free_io(t_io_fds *io)
+void*	free_io(t_io_fds *io)
 {
 	if (!io)
-		return ;
+		return NULL;
 	restore_io(io);
-	if (io->heredoc_delimiter)
-	{
-		unlink(io->infile);
-		free_ptr(io->heredoc_delimiter);
-	}
 	if (io->infile)
 		free_ptr(io->infile);
 	if (io->outfile)
 		free_ptr(io->outfile);
 	if (io)
 		free_ptr(io);
+	return NULL;
 }
 
 //free data ---> pending
+
+void	lstdelone_token(t_elem *lst, void (*del)(void *))
+{
+	if (del && lst && lst->content)
+	{	
+		(*del)(lst->content);
+		lst->content = NULL;
+	}
+	if (lst->prev)
+		lst->prev->next = lst->next;
+	if (lst->next)
+		lst->next->prev = lst->prev;
+	free_ptr(lst);
+}
+
+void	lstclear_token(t_elem **lst, void (*del)(void *))
+{
+	t_elem	*tmp;
+
+	tmp = NULL;
+	while (*lst != NULL)
+	{
+		tmp = (*lst)->next;
+		lstdelone_token(*lst, del);
+		*lst = tmp;
+	}
+}
+
+void free_commands2(t_cmd *cmds)
+{
+	t_cmd *tmp_cmd;
+	char **tmp_str;
+	
+	
+	while (cmds)
+	{
+		if(cmds->io_fds)
+			cmds->io_fds = free_io(cmds->io_fds);
+		tmp_cmd = cmds;
+		tmp_str = cmds->args;
+		int i =0;
+		while (cmds->args[i])
+			free(cmds->args[i++]);
+		free(cmds->args[i]);
+		free(tmp_str);
+		cmds = cmds->next;
+		free(tmp_cmd);
+	}
+}
+
+void free_commands(t_cmd *cmds)
+{
+	t_cmd *tmp_cmd;
+	char **tmp_str;
+	
+
+	while (cmds)
+	{
+		if(cmds->io_fds)
+			cmds->io_fds = free_io(cmds->io_fds);
+		tmp_cmd = cmds;
+		tmp_str = cmds->args;
+		int i =0;
+		while (cmds->args[i])
+		{
+   			//  printf("Commands %s\n", cmds->args[i]);
+			free(cmds->args[i++]);
+		}
+		free(cmds->args[i]);
+		free(tmp_str);
+		cmds = cmds->next;
+		free(tmp_cmd);
+	}
+}
+
+
+void free_data(t_data *data, t_cmd *cmds, bool flag)
+{
+    // t_cmd *temp;
+
+
+    if (data && data->input)
+    {
+        free(data->input);
+        data->input = NULL;
+    }
+    if (data && data->tokens && data->tokens->type != EMPTY)
+        lstclear_token(&data->tokens, &free_ptr);
+
+    // Add the loop here to free io_fds for each command
+	cmds->io_fds = free_io(cmds->io_fds);
+
+    if (flag == true)
+    {
+        if (data && data->current_dir)
+            free_ptr(data->current_dir);
+        if (data && data->old_working_dir)
+            free_ptr(data->old_working_dir);
+        if (data && data->env)
+            free_str_tab(data->env);
+        rl_clear_history();
+    }
+}

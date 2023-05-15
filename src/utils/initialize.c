@@ -1,6 +1,8 @@
 #include "../../inc/minishell.h"
 
 
+
+
 /* init_env:
 *	Initializes a data variable with the contents of the environment
 *	variables inherited from the original shell.
@@ -92,8 +94,6 @@ void	init_io(t_cmd *cmd)
 			return ;
 		cmd->io_fds->infile = NULL;
 		cmd->io_fds->outfile = NULL;
-		cmd->io_fds->heredoc_delimiter = NULL;
-		cmd->io_fds->heredoc_quotes = false;
 		cmd->io_fds->fd_in = -1;
 		cmd->io_fds->fd_out = -1;
 		cmd->io_fds->stdin_backup = -1;

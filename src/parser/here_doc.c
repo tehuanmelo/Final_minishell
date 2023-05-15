@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 13:16:07 by tde-melo          #+#    #+#             */
-/*   Updated: 2023/04/27 14:28:02 by tde-melo         ###   ########.fr       */
+/*   Updated: 2023/05/11 14:57:15 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ void here_doc(char **args)
         print_file_contents("/tmp/.here_do.c");
         //frprintf(stderr, "\n");
         if (execute_heredoc(delimiter))
-            exit(EXIT_FAILURE);
-        exit(EXIT_SUCCESS);
+            exit_shell(&data, EXIT_FAILURE);
+        exit_shell(&data, EXIT_SUCCESS);
     }
     else
     {

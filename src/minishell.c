@@ -15,22 +15,28 @@
 void set_data(t_data *data, char *str)
 {
 	data->nb_cmd = 0;
-	data->input = ft_strtrim(str, " ");
+	data->input = str;
 	data->tokens = get_tokens_list(data->input);
 	data->heredoc_fd = -1;
 }
 
 int _readline_(char **input)
 {
-	*input = readline(MINI_PROMPT);
+	char *tmp;
+	
+	tmp = readline(MINI_PROMPT);
+	*input = ft_strtrim(tmp, " ");
+	free(tmp);
 	if (!*input)
 	{
-		//frprintf(stderr, "Input: %s\n", *input);
 		ft_putstr("exit\n");
-		exit(1);
+		exit_shell3(&data, data.exit_code);
 	}
 	if (strcmp(*input, "") == 0)
+	{
+		free(*input);
 		return (1);
+	}
 	if (strlen(*input) > 0)
 		add_history(*input);
 	return (0);
@@ -38,12 +44,20 @@ int _readline_(char **input)
 
 void init_shell(t_data *data)
 {
-	if (!sintax_error(data))
-	{
-		data->cmd_lst = parser(data);
-		data->exit_code = execute(data);
-	}
-	else	
-		return;
+    if (!sintax_error(data))
+    {
+        data->cmd_lst = parser(data);
+        data->exit_code = execute(data);
+		// print_comands();
+		free_data(data, data->cmd_lst, false);
+		free_commands(data->cmd_lst);
+    }
+	else
+		{
+			free(data->input);
+			return ;
+		}
+	
 }
+
 
