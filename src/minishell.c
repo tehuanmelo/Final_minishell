@@ -1,4 +1,4 @@
- /* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
@@ -12,7 +12,7 @@
 
 #include "../inc/minishell.h"
 
-void set_data(t_data *data, char *str)
+void	set_data(t_data *data, char *str)
 {
 	data->nb_cmd = 0;
 	data->input = str;
@@ -20,10 +20,10 @@ void set_data(t_data *data, char *str)
 	data->heredoc_fd = -1;
 }
 
-int _readline_(char **input)
+int	_readline_(char **input)
 {
-	char *tmp;
-	
+	char	*tmp;
+
 	tmp = readline(MINI_PROMPT);
 	*input = ft_strtrim(tmp, " ");
 	free(tmp);
@@ -42,22 +42,18 @@ int _readline_(char **input)
 	return (0);
 }
 
-void init_shell(t_data *data)
+void	init_shell(t_data *data)
 {
-    if (!sintax_error(data))
-    {
-        data->cmd_lst = parser(data);
-        data->exit_code = execute(data);
-		// print_comands();
+	if (!sintax_error(data))
+	{
+		data->cmd_lst = parser(data);
+		data->exit_code = execute(data);
 		free_data(data, data->cmd_lst, false);
 		free_commands(data->cmd_lst);
-    }
+	}
 	else
-		{
-			free(data->input);
-			return ;
-		}
-	
+	{
+		free(data->input);
+		return ;
+	}
 }
-
-

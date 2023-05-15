@@ -20,13 +20,13 @@ t_cmd	*new_command(void)
 	if (!new)
 		return (NULL);
 	new->args = NULL;
-    new->command = NULL;
-    new->path = NULL;
-    new->pipe_fd[0] = -1;
-    new->pipe_fd[1] = -1;
-    new->io_fds = NULL;
-    new->prev = NULL;
-    new->next = NULL;
+	new->command = NULL;
+	new->path = NULL;
+	new->pipe_fd[0] = -1;
+	new->pipe_fd[1] = -1;
+	new->io_fds = NULL;
+	new->prev = NULL;
+	new->next = NULL;
 	return (new);
 }
 
@@ -82,7 +82,7 @@ int	count_args(t_elem **head)
 // {
 // 	t_cmd *tmp_cmd;
 // 	char **tmp_str;
-	
+
 // 	while (cmds)
 // 	{
 // 		tmp_cmd = cmds;

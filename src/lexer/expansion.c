@@ -12,12 +12,12 @@
 
 #include "../../inc/minishell.h"
 
-char *get_env_var(char *content)
+char	*get_env_var(char *content)
 {
-	char **env;
-	char *str;
-	int len;
-	int i;
+	char	**env;
+	char	*str;
+	int		len;
+	int		i;
 
 	env = data.env;
 	str = NULL;
@@ -26,12 +26,11 @@ char *get_env_var(char *content)
 	while (env[i])
 	{
 		if (ft_strncmp(content, env[i], len) == 0 && env[i][len] == '=')
-			str = ft_strdup(&env[i][len+1]);
+			str = ft_strdup(&env[i][len + 1]);
 		env++;
 	}
 	return (str);
 }
-
 
 void	get_env_value(t_elem *tokens)
 {
@@ -86,11 +85,11 @@ void	check_here_doc_variable(t_data *data)
 	}
 }
 
-void check_exit_variable(t_data *data)
+void	check_exit_variable(t_data *data)
 {
-	t_elem *head;
-	char *tmp;
-	char *env_exit;
+	t_elem	*head;
+	char	*tmp;
+	char	*env_exit;
 
 	head = data->tokens;
 	while (head)
@@ -111,7 +110,7 @@ void check_exit_variable(t_data *data)
 	}
 }
 
-void  expand_env(t_data *data)
+void	expand_env(t_data *data)
 {
 	t_elem	*head;
 
