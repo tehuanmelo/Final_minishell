@@ -1,40 +1,52 @@
-#include "../../inc/minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/16 14:33:30 by mbin-nas          #+#    #+#             */
+/*   Updated: 2023/05/16 14:35:20 by mbin-nas         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "../../inc/minishell.h"
 
 /* ft_join_string
 * Joins two strings, freeing the previous string. 
 * Returns the new concatenated string. 
 */
-char *ft_join_string(char *str, char *add)
+char	*ft_join_string(char *str, char *add)
 {
-    char *temp;
-    if(!add)
-        return (str);
-    if(!str)
-        return(ft_strdup(add));
-    temp = str;
-    str = ft_strjoin(temp, add);
-    free_ptr(temp);
-    return (str);
+	char	*temp;
+
+	if (!add)
+		return (str);
+	if (!str)
+		return (ft_strdup(add));
+	temp = str;
+	str = ft_strjoin(temp, add);
+	free_ptr(temp);
+	return (str);
 }
 
 static bool	add_detail_quotes(char *command)
 {
-	if (ft_strncmp(command, "export", 7) == 0
-		|| ft_strncmp(command, "unset", 6) == 0)
+	if (ft_strncmp(command, "export", 7) == 0 || ft_strncmp(command, "unset",
+			6) == 0)
 		return (true);
 	return (false);
 }
 
-int	error_msg_commad(char *command, char *detail, char *error_message, int error_nb)
+int	error_msg_commad(char *command, char *detail, char *error_message,
+		int error_nb)
 {
-	// printf("I was called ------\n");
 	char	*msg;
 	bool	detail_quotes;
 
 	detail_quotes = add_detail_quotes(command);
 	msg = ft_strdup("minishell: ");
-	if (command != NULL && command[0] != '\0') // Check if command is not empty
+	if (command != NULL && command[0] != '\0')
 	{
 		msg = ft_join_string(msg, command);
 		msg = ft_join_string(msg, ": ");
@@ -53,7 +65,6 @@ int	error_msg_commad(char *command, char *detail, char *error_message, int error
 	free_ptr(msg);
 	return (error_nb);
 }
-
 
 void	errmsg(char *errmsg, char *detail, int quotes)
 {

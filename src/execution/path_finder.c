@@ -1,20 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   path_finder.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/16 14:10:12 by mbin-nas          #+#    #+#             */
+/*   Updated: 2023/05/16 14:26:47 by mbin-nas         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
-
-static char *find_valid_path_command(char *cmd, char **paths)
+static char	*find_valid_path_command(char *cmd, char **paths)
 {
-    int		i;
+	int		i;
 	char	*cmd_path;
 
 	cmd_path = NULL;
 	i = 0;
 	while (paths[i])
 	{
-        cmd_path = ft_strjoin(paths[i], cmd);
+		cmd_path = ft_strjoin(paths[i], cmd);
 		if (!cmd_path)
 		{
-			error_msg_commad("malloc", NULL,
-				"an unexpected error occured", EXIT_FAILURE);
+			error_msg_commad("malloc", NULL, "an unexpected error occured",
+				EXIT_FAILURE);
 			return (NULL);
 		}
 		if (access(cmd_path, F_OK | X_OK) == 0)
@@ -25,41 +36,41 @@ static char *find_valid_path_command(char *cmd, char **paths)
 	return (NULL);
 }
 
-static char **fetch_paths_from_env(t_data *data)
+static char	**fetch_paths_from_env(t_data *data)
 {
-    char **env_path;
+	char	**env_path;
 
-    if(fetch_env_variable_index(data->env, "PATH") == -1)
-        return (NULL);
-    env_path = ft_split(fetch_env_variable_char(data->env, "PATH"), ':');
-    if(!env_path)
-        return (NULL);
-    return (env_path);
+	if (fetch_env_variable_index(data->env, "PATH") == -1)
+		return (NULL);
+	env_path = ft_split(fetch_env_variable_char(data->env, "PATH"), ':');
+	if (!env_path)
+		return (NULL);
+	return (env_path);
 }
 
-char *fetch_command_path(t_data *data, char *name)
+char	*fetch_command_path(t_data *data, char *name)
 {
-    char	**env_paths;
-	char	*cmd;
-	char	*cmd_path;
+    char        **env_paths;
+    char        *cmd;
+    char        *cmd_path;
 
 	if (!name)
 		return (NULL);
-    env_paths = fetch_paths_from_env(data);
-    if(!env_paths)
-        return (NULL);
-    cmd = ft_strjoin("/", name);
-    if(!cmd)
-    {
-        free_str_tab(env_paths);
-        return (NULL);
-    }
-    cmd_path = find_valid_path_command(cmd, env_paths);
-    if(!cmd_path)
-    {
-        free_ptr(cmd);
-        free_str_tab(env_paths);
-        return (NULL);
-    }
-    return (cmd_path);
+	env_paths = fetch_paths_from_env(data);
+	if (!env_paths)
+		return (NULL);
+	cmd = ft_strjoin("/", name);
+	if (!cmd)
+	{
+		free_str_tab(env_paths);
+		return (NULL);
+	}
+	cmd_path = find_valid_path_command(cmd, env_paths);
+	if (!cmd_path)
+	{
+		free_ptr(cmd);
+		free_str_tab(env_paths);
+		return (NULL);
+	}
+	return (cmd_path);
 }

@@ -1,7 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   initialize.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/16 14:33:37 by mbin-nas          #+#    #+#             */
+/*   Updated: 2023/05/16 14:36:41 by mbin-nas         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
-
-
-
 
 /* init_env:
 *	Initializes a data variable with the contents of the environment
@@ -10,7 +19,7 @@
 */
 static bool	init_env(t_data *data, char **env)
 {
-	int		i;
+	int	i;
 
 	data->env = ft_calloc(count_env_variables(env) + 1, sizeof * data->env);
 	if (!data->env)
@@ -70,8 +79,8 @@ bool	init_data(t_data *data, char **env)
 	}
 	if (!init_wds(data))
 	{
-		error_msg_commad("Fatal", NULL, "Could not initialize working directories",
-			1);
+		error_msg_commad("Fatal", NULL,
+			"Could not initialize working directories", 1);
 		return (false);
 	}
 	data->tokens = NULL;
@@ -79,7 +88,7 @@ bool	init_data(t_data *data, char **env)
 	data->cmd_lst = NULL;
 	data->heredoc_fd = -1;
 	data->pid = -1;
-	data->exit_code= 0;
+	data->exit_code = 0;
 	return (true);
 }
 
@@ -89,13 +98,13 @@ bool	init_data(t_data *data, char **env)
 */
 void	init_io(t_cmd *cmd)
 {
-		cmd->io_fds = malloc(sizeof(t_io_fds));
-		if (!cmd->io_fds)
-			return ;
-		cmd->io_fds->infile = NULL;
-		cmd->io_fds->outfile = NULL;
-		cmd->io_fds->fd_in = -1;
-		cmd->io_fds->fd_out = -1;
-		cmd->io_fds->stdin_backup = -1;
-		cmd->io_fds->stdout_backup = -1;
+	cmd->io_fds = malloc(sizeof(t_io_fds));
+	if (!cmd->io_fds)
+		return ;
+	cmd->io_fds->infile = NULL;
+	cmd->io_fds->outfile = NULL;
+	cmd->io_fds->fd_in = -1;
+	cmd->io_fds->fd_out = -1;
+	cmd->io_fds->stdin_backup = -1;
+	cmd->io_fds->stdout_backup = -1;
 }
