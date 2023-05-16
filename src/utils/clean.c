@@ -88,7 +88,7 @@ void*	free_io(t_io_fds *io)
 
 void	lstdelone_token(t_elem *lst, void (*del)(void *))
 {
-	if (del && lst && lst->content)
+	if (del && lst && lst->type != EMPTY)
 	{	
 		(*del)(lst->content);
 		lst->content = NULL;
@@ -171,7 +171,7 @@ void free_data(t_data *data, t_cmd *cmds, bool flag)
         free(data->input);
         data->input = NULL;
     }
-    if (data && data->tokens && data->tokens->type != EMPTY)
+    if (data && data->tokens)
         lstclear_token(&data->tokens, &free_ptr);
 
     // Add the loop here to free io_fds for each command

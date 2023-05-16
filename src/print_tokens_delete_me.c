@@ -1,7 +1,7 @@
 
 // Do not forget to delete this file before submit the project
 
-#include "../../inc/minishell.h"
+#include "../inc/minishell.h"
 
 void	print_tokens(t_elem *list)
 {
