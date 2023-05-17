@@ -145,6 +145,7 @@ void syntax_error_message(char *str);
 
 // ------------ free list ----------------
 void free_tokens_list(t_elem *tokens);
+char	**remove_heredoc_args(char **args);
 
 // ------------- expansions --------------
 void expand_env(t_data *data);

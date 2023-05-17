@@ -130,17 +130,17 @@ int	execute_commands(t_data *data, t_cmd *cmd)
 
 	if (data->exit_code != EXIT_SUCCESS)
 		exit_shell(data, data->exit_code);
-	if (!check_here_doc(cmd->args))
-	{
-		here_doc(cmd->args);
-		cmd->args = remove_heredoc_args(cmd->args);
-		cmd->io_fds->fd_in = open("/tmp/.here_do.c", O_RDONLY);
-		if (cmd->io_fds->fd_in < 0)
-		{
-			perror("open");
-			exit(EXIT_FAILURE);
-		}
-	}
+	// if (!check_here_doc(cmd->args))
+	// {
+	// 	here_doc(cmd->args);
+	// 	cmd->args = remove_heredoc_args(cmd->args);
+	// 	cmd->io_fds->fd_in = open("/tmp/.here_do.c", O_RDONLY);
+	// 	if (cmd->io_fds->fd_in < 0)
+	// 	{
+	// 		perror("open");
+	// 		exit(EXIT_FAILURE);
+	// 	}
+	// }
 	if (!check_infile_outfile(cmd->io_fds))
 		exit_shell(data, EXIT_FAILURE);
 	set_pipe_fds(data->cmd_lst, cmd);

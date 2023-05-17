@@ -59,7 +59,10 @@ static int	create_children(t_data *data)
 			return (error_msg_commad("fork", NULL, strerror(errno),
 					EXIT_FAILURE));
 		else if (data->pid == 0)
+		{
+
 			execute_commands(data, cmd);
+		}
 		cmd = cmd->next;
 	}
 	return (get_children(data));
@@ -98,6 +101,8 @@ static int	execution_prep(t_data *data)
 int	execute(t_data *data)
 {
 	int	ret;
+	t_cmd *cmd;
+	int pipefd[2];
 
 	ret = execution_prep(data);
 	if (ret != COMMAND_NOT_FOUND)
@@ -113,8 +118,26 @@ int	execute(t_data *data)
 			return (ret);
 		}
 	}
+	cmd = data->cmd_lst;
+	while (cmd)
+	{
+		if (!check_here_doc(cmd->args))
+		{
+			if (pipe(pipefd) == -1)
+			{
+				perror("pipe");
+				exit(EXIT_FAILURE);
+			}
+			here_doc(cmd->args);
+			cmd->args = remove_heredoc_args(cmd->args);
+			cmd->io_fds->fd_in = pipefd[0];
+			close(pipefd[1]);
+		}
+		cmd = cmd->next;
+	}
 	ret = create_children(data);
 	restore_io(data->cmd_lst->io_fds);
 	close_fds(data->cmd_lst, true);
 	return (ret);
 }
+
