@@ -101,7 +101,6 @@ static int	execution_prep(t_data *data)
 int	execute(t_data *data)
 {
 	int	ret;
-	t_cmd *cmd;
 	int pipefd[2];
 
 	ret = execution_prep(data);
@@ -118,23 +117,32 @@ int	execute(t_data *data)
 			return (ret);
 		}
 	}
-	cmd = data->cmd_lst;
-	while (cmd)
+	t_cmd *current_cmd = data->cmd_lst;
+	while (current_cmd)
 	{
-		if (!check_here_doc(cmd->args))
+		if (!check_here_doc(current_cmd->args))
 		{
 			if (pipe(pipefd) == -1)
 			{
 				perror("pipe");
 				exit(EXIT_FAILURE);
 			}
-			here_doc(cmd->args);
-			cmd->args = remove_heredoc_args(cmd->args);
-			cmd->io_fds->fd_in = pipefd[0];
+			int should_print = 1;
+			if (current_cmd->next)
+			{
+				if (!check_here_doc(current_cmd->next->args))
+				{
+					should_print = 0;
+				}
+			}
+			here_doc(current_cmd->args, should_print);
+			current_cmd->args = remove_heredoc_args(current_cmd->args);
+			current_cmd->io_fds->fd_in = pipefd[0];
 			close(pipefd[1]);
 		}
-		cmd = cmd->next;
+		current_cmd = current_cmd->next;
 	}
+
 	ret = create_children(data);
 	restore_io(data->cmd_lst->io_fds);
 	close_fds(data->cmd_lst, true);

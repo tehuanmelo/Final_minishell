@@ -178,6 +178,7 @@ void	free_data(t_data *data, t_cmd *cmds, bool flag)
 	if (data && data->tokens)
 		lstclear_token(&data->tokens, &free_ptr);
 	cmds->io_fds = free_io(cmds->io_fds);
+	close_fds(cmds, false);
 	if (flag == true)
 	{
 		if (data && data->current_dir)

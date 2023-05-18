@@ -75,7 +75,7 @@ int execute_heredoc(char *delimiter)
     return (EXIT_SUCCESS);
 }
 
-void here_doc(char **args)
+void here_doc(char **args, int should_print)
 {
     char *delimiter;
     int status;
@@ -86,11 +86,11 @@ void here_doc(char **args)
     {
         signal(SIGINT, sigint_handler_heredoc);
         delimiter = get_delimiter(args);
-        //frprintf(stderr, "Heredoc file contents:\n");
-        print_file_contents("/tmp/.here_do.c");
-        //frprintf(stderr, "\n");
         if (execute_heredoc(delimiter))
             exit_shell(&data, EXIT_FAILURE);
+        // Print file contents only if should_print is true
+        if (should_print)
+            print_file_contents("/tmp/.here_do.c");
         exit_shell(&data, EXIT_SUCCESS);
     }
     else

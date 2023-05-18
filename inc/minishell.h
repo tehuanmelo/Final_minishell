@@ -169,7 +169,7 @@ char	*join_string(char *s1, char *s2);
 // ------------- here-doc ---------------
 int check_here_doc(char **args);
 char **remove_heredoc_args(char **args);
-void here_doc(char **input);
+void here_doc(char **input, int should_print);
 void print_file_contents(const char *filename);
 
 // #######################################
