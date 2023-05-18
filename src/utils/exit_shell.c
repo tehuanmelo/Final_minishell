@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:33:34 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/16 14:35:50 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/18 21:42:32 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ void	exit_shell3(t_data *data, int exno)
 {
 	if (data)
 	{
-		if (data->cmd_lst && data->cmd_lst->io_fds)
-			close_fds(data->cmd_lst, true);
+		// if (data->cmd_lst && data->cmd_lst->io_fds)
+		// 	close_fds(data->cmd_lst, true);
 		if (data && data->input)
 		{
 			free(data->input);

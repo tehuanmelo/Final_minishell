@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:32:30 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/18 13:41:48 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/18 21:59:10 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,6 @@ int	handle_outfile_redirection(t_cmd *cmd, int index)
 		free(cmd->args[index + 2]);
 		cmd->args[index + 2] = NULL;
 	}
-	// printf("Added a null %s\n", cmd->args[index]);
-	// printf("Added a null %s\n", cmd->args[index + 1]);
-	// printf("Added a null %s\n", cmd->args[index + 2]);
-	// while(cmd->args[])
 	free(cmd->args[index]);
 	cmd->args[index] = NULL;
 	free(cmd->args[index + 1]);
@@ -79,11 +75,12 @@ int	handle_infile_redirection(t_cmd *cmd, int index)
 	if (last_fd_in == -1)
 	{
 		missing_filename = ft_strdup(cmd->args[index + 1]);
-		for (int i = 0; cmd->args[i] != NULL; i++)
-		{
-			free(cmd->args[i]);
-			cmd->args[i] = NULL;
-		}
+		// for (int i = 0; cmd->args[i] != NULL; i++)
+		// {
+		// 	free(cmd->args[i]);
+		// 	cmd->args[i] = NULL;
+		// }
+		// free(cmd->args);
 		data.exit_code = error_msg_commad(missing_filename, NULL,
 				strerror(errno), 1);
 		free(missing_filename);
@@ -92,6 +89,8 @@ int	handle_infile_redirection(t_cmd *cmd, int index)
 	cmd->io_fds->fd_in = last_fd_in;
 	free(cmd->args[index]);
 	cmd->args[index] = NULL;
+	free(cmd->args[index + 1]);
+	cmd->args[index + 1] = NULL;
 	return (EXIT_SUCCESS);
 }
 

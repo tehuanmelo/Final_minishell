@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:33:26 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/18 13:43:12 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/18 21:57:28 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	close_parent_fds(t_cmd *cmds)
 			close(cmds->io_fds->stdin_backup);
 		if (cmds->io_fds->stdout_backup != -1)
 			close(cmds->io_fds->stdout_backup);
-		restore_io(cmds->io_fds); 
+		restore_io(cmds->io_fds);
 	}
 }
 
@@ -97,7 +97,7 @@ void	*free_io(t_io_fds *io)
 void	lstdelone_token(t_elem *lst, void (*del)(void *))
 {
 	if (del && lst && lst->type != EMPTY)
-	{	
+	{
 		(*del)(lst->content);
 		lst->content = NULL;
 	}
@@ -143,6 +143,7 @@ void	free_commands2(t_cmd *cmds)
 	}
 }
 
+
 void	free_commands(t_cmd *cmds)
 {
 	t_cmd	*tmp_cmd;
@@ -161,8 +162,10 @@ void	free_commands(t_cmd *cmds)
    			//  printf("Commands %s\n", cmds->args[i]);
 			free(cmds->args[i++]);
 		}
-		free(cmds->args[i]);
+		// free(cmds->args[i]);
 		free(tmp_str);
+		if (cmds->command && cmds->command != NULL)
+			free(cmds->command);
 		cmds = cmds->next;
 		free(tmp_cmd);
 	}

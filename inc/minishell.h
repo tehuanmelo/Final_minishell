@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 10:03:35 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/11 16:00:37 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/18 21:27:42 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,8 +217,8 @@ int	ft_echo_built_in(t_data *data, char **args);
 int	ft_env_built_in(t_data *data, char **args);
 int ft_export_built_in(t_data *data, char **args);
 int ft_pwd_built_in(t_data *data, char **args);
-int ft_unset_built_in(t_data *data, char **args); 
-int	ft_exit_built_in(t_data *data, char **args); 
+int ft_unset_built_in(t_data *data, char **args);
+int	ft_exit_built_in(t_data *data, char **args);
 
 //# ----------------------------------------------
 //# ~~~~~~~~~~~~~ ENV MANIPUlATION ~~~~~~~~~~~~~
@@ -272,9 +272,9 @@ void    close_child_fds(t_cmd *cmds);
 void*	free_io(t_io_fds *io);
 void    close_parent_fds(t_cmd *cmds);
 void	exit_shell(t_data *data, int exno);
-void    free_commands2(t_cmd *cmds); 
+void    free_commands2(t_cmd *cmds);
 void	exit_shell2(t_data *data, int exno);
 void	exit_shell3(t_data *data, int exno);
 void	lstclear_token(t_elem **lst, void (*del)(void *));
-
+void	free_commands_0(t_cmd *cmds);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:09:53 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/16 14:16:44 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/18 21:37:50 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,10 @@ static int	execute_local_bin(t_data *data, t_cmd *cmd)
 
 	result = check_command_not_found(data, cmd);
 	if (result != 0)
-		exit_shell2(data, result);
+		{
+			printf("Exit 2\n");
+			exit_shell(data, result);
+		}
 	if (execve(cmd->path, cmd->args, data->env) == -1)
 	{
 		error_msg_commad("execve: ", NULL, strerror(errno), errno);
@@ -81,12 +84,18 @@ char	**remove_heredoc_args(char **args)
 		if (ft_strcmp(args[i], "<<") != 0 && (i == 0 || ft_strcmp(args[i - 1],
 					"<<") != 0))
 		{
-			new_args[j] = args[i];
+			new_args[j] = ft_strdup(args[i]);
 			j++;
 		}
 		i++;
 	}
 	new_args[j] = NULL;
+	i = 0;
+	while (args[i])
+	{
+		free(args[i++]);
+	}
+	free(args);
 	return (new_args);
 }
 
@@ -126,21 +135,11 @@ char	**remove_heredoc_args(char **args)
 
 int	execute_commands(t_data *data, t_cmd *cmd)
 {
+	printf("Which one is this\n");
 	int	ret;
 
 	if (data->exit_code != EXIT_SUCCESS)
 		exit_shell(data, data->exit_code);
-	// if (!check_here_doc(cmd->args))
-	// {
-	// 	here_doc(cmd->args);
-	// 	cmd->args = remove_heredoc_args(cmd->args);
-	// 	cmd->io_fds->fd_in = open("/tmp/.here_do.c", O_RDONLY);
-	// 	if (cmd->io_fds->fd_in < 0)
-	// 	{
-	// 		perror("open");
-	// 		exit(EXIT_FAILURE);
-	// 	}
-	// }
 	if (!check_infile_outfile(cmd->io_fds))
 		exit_shell(data, EXIT_FAILURE);
 	set_pipe_fds(data->cmd_lst, cmd);
@@ -148,12 +147,16 @@ int	execute_commands(t_data *data, t_cmd *cmd)
 	close_fds(cmd, false);
 	ret = execute_built_ins(data, cmd);
 	if (ret != COMMAND_NOT_FOUND)
-		exit_shell(data, ret);
+		{
+			printf("About to call \n");
+			exit_shell(data, ret);
+		}
 	if (ft_strchr(cmd->command, '/') == NULL)
 		ret = execute_system_binaries(data, cmd);
 	else
 		cmd->path = cmd->command;
 	ret = execute_local_bin(data, cmd);
+	printf("About to call 2\n");
 	exit_shell(data, ret);
 	return (ret);
 }

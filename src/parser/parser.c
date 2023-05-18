@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 21:07:15 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/15 14:15:27 by tde-melo         ###   ########.fr       */
+/*   Updated: 2023/05/18 21:13:40 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ t_cmd	*parser(t_data *data)
 	{
 		new = new_command();
 		new->args = get_args(&head_counter, &tmp);
-		new->command = new->args[0];
+		new->command = ft_strdup(new->args[0]);
 		init_io(new);
 		data->exit_code = parse_redirection(new);
 		append_command(&head, new);

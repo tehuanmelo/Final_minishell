@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_execution.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:10:01 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/18 19:29:51 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/18 21:47:37 by aball            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,16 @@ static int	execution_prep(t_data *data)
 */
 int	execute(t_data *data)
 {
+	printf("WHo am I \n");
 	int	ret;
 	int pipefd[2];
 	t_cmd *current_cmd = data->cmd_lst;
 	ret = execution_prep(data);
 	if (ret != COMMAND_NOT_FOUND)
-		return (ret);
+		{
+			printf("Whaaat\n");
+			return (ret);
+		}
 	if (!data->cmd_lst->next && !data->cmd_lst->prev
 		&& check_infile_outfile(data->cmd_lst->io_fds))
 	{
@@ -138,10 +142,11 @@ int	execute(t_data *data)
 		restore_io(data->cmd_lst->io_fds);
 		if (ret != COMMAND_NOT_FOUND)
 		{
+			printf("Not found\n");
 			return (ret);
 		}
 	}
-	
+
 	while (current_cmd)
 	{
 		if (!check_here_doc(current_cmd->args))
