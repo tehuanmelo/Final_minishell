@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:33:26 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/16 14:34:03 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/18 13:43:12 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,8 @@ void	*free_io(t_io_fds *io)
 
 void	lstdelone_token(t_elem *lst, void (*del)(void *))
 {
-	if (del && lst && lst->content)
-	{
+	if (del && lst && lst->type != EMPTY)
+	{	
 		(*del)(lst->content);
 		lst->content = NULL;
 	}
@@ -158,7 +158,7 @@ void	free_commands(t_cmd *cmds)
 		i = 0;
 		while (cmds->args[i])
 		{
-			// printf("Commands %s\n", cmds->args[i]);
+   			//  printf("Commands %s\n", cmds->args[i]);
 			free(cmds->args[i++]);
 		}
 		free(cmds->args[i]);

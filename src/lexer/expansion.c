@@ -6,18 +6,18 @@
 /*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:10:33 by tde-melo          #+#    #+#             */
-/*   Updated: 2023/05/09 17:08:21 by tehuanmelo       ###   ########.fr       */
+/*   Updated: 2023/05/12 21:00:58 by tehuanmelo       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char *get_env_var(char *content)
+char	*get_env_var(char *content)
 {
-	char **env;
-	char *str;
-	int len;
-	int i;
+	char	**env;
+	char	*str;
+	int		len;
+	int		i;
 
 	env = data.env;
 	str = NULL;
@@ -26,12 +26,11 @@ char *get_env_var(char *content)
 	while (env[i])
 	{
 		if (ft_strncmp(content, env[i], len) == 0 && env[i][len] == '=')
-			str = ft_strdup(&env[i][len+1]);
+			str = ft_strdup(&env[i][len + 1]);
 		env++;
 	}
 	return (str);
 }
-
 
 void	get_env_value(t_elem *tokens)
 {
@@ -51,6 +50,8 @@ void	get_env_value(t_elem *tokens)
 		}
 		else
 		{
+			if (!ft_strcmp(tokens->content, "$EMPTY"))
+				data.exit_code = 0;
 			tokens->content = "";
 			tokens->len = 0;
 			tokens->type = EMPTY;
@@ -84,11 +85,11 @@ void	check_here_doc_variable(t_data *data)
 	}
 }
 
-void check_exit_variable(t_data *data)
+void	check_exit_variable(t_data *data)
 {
-	t_elem *head;
-	char *tmp;
-	char *env_exit;
+	t_elem	*head;
+	char	*tmp;
+	char	*env_exit;
 
 	head = data->tokens;
 	while (head)
@@ -109,7 +110,7 @@ void check_exit_variable(t_data *data)
 	}
 }
 
-void  expand_env(t_data *data)
+void	expand_env(t_data *data)
 {
 	t_elem	*head;
 

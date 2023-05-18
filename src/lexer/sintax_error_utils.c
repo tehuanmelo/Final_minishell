@@ -12,7 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-
 int	is_redir(enum e_type type)
 {
 	return (type == REDIR_IN || type == REDIR_OUT || type == DREDIR_OUT
@@ -34,7 +33,7 @@ int	is_pipe(enum e_type type)
 	return (type == PIPE);
 }
 
-void syntax_error_message(char *str)
+void	syntax_error_message(char *str)
 {
 	data.exit_code = 258;
 	ft_putstr("minishell: syntax error near unexpected token ");
@@ -46,6 +45,6 @@ void syntax_error_message(char *str)
 		ft_putstr("`<'\n");
 	else if (!ft_strcmp(str, ">>"))
 		ft_putstr("`>>'\n");
-	else 
+	else
 		ft_putstr("`<<'\n");
 }

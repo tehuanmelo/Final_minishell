@@ -10,41 +10,41 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
 #include "../inc/execution.h"
+#include "../inc/minishell.h"
 
-void free_env(char **env) {
-    int i;
+void	free_env(char **env)
+{
+	int	i;
 
-    if (env == NULL)
-        return;
-
-    for (i = 0; env[i] != NULL; i++) {
-        free(env[i]);
-    }
-    free(env);
+	if (env == NULL)
+		return ;
+	for (i = 0; env[i] != NULL; i++)
+	{
+		free(env[i]);
+	}
+	free(env);
 }
 
-int main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
-	char *str;
+	char	*str;
+
 	(void)argc;
 	(void)argv;
-
 	init_signals();
 	init_data(&data, env);
 	while (1)
 	{
 		if (_readline_(&str))
-			continue;
+			continue ;
 		else
 		{
-			set_data(&data, str);    
+			set_data(&data, str);
 			expand_env(&data);
-			init_shell(&data);   
+			init_shell(&data);
 			free_tokens_list(data.tokens);
 		}
 	}
 	return (0);
 }
-     
