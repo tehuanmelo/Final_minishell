@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:09:53 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/18 21:37:50 by aball            ###   ########.fr       */
+/*   Updated: 2023/05/19 21:01:46 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,17 +133,17 @@ char	**remove_heredoc_args(char **args)
 //     return (ret);
 // }
 
-int	execute_commands(t_data *data, t_cmd *cmd)
+int	execute_commands(t_data *data, t_cmd *cmd, int command_index)
 {
 	printf("Which one is this\n");
 	int	ret;
-
+	
 	if (data->exit_code != EXIT_SUCCESS)
 		exit_shell(data, data->exit_code);
 	if (!check_infile_outfile(cmd->io_fds))
 		exit_shell(data, EXIT_FAILURE);
 	set_pipe_fds(data->cmd_lst, cmd);
-	redirect_io(cmd->io_fds);
+	redirect_io(cmd->io_fds, command_index);
 	close_fds(cmd, false);
 	ret = execute_built_ins(data, cmd);
 	if (ret != COMMAND_NOT_FOUND)

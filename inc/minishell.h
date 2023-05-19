@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 10:03:35 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/18 21:27:42 by aball            ###   ########.fr       */
+/*   Updated: 2023/05/19 21:04:02 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,8 @@ char	*join_string(char *s1, char *s2);
 // ------------- here-doc ---------------
 int check_here_doc(char **args);
 char **remove_heredoc_args(char **args);
-void here_doc(char **input, int should_print);
+// void here_doc(char **input, int should_print);
+void here_doc(char **args, int should_print, int command_index);
 void print_file_contents(const char *filename);
 
 // #######################################
@@ -247,13 +248,13 @@ bool	create_pipes(t_data *data);
 bool	restore_io(t_io_fds *io);
 bool	check_infile_outfile(t_io_fds *io);
 bool	set_pipe_fds(t_cmd *cmds, t_cmd *c);
-bool	redirect_io(t_io_fds *io);
+bool	redirect_io(t_io_fds *io, int command_index);
 
 //# ----------------------------------------------
 //# ~~~~~~~~~~~~~ EXECUTION ~~~~~~~~~~~~~
 //# ----------------------------------------------
 int     execute_built_ins(t_data *data, t_cmd *check_cmd);
-int     execute_commands(t_data *data, t_cmd *cmd);
+int     execute_commands(t_data *data, t_cmd *cmd, int command_index);
 int	    execute(t_data *data);
 
 

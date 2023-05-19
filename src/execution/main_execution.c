@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_execution.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:10:01 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/18 21:47:37 by aball            ###   ########.fr       */
+/*   Updated: 2023/05/19 21:20:20 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static int	create_children(t_data *data)
 	t_cmd	*cmd;
 
 	cmd = data->cmd_lst;
+	int i = 0;
 	while (data->pid != 0 && cmd)
 	{
 		data->pid = fork();
@@ -61,8 +62,9 @@ static int	create_children(t_data *data)
 		else if (data->pid == 0)
 		{
 
-			execute_commands(data, cmd);
+			execute_commands(data, cmd, i);
 		}
+		i++;
 		cmd = cmd->next;
 	}
 	return (get_children(data));
@@ -102,7 +104,7 @@ int	execute(t_data *data)
 {
 	printf("WHo am I \n");
 	int	ret;
-	int pipefd[2];
+	// int pipefd[2];
 	t_cmd *current_cmd = data->cmd_lst;
 	ret = execution_prep(data);
 	if (ret != COMMAND_NOT_FOUND)
@@ -113,15 +115,15 @@ int	execute(t_data *data)
 	if (!data->cmd_lst->next && !data->cmd_lst->prev
 		&& check_infile_outfile(data->cmd_lst->io_fds))
 	{
-			while (current_cmd)
-	{
+	
+		
 		if (!check_here_doc(current_cmd->args))
 		{
-			if (pipe(pipefd) == -1)
-			{
-				perror("pipe");
-				exit(EXIT_FAILURE);
-			}
+			// if (pipe(pipefd) == -1)
+			// {
+			// 	perror("pipe");
+			// 	exit(EXIT_FAILURE);
+			// }
 			int should_print = 1;
 			if (current_cmd->next)
 			{
@@ -130,14 +132,12 @@ int	execute(t_data *data)
 					should_print = 0;
 				}
 			}
-			here_doc(current_cmd->args, should_print);
+			here_doc(current_cmd->args, should_print, 0);
 			current_cmd->args = remove_heredoc_args(current_cmd->args);
-			current_cmd->io_fds->fd_in = pipefd[0];
-			close(pipefd[1]);
+			// current_cmd->io_fds->fd_in = pipefd[0];
+			// close(pipefd[1]);
 		}
-		current_cmd = current_cmd->next;
-	}
-		redirect_io(data->cmd_lst->io_fds);
+		redirect_io(data->cmd_lst->io_fds, 0);
 		ret = execute_built_ins(data, data->cmd_lst);
 		restore_io(data->cmd_lst->io_fds);
 		if (ret != COMMAND_NOT_FOUND)
@@ -147,28 +147,31 @@ int	execute(t_data *data)
 		}
 	}
 
+int i = 0;
 	while (current_cmd)
 	{
 		if (!check_here_doc(current_cmd->args))
 		{
-			if (pipe(pipefd) == -1)
-			{
-				perror("pipe");
-				exit(EXIT_FAILURE);
-			}
-			int should_print = 1;
-			if (current_cmd->next)
-			{
-				if (!check_here_doc(current_cmd->next->args))
-				{
-					should_print = 0;
-				}
-			}
-			here_doc(current_cmd->args, should_print);
+			// if (pipe(pipefd) == -1)
+			// {
+			// 	perror("pipe");
+			// 	exit(EXIT_FAILURE);
+			// }
+			// int should_print = 1;
+			// if (current_cmd->next)
+			// {
+			// 	if (!check_here_doc(current_cmd->next->args))
+			// 	{
+			// 		should_print = 0;
+			// 	}
+			// }
+			here_doc(current_cmd->args, 1, i);
 			current_cmd->args = remove_heredoc_args(current_cmd->args);
-			current_cmd->io_fds->fd_in = pipefd[0];
-			close(pipefd[1]);
+			// current_cmd->io_fds->fd_in = pipefd[0];
+			// close(pipefd[1]);
+			
 		}
+		i++;
 		current_cmd = current_cmd->next;
 	}
 

@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:30:39 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/16 14:30:40 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/19 21:13:32 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ bool	check_infile_outfile(t_io_fds *io)
 	return (true);
 }
 
-bool	redirect_io(t_io_fds *io)
+bool	redirect_io(t_io_fds *io, int command_index)
 {
 	int	ret;
 
@@ -64,5 +64,14 @@ bool	redirect_io(t_io_fds *io)
 	if (io->fd_out != -1)
 		if (dup2(io->fd_out, STDOUT_FILENO) == -1)
 			ret = error_msg_commad("dup2", io->outfile, strerror(errno), false);
+	char *str1 = ft_itoa(command_index); 
+	char *str = ft_strjoin("/tmp/.here_do.c", str1);
+	data.heredoc_fd = open(str, O_RDONLY);
+	if(data.heredoc_fd != -1)
+		{	
+			dup2(data.heredoc_fd, STDIN_FILENO);
+		}
+	free(str1);
+	free(str);
 	return (ret);
 }

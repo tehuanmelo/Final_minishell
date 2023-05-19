@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:32:30 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/18 21:59:10 by aball            ###   ########.fr       */
+/*   Updated: 2023/05/19 16:31:59 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	handle_outfile_redirection(t_cmd *cmd, int index)
 	cmd->args[index] = NULL;
 	free(cmd->args[index + 1]);
 	cmd->args[index + 1] = NULL;
+	close(cmd->io_fds->fd_out);
 	return (EXIT_SUCCESS);
 }
 
@@ -91,6 +92,7 @@ int	handle_infile_redirection(t_cmd *cmd, int index)
 	cmd->args[index] = NULL;
 	free(cmd->args[index + 1]);
 	cmd->args[index + 1] = NULL;
+	close(cmd->io_fds->fd_in);
 	return (EXIT_SUCCESS);
 }
 
