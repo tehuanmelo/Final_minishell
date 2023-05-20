@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:10:12 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/16 14:26:47 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/20 18:26:09 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ static char	**fetch_paths_from_env(t_data *data)
 
 char	*fetch_command_path(t_data *data, char *name)
 {
-    char        **env_paths;
-    char        *cmd;
-    char        *cmd_path;
+	char	**env_paths;
+	char	*cmd;
+	char	*cmd_path;
 
 	if (!name)
 		return (NULL);

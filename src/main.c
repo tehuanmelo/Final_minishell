@@ -6,25 +6,12 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 22:26:41 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/11 16:43:42 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/20 18:37:20 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/execution.h"
 #include "../inc/minishell.h"
-
-void	free_env(char **env)
-{
-	int	i;
-
-	if (env == NULL)
-		return ;
-	for (i = 0; env[i] != NULL; i++)
-	{
-		free(env[i]);
-	}
-	free(env);
-}
 
 int	main(int argc, char **argv, char **env)
 {

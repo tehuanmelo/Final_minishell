@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:33:37 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/16 14:36:41 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/20 19:40:49 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ bool	init_data(t_data *data, char **env)
 	data->cmd_lst = NULL;
 	data->heredoc_fd = -1;
 	data->pid = -1;
+	data->heredoc_call = false;
 	data->exit_code = 0;
 	return (true);
 }

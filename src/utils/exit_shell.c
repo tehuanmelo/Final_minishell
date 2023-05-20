@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:33:34 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/19 20:11:22 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/20 19:50:09 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ void	exit_shell(t_data *data, int exno)
 {
 	if (data)
 	{
+		// printf("Here doc fd %d\n", data->heredoc_fd);
+		// if(data->heredoc_fd != -1)
+			close(data->heredoc_fd);
 		if (data->cmd_lst)
 			close_fds(data->cmd_lst, true);
 		free_data(data, data->cmd_lst, true);
@@ -46,8 +49,6 @@ void	exit_shell3(t_data *data, int exno)
 {
 	if (data)
 	{
-		// if (data->cmd_lst && data->cmd_lst->io_fds)
-		// 	close_fds(data->cmd_lst, true);
 		if (data && data->input)
 		{
 			free(data->input);

@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:32:30 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/19 16:31:59 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/20 17:44:47 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ int	handle_outfile_redirection(t_cmd *cmd, int index)
 	{
 		open_flag |= O_APPEND;
 	}
-	close(cmd->io_fds->fd_out);
+	if(cmd->io_fds->fd_out != -1)
+		close(cmd->io_fds->fd_out);
 	cmd->io_fds->fd_out = open(cmd->args[index + 1], open_flag, 0644);
 	if (cmd->io_fds->fd_out == -1)
 	{
@@ -55,7 +56,7 @@ int	handle_outfile_redirection(t_cmd *cmd, int index)
 	cmd->args[index] = NULL;
 	free(cmd->args[index + 1]);
 	cmd->args[index + 1] = NULL;
-	close(cmd->io_fds->fd_out);
+	// close(cmd->io_fds->fd_out); 
 	return (EXIT_SUCCESS);
 }
 
@@ -76,12 +77,6 @@ int	handle_infile_redirection(t_cmd *cmd, int index)
 	if (last_fd_in == -1)
 	{
 		missing_filename = ft_strdup(cmd->args[index + 1]);
-		// for (int i = 0; cmd->args[i] != NULL; i++)
-		// {
-		// 	free(cmd->args[i]);
-		// 	cmd->args[i] = NULL;
-		// }
-		// free(cmd->args);
 		data.exit_code = error_msg_commad(missing_filename, NULL,
 				strerror(errno), 1);
 		free(missing_filename);
@@ -92,7 +87,8 @@ int	handle_infile_redirection(t_cmd *cmd, int index)
 	cmd->args[index] = NULL;
 	free(cmd->args[index + 1]);
 	cmd->args[index + 1] = NULL;
-	close(cmd->io_fds->fd_in);
+	if(cmd->io_fds->fd_in != -1)
+		close(cmd->io_fds->fd_in);
 	return (EXIT_SUCCESS);
 }
 

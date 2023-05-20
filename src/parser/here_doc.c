@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 13:16:07 by tde-melo          #+#    #+#             */
-/*   Updated: 2023/05/19 21:24:01 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/20 19:41:23 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,15 @@ int	check_here_doc(char **args)
 			return (0);
 		args++;
 	}
+	data.heredoc_call = true;
 	return (1);
 }
 
-char	*get_delimiter(char **input)
+char	*get_delimiter(char **input, int delimier_index)
 {
 	char	*delimiter;
-
+	(void)delimier_index;
+	
 	delimiter = NULL;
 	while (*input)
 	{
@@ -34,7 +36,6 @@ char	*get_delimiter(char **input)
 		if (!ft_strcmp("<<", *input))
 		{
 			delimiter = *(++input);
-			break ;
 		}
 		input++;
 	}
@@ -80,8 +81,6 @@ int	execute_heredoc(char *delimiter, int command_index)
 		free(line);
 	}
 	free(str1);
-	// print_file_contents(str);
-	// printf("index command %d\n", command_index);
 	free(str);
 	close(data_->heredoc_fd);
 	return (EXIT_SUCCESS);
@@ -92,16 +91,15 @@ void here_doc(char **args, int should_print, int command_index)
 	char	*delimiter;
 	int		status;
 	pid_t	pid;
+	int		delimiter_index = 0;
+	
 
     pid = fork();
     if (pid == 0)
     {
         signal(SIGINT, sigint_handler_heredoc);
-        delimiter = get_delimiter(args);
+        delimiter = get_delimiter(args, delimiter_index);
 		printf("I am getting the delimiter %s\n", delimiter);
-        // if (execute_heredoc(delimiter))
-        //     exit_shell(&data, EXIT_FAILURE);
-        // Print file contents only if should_print is true
         if (should_print)
 			execute_heredoc(delimiter , command_index);   //     print_file_contents("/tmp/.here_do.c");
         exit_shell(&data, EXIT_SUCCESS);
