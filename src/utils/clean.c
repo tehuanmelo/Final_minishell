@@ -53,6 +53,11 @@ void	close_fds(t_cmd *cmds, bool close_backups)
 		if (close_backups)
 			restore_io(cmds->io_fds);
 	}
+	if(data.heredoc_fd)
+	{
+		if(data.heredoc_fd != -1 )
+			close(data.heredoc_fd);
+	}
 	close_pipe_fds(cmds, NULL);
 }
 
@@ -65,6 +70,7 @@ void	close_child_fds(t_cmd *cmds)
 		if (cmds->io_fds->fd_out != -1)
 			close(cmds->io_fds->fd_out);
 	}
+	
 	close_pipe_fds(cmds, NULL);
 }
 
