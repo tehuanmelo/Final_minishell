@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_input_output.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:30:39 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/20 19:58:19 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/21 18:49:42 by tehuanmelo       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ bool	redirect_io(t_io_fds *io, int command_index)
 		if (dup2(io->fd_out, STDOUT_FILENO) == -1)
 				ret = error_msg_commad("dup2", io->outfile, strerror(errno), false);
 		char *str1 = ft_itoa(command_index); 
-		char *str = ft_strjoin("/tmp/.here_do.c", str1);
+		char *str = ft_strjoin("/tmp/.here_doc", str1);
 
 		if(data.heredoc_fd != -1 )
 			close(data.heredoc_fd);

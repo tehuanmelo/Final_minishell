@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 13:16:07 by tde-melo          #+#    #+#             */
-/*   Updated: 2023/05/20 19:41:23 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/21 21:47:05 by tehuanmelo       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	check_here_doc(char **args)
+int check_here_doc(char **args)
 {
 	while (*args)
 	{
@@ -24,25 +24,25 @@ int	check_here_doc(char **args)
 	return (1);
 }
 
-char	*get_delimiter(char **input, int delimier_index)
+char **get_delimiter(char **input, int nbr_heredocs)
 {
-	char	*delimiter;
-	(void)delimier_index;
-	
-	delimiter = NULL;
+	char **delimiter;
+	int i;
+
+	delimiter = ft_calloc(nbr_heredocs + 1, sizeof(char *));
+	i = 0;
 	while (*input)
 	{
-		//! FIX HERE FOR THE LAST DELIMINTER 
 		if (!ft_strcmp("<<", *input))
 		{
-			delimiter = *(++input);
+			delimiter[i++] = ft_strdup(*(++input));
 		}
 		input++;
 	}
 	return (delimiter);
 }
 
-int	heredoc_readline(char **input)
+int heredoc_readline(char **input)
 {
 	*input = readline(HD_PROMPT);
 	if (!*input)
@@ -50,64 +50,92 @@ int	heredoc_readline(char **input)
 	return (EXIT_SUCCESS);
 }
 
-int	execute_heredoc(char *delimiter, int command_index)
+int execute_heredoc(char **delimiter, int command_index, int nbr_heredocs)
 {
-	int		line_writen;
-	int		nl_writen;
-	char	*line;
-	int		status;
-	t_data	*data_;
-	char *str1 = ft_itoa(command_index); 
-	char *str = ft_strjoin("/tmp/.here_do.c", str1);
-	
+	int line_writen;
+	int nl_writen;
+	char *line;
+	int status;
+	t_data *data_;
+	char *str1 = ft_itoa(command_index);
+	char *str = ft_strjoin("/tmp/.here_doc", str1);
+	int i;
+
 	data_ = &data;
-	data_->heredoc_fd = open(str, O_WRONLY | O_CREAT | O_TRUNC,
-			0777);
+	data_->heredoc_fd = open(str, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (data_->heredoc_fd == -1)
-		{
-			free(str1);
-			free(str);
-			return (EXIT_FAILURE);
-		}
+	{
+		free(str1);
+		free(str);
+		return (EXIT_FAILURE);
+	}
+	i = 0;
 	while (1)
 	{
 		status = heredoc_readline(&line);
-		if (status == EXIT_FAILURE || (ft_strcmp(line, delimiter) == 0))
-			break ;
-		line_writen = write(data_->heredoc_fd, line, ft_strlen(line));
-		nl_writen = write(data_->heredoc_fd, "\n", 1);
-		if (line_writen == -1 || nl_writen == -1)
-			break ;
+		if (nbr_heredocs > 1)
+		{
+			if (ft_strcmp(line, delimiter[i]) == 0)
+			{
+				nbr_heredocs--;
+				i++;
+			}
+		}
+		else
+		{
+			if (status == EXIT_FAILURE || (ft_strcmp(line, delimiter[i]) == 0))
+				break;
+			line_writen = write(data_->heredoc_fd, line, ft_strlen(line));
+			nl_writen = write(data_->heredoc_fd, "\n", 1);
+			if (line_writen == -1 || nl_writen == -1)
+				break;
+		}
 		free(line);
 	}
+	close(data_->heredoc_fd);
 	free(str1);
 	free(str);
-	close(data_->heredoc_fd);
 	return (EXIT_SUCCESS);
+}
+
+int get_heredoc_nbr(char **args)
+{
+	int i;
+	int nbr_heredocs;
+
+	i = 0;
+	nbr_heredocs = 0;
+	while (args[i])
+	{
+		if (ft_strcmp(args[i], "<<") == 0)
+			nbr_heredocs++;
+		i++;
+	}
+	return (nbr_heredocs);
 }
 
 void here_doc(char **args, int should_print, int command_index)
 {
-	char	*delimiter;
-	int		status;
-	pid_t	pid;
-	int		delimiter_index = 0;
-	
+	char **delimiter;
+	int status;
+	pid_t pid;
+	int nbr_heredocs;
 
-    pid = fork();
-    if (pid == 0)
-    {
-        signal(SIGINT, sigint_handler_heredoc);
-        delimiter = get_delimiter(args, delimiter_index);
-		printf("I am getting the delimiter %s\n", delimiter);
-        if (should_print)
-			execute_heredoc(delimiter , command_index);   //     print_file_contents("/tmp/.here_do.c");
-        exit_shell(&data, EXIT_SUCCESS);
-    }
-    else
-    {
-        signal(SIGINT, SIG_IGN);
-        waitpid(pid, &status, 0);
-        init_signals();
-    }
+	nbr_heredocs = get_heredoc_nbr(args);
+	pid = fork();
+	if (pid == 0)
+	{
+		signal(SIGINT, sigint_handler_heredoc);
+		delimiter = get_delimiter(args, nbr_heredocs);
+
+		if (should_print)
+			execute_heredoc(delimiter, command_index, nbr_heredocs); //     print_file_contents("/tmp/.here_do.c");
+		exit_shell(&data, EXIT_SUCCESS);
+	}
+	else
+	{
+		signal(SIGINT, SIG_IGN);
+		waitpid(pid, &status, 0);
+		init_signals();
+	}
 }
