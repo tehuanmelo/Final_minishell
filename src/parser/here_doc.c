@@ -71,12 +71,12 @@ void write_heredoc_file(char **delimiter, int nbr_heredocs, t_data *data)
 	while (1)
 	{
 		status = heredoc_readline(&line);
-		if (status == EXIT_FAILURE || (ft_strcmp(line, delimiter[i]) == 0))
-			break;
-		else if (nbr_heredocs > 1)
+		if (nbr_heredocs > 1)
 			checking_delimiter_index(&nbr_heredocs, &i, delimiter, line);
 		else
 		{
+			if (status == EXIT_FAILURE || (ft_strcmp(line, delimiter[i]) == 0))
+				break;
 			line_writen = write(data->heredoc_fd, line, ft_strlen(line));
 			nl_writen = write(data->heredoc_fd, "\n", 1);
 			if (line_writen == -1 || nl_writen == -1)
@@ -84,6 +84,8 @@ void write_heredoc_file(char **delimiter, int nbr_heredocs, t_data *data)
 		}
 		free(line);
 	}
+	if (line)
+		free(line);
 }
 
 void free_delimiter(char **delimiter)

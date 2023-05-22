@@ -64,8 +64,8 @@ bool	redirect_io(t_io_fds *io, int command_index)
 	if (io->fd_out != -1)
 		if (dup2(io->fd_out, STDOUT_FILENO) == -1)
 				ret = error_msg_commad("dup2", io->outfile, strerror(errno), false);
-		char *str1 = ft_itoa(command_index); 
-		char *str = ft_strjoin("/tmp/.here_doc", str1);
+	char *str1 = ft_itoa(command_index); 
+	char *str = ft_strjoin("/tmp/.here_doc", str1);
 
 		if(data.heredoc_fd != -1 )
 			close(data.heredoc_fd);
