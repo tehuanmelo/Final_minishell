@@ -6,7 +6,7 @@
 /*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 13:16:07 by tde-melo          #+#    #+#             */
-/*   Updated: 2023/05/21 22:36:34 by tehuanmelo       ###   ########.fr       */
+/*   Updated: 2023/05/22 19:09:44 by tehuanmelo       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void checking_delimiter_index(int *nbr_heredocs, int *i, char **delimiter, char 
 	}
 }
 
-void write_heredoc_file(char **delimiter, int nbr_heredocs, t_data *data_)
+void write_heredoc_file(char **delimiter, int nbr_heredocs, t_data *data)
 {
 	int line_writen;
 	int nl_writen;
@@ -77,8 +77,8 @@ void write_heredoc_file(char **delimiter, int nbr_heredocs, t_data *data_)
 			{
 				if (status == EXIT_FAILURE || (ft_strcmp(line, delimiter[i]) == 0))
 					break;
-				line_writen = write(data_->heredoc_fd, line, ft_strlen(line));
-				nl_writen = write(data_->heredoc_fd, "\n", 1);
+				line_writen = write(data->heredoc_fd, line, ft_strlen(line));
+				nl_writen = write(data->heredoc_fd, "\n", 1);
 				if (line_writen == -1 || nl_writen == -1)
 					break;
 			}
@@ -98,22 +98,22 @@ void free_delimiter(char **delimiter)
 
 int execute_heredoc(char **delimiter, int command_index, int nbr_heredocs)
 {
-	t_data *data_;
+	t_data *new_data;
 	char *str1;
 	char *str;
 
 	str1 = ft_itoa(command_index);
 	str = ft_strjoin("/tmp/.here_doc", str1);
-	data_ = &data;
-	data_->heredoc_fd = open(str, O_WRONLY | O_CREAT | O_TRUNC, 0777);
-	if (data_->heredoc_fd == -1)
+	new_data = &data;
+	new_data->heredoc_fd = open(str, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	if (new_data->heredoc_fd == -1)
 	{
 		free(str1);
 		free(str);
 		return (EXIT_FAILURE);
 	}
-	write_heredoc_file(delimiter, nbr_heredocs, data_);
-	close(data_->heredoc_fd);
+	write_heredoc_file(delimiter, nbr_heredocs, new_data);
+	close(new_data->heredoc_fd);
 	free_delimiter(delimiter);
 	free(str1);
 	free(str);
@@ -147,7 +147,6 @@ void here_doc(char **args, int should_print, int command_index)
 	pid = fork();
 	if (pid == 0)
 	{
-		signal(SIGINT, sigint_handler_heredoc);
 		delimiter = get_delimiter(args, nbr_heredocs);
 		if (should_print)
 			execute_heredoc(delimiter, command_index, nbr_heredocs); //     print_file_contents("/tmp/.here_do.c");

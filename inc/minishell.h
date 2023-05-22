@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 10:03:35 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/20 19:40:33 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/22 14:58:43 by tehuanmelo       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-# define MINI_PROMPT "\033[34;47;1;3mminishell\033[36;49;1;3m => \033[0m"
+# define MINI_PROMPT "\033[34;47;1;3mminishell\033[36;49;1;3m ~> \033[0m"
 # define HD_PROMPT "\033[33;49;3mheredoc~> \033[0m"
 
 enum				e_type
