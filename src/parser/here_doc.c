@@ -6,7 +6,7 @@
 /*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 13:16:07 by tde-melo          #+#    #+#             */
-/*   Updated: 2023/05/22 19:09:44 by tehuanmelo       ###   ########.fr       */
+/*   Updated: 2023/05/22 21:33:01 by tehuanmelo       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,17 +71,17 @@ void write_heredoc_file(char **delimiter, int nbr_heredocs, t_data *data)
 	while (1)
 	{
 		status = heredoc_readline(&line);
-		if (nbr_heredocs > 1)
+		if (status == EXIT_FAILURE || (ft_strcmp(line, delimiter[i]) == 0))
+			break;
+		else if (nbr_heredocs > 1)
 			checking_delimiter_index(&nbr_heredocs, &i, delimiter, line);
 		else
-			{
-				if (status == EXIT_FAILURE || (ft_strcmp(line, delimiter[i]) == 0))
-					break;
-				line_writen = write(data->heredoc_fd, line, ft_strlen(line));
-				nl_writen = write(data->heredoc_fd, "\n", 1);
-				if (line_writen == -1 || nl_writen == -1)
-					break;
-			}
+		{
+			line_writen = write(data->heredoc_fd, line, ft_strlen(line));
+			nl_writen = write(data->heredoc_fd, "\n", 1);
+			if (line_writen == -1 || nl_writen == -1)
+				break;
+		}
 		free(line);
 	}
 }
