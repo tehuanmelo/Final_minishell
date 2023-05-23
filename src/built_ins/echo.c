@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:12:58 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/23 19:19:30 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/23 19:45:47 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,13 @@ void	print_echo_args(char **args, bool n_flag, int i)
 	while (args[i] != NULL)
 	{	
 		if(ft_strcmp(args[i], "\">\"") == 0 || ft_strcmp(args[i], "\'>\'") == 0)
-		{
-			// i++;
 			ft_putchar_fd('>', STDOUT_FILENO);
-		}
+		else if(ft_strcmp(args[i], "\"<\"") == 0 || ft_strcmp(args[i], "\'<\'") == 0)
+			ft_putchar_fd('<', STDOUT_FILENO);
+		else if(ft_strcmp(args[i], "\">>\"") == 0 || ft_strcmp(args[i], "\'>>\'") == 0)
+			ft_putstr_fd(">>", STDOUT_FILENO);
+		else if(ft_strcmp(args[i], "\"<<\"") == 0 || ft_strcmp(args[i], "\'<<\'") == 0)
+			ft_putstr_fd("<<", STDOUT_FILENO);
 		else
 			ft_putstr_fd(args[i], STDOUT_FILENO);
 		if (args[i + 1] != NULL)
