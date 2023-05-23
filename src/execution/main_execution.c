@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:10:01 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/20 18:31:16 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/23 14:42:54 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,15 +106,11 @@ int	execute(t_data *data)
 	t_cmd	*current_cmd;
 	int		should_print;
 	int		i;
-
-	printf("WHo am I \n");
+	
 	current_cmd = data->cmd_lst;
 	ret = execution_prep(data);
 	if (ret != COMMAND_NOT_FOUND)
-	{
-		printf("Whaaat\n");
 		return (ret);
-	}
 	if (!data->cmd_lst->next && !data->cmd_lst->prev
 		&& check_infile_outfile(data->cmd_lst->io_fds))
 	{

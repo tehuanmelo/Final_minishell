@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 13:16:07 by tde-melo          #+#    #+#             */
-/*   Updated: 2023/05/20 19:41:23 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/23 14:42:13 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ char	*get_delimiter(char **input, int delimier_index)
 	
 	delimiter = NULL;
 	while (*input)
-	{
-		//! FIX HERE FOR THE LAST DELIMINTER 
+	{ 
 		if (!ft_strcmp("<<", *input))
 		{
 			delimiter = *(++input);
@@ -52,6 +51,7 @@ int	heredoc_readline(char **input)
 
 int	execute_heredoc(char *delimiter, int command_index)
 {
+	
 	int		line_writen;
 	int		nl_writen;
 	char	*line;
@@ -83,6 +83,7 @@ int	execute_heredoc(char *delimiter, int command_index)
 	free(str1);
 	free(str);
 	close(data_->heredoc_fd);
+	data_->heredoc_fd = -1;
 	return (EXIT_SUCCESS);
 }
 
@@ -93,7 +94,7 @@ void here_doc(char **args, int should_print, int command_index)
 	pid_t	pid;
 	int		delimiter_index = 0;
 	
-
+data.command_index = command_index;
     pid = fork();
     if (pid == 0)
     {

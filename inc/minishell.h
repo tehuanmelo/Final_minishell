@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 10:03:35 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/20 19:40:33 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/23 14:28:36 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ typedef struct s_data
 	char			*input;
 	int				nb_cmd;
 	int				exit_code;
+	int				command_index;
 	char			**env;
 	char			*current_dir;
 	char			*old_working_dir;

@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:33:26 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/20 19:36:51 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/23 14:49:54 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,23 @@ void	close_fds(t_cmd *cmds, bool close_backups)
 {
 	if (cmds->io_fds)
 	{
-		if (cmds->io_fds->fd_in != -1)
+		if (cmds->io_fds->fd_in != -1 && cmds->io_fds->fd_in != STDIN_FILENO)
 			close(cmds->io_fds->fd_in);
-		if (cmds->io_fds->fd_out != -1)
+		if (cmds->io_fds->fd_out != -1 && cmds->io_fds->fd_out != STDOUT_FILENO)
 			close(cmds->io_fds->fd_out);
+		
+	// cmds->io_fds->fd_in = 0;
+	// cmds->io_fds->fd_out = 1;
 		if (close_backups)
 			restore_io(cmds->io_fds);
 	}
-	if(data.heredoc_fd != -1 )
+
+	if(data.heredoc_fd != -1)
+	{
+		// perror("delete: \n");
 		close(data.heredoc_fd);
+	}
+	data.heredoc_fd = -1;
 	close_pipe_fds(cmds, NULL);
 }
 
