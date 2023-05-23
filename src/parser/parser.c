@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 21:07:15 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/18 21:13:40 by aball            ###   ########.fr       */
+/*   Updated: 2023/05/23 18:23:53 by tde-melo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,15 @@
 char	*get_string(t_elem **head)
 {
 	char	*str;
+	char *tmp;
 
 	str = NULL;
-	if ((is_redir((*head)->type)))
+	if (ft_strcmp((*head)->content, ">") == 0 && (*head)->prev->type == D_QUOTE && (*head)->next->type == D_QUOTE)
+	{
+		tmp = "\">\"";
+		str = join_string(str, tmp);
+	}
+	else if ((is_redir((*head)->type)))
 		str = join_string(str, (*head)->content);
 	else
 	{
@@ -78,6 +84,7 @@ t_cmd	*parser(t_data *data)
 		new->args = get_args(&head_counter, &tmp);
 		new->command = ft_strdup(new->args[0]);
 		init_io(new);
+		
 		data->exit_code = parse_redirection(new);
 		append_command(&head, new);
 	}

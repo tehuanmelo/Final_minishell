@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:12:58 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/10 12:28:17 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/23 18:21:39 by tde-melo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	print_echo_args(char **args, bool n_flag, int i)
 		i++;
 	}
 }
+
+
 
 bool	check_for_n(char *arg)
 {
