@@ -6,25 +6,31 @@
 /*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 21:07:15 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/23 19:10:22 by tde-melo         ###   ########.fr       */
+/*   Updated: 2023/05/23 19:59:20 by tde-melo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int is_redir_inquotes(t_elem *head)
+int check_if_is_redir(char *content)
+{
+	if (ft_strcmp(content, ">") == 0)
+			return 0;
+		else if (ft_strcmp(content, "<") == 0)
+			return 0;
+		else if (ft_strcmp(content, "<<") == 0)
+			return 0;
+		else if (ft_strcmp(content, ">>") == 0)
+			return 0;
+	return 1;
+}
+
+int is_special_redir_case(t_elem *head)
 {
 	if (head->prev && head->next && ((head->prev->type == D_QUOTE && head->next->type == D_QUOTE) || (head->prev->type == S_QUOTE && head->next->type == S_QUOTE)))
-	{
-		if (ft_strcmp(head->content, ">") == 0)
-			return 0;
-		else if (ft_strcmp(head->content, "<") == 0)
-			return 0;
-		else if (ft_strcmp(head->content, "<<") == 0)
-			return 0;
-		else if (ft_strcmp(head->content, ">>") == 0)
-			return 0;
-	}
+		return check_if_is_redir(head->content);
+	else if (head && head->type == ENV)
+		return check_if_is_redir(head->content);
 	return 1;
 }
 
@@ -43,7 +49,7 @@ char *get_string(t_elem **head)
 	char *str;
 
 	str = NULL;
-	if (!is_redir_inquotes(*head))
+	if (!is_special_redir_case(*head))
 		str = get_redir_within_quotes((*head)->content);
 	else if ((is_redir((*head)->type)))
 		str = join_string(str, (*head)->content);
