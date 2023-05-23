@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:12:58 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/23 18:21:39 by tde-melo         ###   ########.fr       */
+/*   Updated: 2023/05/23 19:45:47 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,19 @@ void	print_echo_args(char **args, bool n_flag, int i)
 			ft_putchar_fd('\n', STDOUT_FILENO);
 		return ;
 	}
-	while (args[i])
-	{
-		ft_putstr_fd(args[i], STDOUT_FILENO);
-		if (args[i + 1])
+	while (args[i] != NULL)
+	{	
+		if(ft_strcmp(args[i], "\">\"") == 0 || ft_strcmp(args[i], "\'>\'") == 0)
+			ft_putchar_fd('>', STDOUT_FILENO);
+		else if(ft_strcmp(args[i], "\"<\"") == 0 || ft_strcmp(args[i], "\'<\'") == 0)
+			ft_putchar_fd('<', STDOUT_FILENO);
+		else if(ft_strcmp(args[i], "\">>\"") == 0 || ft_strcmp(args[i], "\'>>\'") == 0)
+			ft_putstr_fd(">>", STDOUT_FILENO);
+		else if(ft_strcmp(args[i], "\"<<\"") == 0 || ft_strcmp(args[i], "\'<<\'") == 0)
+			ft_putstr_fd("<<", STDOUT_FILENO);
+		else
+			ft_putstr_fd(args[i], STDOUT_FILENO);
+		if (args[i + 1] != NULL)
 			ft_putchar_fd(' ', STDOUT_FILENO);
 		else if (!args[i + 1] && !n_flag)
 			ft_putchar_fd('\n', STDOUT_FILENO);
@@ -31,7 +40,18 @@ void	print_echo_args(char **args, bool n_flag, int i)
 	}
 }
 
-
+// bool check_for_redirection(char **arg)
+// {
+// 	int i = 0;
+// 	bool flag_for_redir = false;
+	
+// 	if (ft_strcmp(arg[i], "\">\"") == 0)
+// 	{
+// 		flag_for_redir = true;
+// 		i++;
+// 	}
+// 	return (flag_for_redir);
+// }
 
 bool	check_for_n(char *arg)
 {
