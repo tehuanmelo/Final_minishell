@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aball <aball@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 13:34:47 by tde-melo          #+#    #+#             */
-/*   Updated: 2023/05/18 21:40:37 by aball            ###   ########.fr       */
+/*   Updated: 2023/05/23 15:14:53 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,20 @@ void	init_shell(t_data *data)
 	{
 		data->cmd_lst = parser(data);
 		data->exit_code = execute(data);
+		// if(access())
+		int i = 0;
+		while (i <= data->command_index)
+		{
+			char *str1 = ft_itoa(i); 
+			char *str = ft_strjoin("/tmp/.here_doc", str1);
+			if (access(str, F_OK) == 0)
+				unlink(str);
+			i++;
+			free(str1);
+			free(str);
+		}
+		
+		// printf("%d\n", data->command_index);
 		free_data(data, data->cmd_lst, false);
 		free_commands(data->cmd_lst);
 	}

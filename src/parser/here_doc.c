@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 13:16:07 by tde-melo          #+#    #+#             */
-/*   Updated: 2023/05/22 21:33:01 by tehuanmelo       ###   ########.fr       */
+/*   Updated: 2023/05/23 15:13:58 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ int execute_heredoc(char **delimiter, int command_index, int nbr_heredocs)
 	free_delimiter(delimiter);
 	free(str1);
 	free(str);
+	new_data->heredoc_fd = -1;
 	return (EXIT_SUCCESS);
 }
 
@@ -145,6 +146,7 @@ void here_doc(char **args, int should_print, int command_index)
 	pid_t pid;
 	int nbr_heredocs;
 
+	data.command_index = command_index;
 	nbr_heredocs = get_heredoc_nbr(args);
 	pid = fork();
 	if (pid == 0)

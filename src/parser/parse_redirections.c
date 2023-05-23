@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:32:30 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/20 17:44:47 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/23 13:58:24 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ int	handle_infile_redirection(t_cmd *cmd, int index)
 	cmd->args[index] = NULL;
 	free(cmd->args[index + 1]);
 	cmd->args[index + 1] = NULL;
-	if(cmd->io_fds->fd_in != -1)
-		close(cmd->io_fds->fd_in);
+	// if(cmd->io_fds->fd_in != -1)
+	// 	close(cmd->io_fds->fd_in);
 	return (EXIT_SUCCESS);
 }
 
