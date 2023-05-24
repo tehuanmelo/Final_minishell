@@ -6,7 +6,7 @@
 /*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 12:27:07 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/16 15:50:48 by tehuanmelo       ###   ########.fr       */
+/*   Updated: 2023/05/24 15:37:40 by tehuanmelo       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,43 +32,15 @@ int	check_quotes(t_elem **tokens, enum e_type type)
 
 int	check_redir(t_elem *tokens)
 {
-	t_elem	*tmp_prev;
 	t_elem	*tmp_next;
 
-	tmp_prev = NULL;
-	tmp_next = NULL;
-	if (tokens->prev && tokens->next)
+	tmp_next = get_list_next_bound(tokens);
+	if (tmp_next)
 	{
-		tmp_prev = tokens->prev;
-		tmp_next = tokens->next;
-		while (tmp_prev && (tmp_prev->type == WHITE_SPACE
-				|| is_quote(tmp_prev->type) || tmp_prev->type == EMPTY))
-			tmp_prev = tmp_prev->prev;
-		while (tmp_next && (tmp_next->type == WHITE_SPACE
-				|| is_quote(tmp_next->type) || tmp_next->type == EMPTY))
-			tmp_next = tmp_next->next;
-	}
-	if (tmp_next && tmp_prev)
-	{
-		if ((tmp_prev->type == WORD || tmp_prev->type == ENV
-				|| tmp_prev->type == PIPE) && (tmp_next->type == WORD
-				|| tmp_next->type == ENV || tmp_next->type == PIPE))
+		if ((tmp_next->type == WORD || tmp_next->type == ENV || tmp_next->type == PIPE))
 			return (EXIT_SUCCESS);
 	}
 	syntax_error_message(tokens->content);
-	return (EXIT_FAILURE);
-}
-
-int check_tmp_pipe (t_elem *tmp_prev, t_elem *tmp_next)
-{
-	if (tmp_next && tmp_prev)
-	{
-		if ((tmp_prev->type == WORD || tmp_prev->type == ENV
-				|| (is_redir(tmp_prev->type) && tmp_prev->next->type == PIPE))
-				&& (tmp_next->type == WORD || tmp_next->type == ENV
-				|| is_redir(tmp_next->type)))
-			return (EXIT_SUCCESS);
-	}
 	return (EXIT_FAILURE);
 }
 
@@ -81,17 +53,17 @@ int	check_pipe(t_elem *tokens)
 	tmp_next = NULL;
 	if (tokens->prev && tokens->next)
 	{
-		tmp_prev = tokens->prev;
-		tmp_next = tokens->next;
-		while (tmp_prev && (tmp_prev->type == WHITE_SPACE
-				|| is_quote(tmp_prev->type) || tmp_prev->type == EMPTY))
-			tmp_prev = tmp_prev->prev;
-		while (tmp_next && (tmp_next->type == WHITE_SPACE
-				|| is_quote(tmp_next->type) || tmp_next->type == EMPTY))
-			tmp_next = tmp_next->next;
+		tmp_prev = get_list_prev_bound(tokens);
+		tmp_next = get_list_next_bound(tokens);
 	}
-	if (!check_tmp_pipe(tmp_prev, tmp_next))
-		return (EXIT_SUCCESS);
+	if (tmp_next && tmp_prev)
+	{
+		if ((tmp_prev->type == WORD || tmp_prev->type == ENV
+				|| (is_redir(tmp_prev->type) && tmp_prev->next->type == PIPE))
+				&& (tmp_next->type == WORD || tmp_next->type == ENV
+				|| is_redir(tmp_next->type)))
+			return (EXIT_SUCCESS);
+	}
 	syntax_error_message(tokens->content);
 	return (EXIT_FAILURE);
 }

@@ -1,7 +1,7 @@
 NAME = minishell
 
 LEXER = lexer.c lexer_utils.c sintax_error.c sintax_error_utils.c expansion.c utils.c print_tokens_delete_me.c
-PARSER = parser.c parser_utils.c here_doc.c parse_redirections.c print_commands_delete_me.c join_string.c
+PARSER = parser.c parser_utils.c here_doc.c parse_redirections.c print_commands_delete_me.c join_string.c here_doc_utils.c
 SIGNALS = signals.c
 BUILT_INS = cd.c echo.c env.c export.c pwd.c unset.c exit.c
 EXECUTION = env_variable.c execute_command.c executives_utils.c main_execution.c our_env_var.c path_finder.c
@@ -13,10 +13,10 @@ MAIN = main.c  minishell.c
 CC = gcc
 # CFLAGS = -Wall -Werror -Wextra -g -I/usr/local/cellar/readline/8.1/include
 # READLINE_LIB =  -L/usr/local/cellar/readline/8.1/lib -lreadline
-CFLAGS = -Wall -Werror -Wextra -g -I/usr/local/cellar/readline/8.1.1/include
-READLINE_LIB =  -L/usr/local/cellar/readline/8.1.1/lib -lreadline
-# CFLAGS = -Wall -Werror -Wextra -I/opt/homebrew/Cellar/readline/8.2.1/include
-# READLINE_LIB =  -L/opt/homebrew/Cellar/readline/8.2.1/lib -lreadline
+# CFLAGS = -Wall -Werror -Wextra -g -I/usr/local/cellar/readline/8.1.1/include
+# READLINE_LIB =  -L/usr/local/cellar/readline/8.1.1/lib -lreadline
+CFLAGS = -Wall -Werror -Wextra -I/opt/homebrew/Cellar/readline/8.2.1/include
+READLINE_LIB =  -L/opt/homebrew/Cellar/readline/8.2.1/lib -lreadline
 # CFLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address
 OBJPATH = ./obj/
 LIBFT = ./src/libft

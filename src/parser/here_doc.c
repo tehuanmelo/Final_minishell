@@ -6,43 +6,13 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 13:16:07 by tde-melo          #+#    #+#             */
-/*   Updated: 2023/05/23 20:50:42 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/24 16:51:31 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	check_here_doc(char **args)
-{
-	while (*args)
-	{
-		if (!ft_strcmp(*args, "<<"))
-			return (0);
-		args++;
-	}
-	data.heredoc_call = true;
-	return (1);
-}
-
-char	**get_delimiter(char **input, int nbr_heredocs)
-{
-	char	**delimiter;
-	int		i;
-
-	delimiter = ft_calloc(nbr_heredocs + 1, sizeof(char *));
-	i = 0;
-	while (*input)
-	{
-		if (!ft_strcmp("<<", *input))
-		{
-			delimiter[i++] = ft_strdup(*(++input));
-		}
-		input++;
-	}
-	return (delimiter);
-}
-
-int	heredoc_readline(char **input)
+int heredoc_readline(char **input)
 {
 	*input = readline(HD_PROMPT);
 	if (!*input)
@@ -50,17 +20,7 @@ int	heredoc_readline(char **input)
 	return (EXIT_SUCCESS);
 }
 
-void	checking_delimiter_index(int *nbr_heredocs, int *i, char **delimiter,
-		char *line)
-{
-	if (ft_strcmp(line, delimiter[*i]) == 0)
-	{
-		(*nbr_heredocs)--;
-		(*i)++;
-	}
-}
-
-void	write_heredoc_file(char **delimiter, int nbr_heredocs, t_data *data)
+void write_heredoc_file(char **delimiter, int nbr_heredocs, t_data *data)
 {
 	int		line_writen;
 	int		nl_writen;
@@ -89,17 +49,7 @@ void	write_heredoc_file(char **delimiter, int nbr_heredocs, t_data *data)
 		free(line);
 }
 
-void	free_delimiter(char **delimiter)
-{
-	int	i;
-
-	i = 0;
-	while (delimiter[i])
-		free(delimiter[i++]);
-	free(delimiter);
-}
-
-int	execute_heredoc(char **delimiter, int command_index, int nbr_heredocs)
+int execute_heredoc(char **delimiter, int command_index, int nbr_heredocs)
 {
 	t_data	*new_data;
 	char	*str1;
@@ -124,23 +74,7 @@ int	execute_heredoc(char **delimiter, int command_index, int nbr_heredocs)
 	return (EXIT_SUCCESS);
 }
 
-int	get_heredoc_nbr(char **args)
-{
-	int	i;
-	int	nbr_heredocs;
-
-	i = 0;
-	nbr_heredocs = 0;
-	while (args[i])
-	{
-		if (ft_strcmp(args[i], "<<") == 0)
-			nbr_heredocs++;
-		i++;
-	}
-	return (nbr_heredocs);
-}
-
-void	here_doc(char **args, int should_print, int command_index)
+void here_doc(char **args, int should_print, int command_index)
 {
 	char	**delimiter;
 	int		status;
