@@ -16,7 +16,7 @@ void print_comands()
 {
     t_cmd *head;
 
-    head = data.cmd_lst;
+    head = g_data.cmd_lst;
     int i = 0;
     while (head)
     {

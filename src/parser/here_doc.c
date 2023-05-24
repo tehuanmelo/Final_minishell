@@ -6,7 +6,7 @@
 /*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 13:16:07 by tde-melo          #+#    #+#             */
-/*   Updated: 2023/05/24 17:17:28 by tde-melo         ###   ########.fr       */
+/*   Updated: 2023/05/24 17:48:17 by tde-melo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	execute_heredoc(char **delimiter, int command_index, int nbr_heredocs)
 
 	str1 = ft_itoa(command_index);
 	str = ft_strjoin("/tmp/.here_doc", str1);
-	new_data = &data;
+	new_data = &g_data;
 	new_data->heredoc_fd = open(str, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (new_data->heredoc_fd == -1)
 	{
@@ -81,7 +81,7 @@ void	here_doc(char **args, int should_print, int command_index)
 	pid_t	pid;
 	int		nbr_heredocs;
 
-	data.command_index = command_index;
+	g_data.command_index = command_index;
 	nbr_heredocs = get_heredoc_nbr(args);
 	pid = fork();
 	if (pid == 0)
@@ -89,7 +89,7 @@ void	here_doc(char **args, int should_print, int command_index)
 		delimiter = get_delimiter(args, nbr_heredocs);
 		if (should_print)
 			execute_heredoc(delimiter, command_index, nbr_heredocs);
-		exit_shell(&data, EXIT_SUCCESS);
+		exit_shell(&g_data, EXIT_SUCCESS);
 	}
 	else
 	{

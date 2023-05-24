@@ -6,7 +6,7 @@
 /*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 13:34:47 by tde-melo          #+#    #+#             */
-/*   Updated: 2023/05/24 17:37:38 by tde-melo         ###   ########.fr       */
+/*   Updated: 2023/05/24 17:52:50 by tde-melo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	_readline_(char **input)
 	if (!*input)
 	{
 		ft_putstr("exit\n");
-		exit_shell3(&data, data.exit_code);
+		exit_shell3(&g_data, g_data.exit_code);
 	}
 	if (strcmp(*input, "") == 0)
 	{

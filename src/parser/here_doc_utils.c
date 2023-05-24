@@ -6,7 +6,7 @@
 /*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 13:16:07 by tde-melo          #+#    #+#             */
-/*   Updated: 2023/05/24 17:16:21 by tde-melo         ###   ########.fr       */
+/*   Updated: 2023/05/24 17:48:40 by tde-melo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	check_here_doc(char **args)
 			return (0);
 		args++;
 	}
-	data.heredoc_call = true;
+	g_data.heredoc_call = true;
 	return (1);
 }
 
