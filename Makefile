@@ -1,12 +1,11 @@
 NAME = minishell
 
-LEXER = lexer.c lexer_utils.c sintax_error.c sintax_error_utils.c expansion.c utils.c print_tokens_delete_me.c
-PARSER = parser.c parser_utils.c here_doc.c parse_redirections.c print_commands_delete_me.c join_string.c here_doc_utils.c
+LEXER = lexer.c lexer_utils.c sintax_error.c sintax_error_utils.c expansion.c utils.c
+PARSER = parser.c parser_utils.c here_doc.c parse_redirections.c  join_string.c here_doc_utils.c
 SIGNALS = signals.c
 BUILT_INS = cd.c echo.c env.c export.c pwd.c unset.c exit.c
 EXECUTION = env_variable.c execute_command.c executives_utils.c main_execution.c our_env_var.c path_finder.c
 REDPI = file_input_output.c pipes.c
-DEBUGGER = debugger_print.c
 UTILS =  clean.c error.c exit_shell.c initialize.c frees.c
 MAIN = main.c  minishell.c 
 
@@ -26,7 +25,6 @@ SRC = 	$(addprefix src/lexer/, $(LEXER)) \
 		$(addprefix src/built_ins/, $(BUILT_INS)) \
 		$(addprefix src/RedPi/, $(REDPI)) \
 		$(addprefix src/execution/, $(EXECUTION)) \
-		$(addprefix src/debugger/, $(DEBUGGER)) \
 		$(addprefix src/utils/, $(UTILS)) \
 		$(addprefix src/signals/, $(SIGNALS)) \
 		$(addprefix src/, $(MAIN)) \
@@ -35,7 +33,6 @@ OBJ = 	$(addprefix $(OBJPATH), $(PARSER:.c=.o)) \
 		$(addprefix $(OBJPATH), $(LEXER:.c=.o)) \
 		$(addprefix $(OBJPATH), $(SIGNALS:.c=.o)) \
 		$(addprefix $(OBJPATH), $(BUILT_INS:.c=.o)) \
-		$(addprefix $(OBJPATH), $(DEBUGGER:.c=.o)) \
 		$(addprefix $(OBJPATH), $(EXECUTION:.c=.o)) \
 		$(addprefix $(OBJPATH), $(REDPI:.c=.o)) \
 		$(addprefix $(OBJPATH), $(UTILS:.c=.o)) \
@@ -67,9 +64,6 @@ $(OBJPATH)%.o:	src/signals/%.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 $(OBJPATH)%.o:	src/built_ins/%.c
-	$(CC) $(CFLAGS) -c -o $@ $<
-
-$(OBJPATH)%.o:	src/debugger/%.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 $(OBJPATH)%.o:	src/execution/%.c

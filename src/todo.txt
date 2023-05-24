@@ -1,2 +1,0 @@
-Memory leaks checks 
-1.  env | grep PWD 

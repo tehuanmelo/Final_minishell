@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:12:58 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/23 20:43:41 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/24 18:18:26 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,14 @@
 void	print_echo_args(char **args, bool n_flag, int i)
 {
 	if (!args[i])
-	{
 		if (!n_flag)
-			ft_putchar_fd('\n', STDOUT_FILENO);
-		return ;
-	}
+			return (ft_putchar_fd('\n', STDOUT_FILENO));
 	while (args[i] != NULL)
 	{	
 		if (ft_strcmp(args[i], "\">\"") == 0 || ft_strcmp(args[i], "\'>\'") == 0)
 			ft_putchar_fd('>', STDOUT_FILENO);
-		else if (ft_strcmp(args[i], "\"<\"") == 0 || ft_strcmp(args[i], "\'<\'") == 0)
+		else if (ft_strcmp(args[i], "\"<\"") == 0 \
+		|| ft_strcmp(args[i], "\'<\'") == 0)
 			ft_putchar_fd('<', STDOUT_FILENO);
 		else if (ft_strcmp(args[i], "\">>\"") == 0 \
 		|| ft_strcmp(args[i], "\'>>\'") == 0)

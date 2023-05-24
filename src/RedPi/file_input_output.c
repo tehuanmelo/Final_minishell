@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_input_output.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:30:39 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/24 17:50:51 by tde-melo         ###   ########.fr       */
+/*   Updated: 2023/05/24 18:32:27 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,27 @@ bool	check_infile_outfile(t_io_fds *io)
 	return (true);
 }
 
+void	heredoc_stupid_fds(int fd_out, int command_index)
+{
+	char	*str1;
+	char	*str;
+
+	str1 = ft_itoa(command_index);
+	str = ft_strjoin("/tmp/.here_doc", str1);
+	if (g_data.heredoc_fd != -1)
+		close(g_data.heredoc_fd);
+	g_data.heredoc_fd = open(str, O_RDONLY);
+	if (g_data.heredoc_fd != -1)
+		dup2(g_data.heredoc_fd, STDIN_FILENO);
+	free(str1);
+	free(str);
+	if (fd_out != -1)
+	{
+		close(fd_out);
+		fd_out = -1;
+	}
+}
+
 bool	redirect_io(t_io_fds *io, int command_index)
 {
 	int	ret;
@@ -63,21 +84,7 @@ bool	redirect_io(t_io_fds *io, int command_index)
 			ret = error_msg_commad("dup2", io->infile, strerror(errno), false);
 	if (io->fd_out != -1)
 		if (dup2(io->fd_out, STDOUT_FILENO) == -1)
-				ret = error_msg_commad("dup2", io->outfile, strerror(errno), false);
-	char *str1 = ft_itoa(command_index); 
-	char *str = ft_strjoin("/tmp/.here_doc", str1);
-
-		if(g_data.heredoc_fd != -1 )
-			close(g_data.heredoc_fd);
-		g_data.heredoc_fd = open(str, O_RDONLY);
-		if(g_data.heredoc_fd != -1)
-				dup2(g_data.heredoc_fd, STDIN_FILENO);
-		free(str1);
-		free(str);
-	if(io->fd_out != -1)
-		{
-			close(io->fd_out);
-			io->fd_out = -1;
-		}
+			ret = error_msg_commad("dup2", io->outfile, strerror(errno), false);
+	heredoc_stupid_fds(io->fd_out, command_index);
 	return (ret);
 }
