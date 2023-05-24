@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:10:01 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/23 15:01:36 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/23 20:44:45 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,6 @@ static int	get_children(t_data *data)
 	return (status);
 }
 
-/* create_children:
-*	Creates a child process for each command to execute, except in the
-*	case of a builtin command that is not piped, which executes in the
-*	main process (no children created in this case).
-*	Returns true when a process was created for each command or when a
-*	builtin was executed alone.
-*	Returns false if there was a fork error.
-*/
 static int	create_children(t_data *data)
 {
 	t_cmd	*cmd;
@@ -70,12 +62,6 @@ static int	create_children(t_data *data)
 	return (get_children(data));
 }
 
-/* execution_prep:
-*	Prepares the command list for execution, creates pipes
-*	and checks the input and output files.
-*	Returns false in case of error, true if all is ready to
-*	execute.
-*/
 static int	execution_prep(t_data *data)
 {
 	if (!data || !data->cmd_lst)
@@ -94,12 +80,6 @@ static int	execution_prep(t_data *data)
 	return (COMMAND_NOT_FOUND);
 }
 
-/* execute:
-*	Executes the given commands by creating children processes
-*	and waiting for them to terminate.
-*	Returns the exit code of the last child to terminate. Or
-*	exit code 1 in case of failure in the child creation process.
-*/
 int	execute(t_data *data)
 {
 	int		ret;
@@ -107,7 +87,6 @@ int	execute(t_data *data)
 	int		should_print;
 	int		i;
 
-	// printf("WHo am I \n");
 	current_cmd = data->cmd_lst;
 	ret = execution_prep(data);
 	if (ret != COMMAND_NOT_FOUND)

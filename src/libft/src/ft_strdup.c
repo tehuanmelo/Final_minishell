@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 08:27:01 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/01/29 20:05:50 by tehuanmelo       ###   ########.fr       */
+/*   Updated: 2023/05/24 16:44:56 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ char	*ft_strdup(const char *s1)
 	char	*new;
 	int		i;
 
+	if (!s1)
+		return (ft_strdup(""));
 	new = ft_calloc((ft_strlen(s1) + 1), sizeof(char));
 	if (!new)
 		return (0);

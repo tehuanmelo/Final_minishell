@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:32:30 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/23 13:58:24 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/23 20:48:40 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,10 @@ int	handle_outfile_redirection(t_cmd *cmd, int index)
 	if (!cmd || !cmd->args || !cmd->io_fds || index < 0)
 		return (COMMAND_NOT_FOUND);
 	if (ft_strcmp(cmd->args[index], ">") == 0)
-	{
 		open_flag |= O_TRUNC;
-	}
 	else if (ft_strcmp(cmd->args[index], ">>") == 0)
-	{
 		open_flag |= O_APPEND;
-	}
-	if(cmd->io_fds->fd_out != -1)
+	if (cmd->io_fds->fd_out != -1)
 		close(cmd->io_fds->fd_out);
 	cmd->io_fds->fd_out = open(cmd->args[index + 1], open_flag, 0644);
 	if (cmd->io_fds->fd_out == -1)
@@ -119,18 +115,12 @@ int	parse_redirection(t_cmd *cmd)
 				break ;
 			}
 			if (cmd->args[i + 2] && !is_redirection_operator(cmd->args[i + 2]))
-			{
 				i += 3;
-			}
 			else
-			{
 				i += 2;
-			}
 		}
 		else
-		{
 			i++;
-		}
 	}
 	return (error_occurred);
 }
