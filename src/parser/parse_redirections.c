@@ -6,13 +6,13 @@
 /*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:32:30 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/24 17:19:59 by tde-melo         ###   ########.fr       */
+/*   Updated: 2023/05/24 18:05:01 by tde-melo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_data	data;
+t_data	g_data;
 
 int	is_redirection_operator(const char *s)
 {
@@ -36,9 +36,9 @@ int	handle_outfile_redirection(t_cmd *cmd, int index)
 	cmd->io_fds->fd_out = open(cmd->args[index + 1], open_flag, 0644);
 	if (cmd->io_fds->fd_out == -1)
 	{
-		data.exit_code = error_msg_commad(cmd->args[index + 1], NULL,
+		g_data.exit_code = error_msg_commad(cmd->args[index + 1], NULL,
 				strerror(errno), 1);
-		return (data.exit_code);
+		return (g_data.exit_code);
 	}
 	if (cmd->args[index + 2] != NULL
 		&& !is_redirection_operator(cmd->args[index + 2]))
@@ -72,10 +72,10 @@ int	handle_infile_redirection(t_cmd *cmd, int index)
 	if (last_fd_in == -1)
 	{
 		missing_filename = ft_strdup(cmd->args[index + 1]);
-		data.exit_code = error_msg_commad(missing_filename, NULL,
+		g_data.exit_code = error_msg_commad(missing_filename, NULL,
 				strerror(errno), 1);
 		free(missing_filename);
-		return (data.exit_code);
+		return (g_data.exit_code);
 	}
 	cmd->io_fds->fd_in = last_fd_in;
 	free(cmd->args[index]);

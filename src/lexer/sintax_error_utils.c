@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sintax_error_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
+/*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 12:27:07 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/07 15:59:53 by tehuanmelo       ###   ########.fr       */
+/*   Updated: 2023/05/24 17:48:58 by tde-melo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	is_pipe(enum e_type type)
 
 void	syntax_error_message(char *str)
 {
-	data.exit_code = 258;
+	g_data.exit_code = 258;
 	ft_putstr("minishell: syntax error near unexpected token ");
 	if (!ft_strcmp(str, "|"))
 		ft_putstr("`|'\n");

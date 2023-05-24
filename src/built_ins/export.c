@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:13:11 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/10 14:14:31 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/24 17:50:02 by tde-melo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	call_no_arguments(char **args, int i, int result)
 {
 	if (!args[i])
 	{
-		print_export_function_only_once(data.env);
+		print_export_function_only_once(g_data.env);
 		return (result);
 	}
 	return (result);

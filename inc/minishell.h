@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 10:03:35 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/24 17:59:09 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/24 18:10:31 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ typedef struct s_data
 	pid_t			pid;
 }					t_data;
 
-extern t_data		data;
+extern t_data		g_data;
 
 // -------------- minishell --------------
 void				set_data(t_data *data, char *str);

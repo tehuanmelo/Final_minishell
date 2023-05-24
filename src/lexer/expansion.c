@@ -6,7 +6,7 @@
 /*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:10:33 by tde-melo          #+#    #+#             */
-/*   Updated: 2023/05/23 19:44:06 by tde-melo         ###   ########.fr       */
+/*   Updated: 2023/05/24 17:49:14 by tde-melo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*get_env_var(char *content)
 	int		len;
 	int		i;
 
-	env = data.env;
+	env = g_data.env;
 	str = NULL;
 	len = ft_strlen(content);
 	i = 0;
@@ -51,7 +51,7 @@ void	get_env_value(t_elem *tokens)
 		else
 		{
 			if (!ft_strcmp(tokens->content, "$EMPTY"))
-				data.exit_code = 0;
+				g_data.exit_code = 0;
 			tokens->content = "";
 			tokens->len = 0;
 			tokens->type = EMPTY;

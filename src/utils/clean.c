@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:33:26 by mbin-nas          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/05/24 17:52:23 by mbin-nas         ###   ########.fr       */
+=======
+/*   Updated: 2023/05/24 17:51:11 by tde-melo         ###   ########.fr       */
+>>>>>>> 669edf8f0b2661890e34542e46a61edb9336772e
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +57,12 @@ void	close_fds(t_cmd *cmds, bool close_backups)
 		if (close_backups)
 			restore_io(cmds->io_fds);
 	}
-	if (data.heredoc_fd != -1)
+
+	if(g_data.heredoc_fd != -1)
 	{
-		close(data.heredoc_fd);
-		data.heredoc_fd = -1;
+
+		close(g_data.heredoc_fd);
+		g_data.heredoc_fd = -1;
 	}
 	close_pipe_fds(cmds, NULL);
 }

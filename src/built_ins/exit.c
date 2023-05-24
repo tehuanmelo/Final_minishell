@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:12:09 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/10 12:32:52 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/24 17:50:10 by tde-melo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static int	get_exit_code(char *arg, bool *error)
 	unsigned long long	i;
 
 	if (!arg)
-		return (data.exit_code);
+		return (g_data.exit_code);
 	i = 0;
 	while (isspace(arg[i]))
 		i++;

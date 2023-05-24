@@ -6,7 +6,7 @@
 /*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 12:27:07 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/24 17:12:17 by tde-melo         ###   ########.fr       */
+/*   Updated: 2023/05/24 18:04:42 by tde-melo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	check_quotes(t_elem **tokens, enum e_type type)
 	}
 	if (!*tokens)
 	{
-		data.exit_code = 127;
+		g_data.exit_code = 127;
 		ft_putstr("minishell: sintax error `unclosed quotes'\n");
 		return (EXIT_FAILURE);
 	}
