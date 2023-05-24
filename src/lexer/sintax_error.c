@@ -6,7 +6,7 @@
 /*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 12:27:07 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/24 15:16:09 by tehuanmelo       ###   ########.fr       */
+/*   Updated: 2023/05/24 15:37:40 by tehuanmelo       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,34 +28,6 @@ int	check_quotes(t_elem **tokens, enum e_type type)
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
-}
-
-t_elem *get_list_prev_bound(t_elem *tokens)
-{
-	t_elem	*tmp_prev;
-
-	tmp_prev = NULL;
-	if (tokens->prev)
-	{
-		tmp_prev = tokens->prev;
-		while (tmp_prev && (tmp_prev->type == WHITE_SPACE || is_quote(tmp_prev->type) || tmp_prev->type == EMPTY))
-			tmp_prev = tmp_prev->prev;
-	}
-	return (tmp_prev);
-}
-
-t_elem *get_list_next_bound(t_elem *tokens)
-{
-	t_elem	*tmp_next;
-
-	tmp_next = NULL;
-	if (tokens->next)
-	{
-		tmp_next = tokens->next;
-		while (tmp_next && (tmp_next->type == WHITE_SPACE || is_quote(tmp_next->type) || tmp_next->type == EMPTY))
-			tmp_next = tmp_next->next;
-	}
-	return (tmp_next);
 }
 
 int	check_redir(t_elem *tokens)

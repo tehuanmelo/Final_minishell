@@ -1,7 +1,7 @@
 NAME = minishell
 
 LEXER = lexer.c lexer_utils.c sintax_error.c sintax_error_utils.c expansion.c utils.c print_tokens_delete_me.c
-PARSER = parser.c parser_utils.c here_doc.c parse_redirections.c print_commands_delete_me.c join_string.c
+PARSER = parser.c parser_utils.c here_doc.c parse_redirections.c print_commands_delete_me.c join_string.c here_doc_utils.c
 SIGNALS = signals.c
 BUILT_INS = cd.c echo.c env.c export.c pwd.c unset.c exit.c
 EXECUTION = env_variable.c execute_command.c executives_utils.c main_execution.c our_env_var.c path_finder.c

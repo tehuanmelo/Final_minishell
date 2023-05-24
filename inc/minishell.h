@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 10:03:35 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/23 15:02:34 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/24 15:33:52 by tehuanmelo       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,8 @@ int					is_redir(enum e_type type);
 int					is_quote(enum e_type type);
 int					is_pipe(enum e_type type);
 void				syntax_error_message(char *str);
+t_elem 				*get_list_prev_bound(t_elem *tokens);
+t_elem 				*get_list_next_bound(t_elem *tokens);
 
 // ------------ free list ----------------
 void				free_tokens_list(t_elem *tokens);
@@ -168,6 +170,11 @@ char				**remove_heredoc_args(char **args);
 // void here_doc(char **input, int should_print);
 void				here_doc(char **args, int should_print, int command_index);
 void				print_file_contents(const char *filename);
+int check_here_doc(char **args);
+char **get_delimiter(char **input, int nbr_heredocs);
+void checking_delimiter_index(int *nbr_heredocs, int *i, char **delimiter, char *line);
+void free_delimiter(char **delimiter);
+int get_heredoc_nbr(char **args);
 
 // #######################################
 //              SIGNALS-DIR
