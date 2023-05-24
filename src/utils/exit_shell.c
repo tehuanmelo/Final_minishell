@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:33:34 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/24 17:53:59 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/24 19:56:43 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@
 void	exit_shell(t_data *data, int exno)
 {
 	if (data)
-	{
+	{	
+		if(data->cmd_lst->io_fds->fd_out != -1)
+			close(data->cmd_lst->io_fds->fd_out);
 		if (data->heredoc_fd != -1)
 			close(data->heredoc_fd);
 		if (data->cmd_lst)

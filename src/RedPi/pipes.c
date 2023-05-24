@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:30:44 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/16 14:31:39 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/24 20:59:30 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,17 @@ bool	set_pipe_fds(t_cmd *cmds, t_cmd *c)
 	if (!c)
 		return (false);
 	if (c->prev)
-	{
-		dup2(c->prev->pipe_fd[0], STDIN_FILENO);
+	{	
+		if(c->io_fds->fd_in == -1)
+			dup2(c->prev->pipe_fd[0], STDIN_FILENO);
 		close(c->prev->pipe_fd[1]);
+		close(c->prev->pipe_fd[0]);
 	}
 	if (c->next)
 	{
-		dup2(c->pipe_fd[1], STDOUT_FILENO);
+		if(c->io_fds->fd_out == -1)
+			dup2(c->pipe_fd[1], STDOUT_FILENO);
+		close(c->pipe_fd[1]);
 		close(c->pipe_fd[0]);
 	}
 	close_pipe_fds(cmds, c);

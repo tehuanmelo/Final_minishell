@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:09:53 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/24 18:36:50 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/24 21:26:15 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,14 +91,23 @@ char	**remove_heredoc_args(char **args)
 int	execute_commands(t_data *data, t_cmd *cmd, int command_index)
 {
 	int	ret;
-
+	(void)command_index;
+	t_cmd *temp = cmd;
 	if (data->exit_code != EXIT_SUCCESS)
 		exit_shell(data, data->exit_code);
 	if (!check_infile_outfile(cmd->io_fds))
 		exit_shell(data, EXIT_FAILURE);
 	set_pipe_fds(data->cmd_lst, cmd);
 	redirect_io(cmd->io_fds, command_index);
-	close_fds(cmd, false);
+	// close_fds(cmd, false);
+	while(temp->prev)
+		temp = temp->prev;
+	while(temp)
+	{
+		if(temp->io_fds->fd_out != -1)
+			close(temp->io_fds->fd_out);
+		temp = temp->next;
+	}
 	ret = execute_built_ins(data, cmd);
 	if (ret != COMMAND_NOT_FOUND)
 		exit_shell(data, ret);
@@ -107,6 +116,8 @@ int	execute_commands(t_data *data, t_cmd *cmd, int command_index)
 	else
 		cmd->path = cmd->command;
 	ret = execute_local_bin(data, cmd);
+	if (cmd->io_fds->fd_out != -1)
+		close(cmd->io_fds->fd_out);
 	exit_shell(data, ret);
 	return (ret);
 }

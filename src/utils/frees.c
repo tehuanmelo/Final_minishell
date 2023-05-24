@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:18:14 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/23 17:24:20 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/24 21:29:03 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	*free_io(t_io_fds *io)
 {
-	if (!io)
-		return (NULL);
-	restore_io(io);
+	// if (!io)
+	// 	return (NULL);
+	// restore_io(io);
 	if (io->infile)
 		free_ptr(io->infile);
 	if (io->outfile)
@@ -85,10 +85,14 @@ void	free_data(t_data *data, t_cmd *cmds, bool flag)
 		free(data->input);
 		data->input = NULL;
 	}
+	if(cmds->io_fds->fd_out != -1)
+		{
+			close(cmds->io_fds->fd_out);
+			cmds->io_fds->fd_out = -1;
+		}
 	if (data && data->tokens)
 		lstclear_token(&data->tokens, &free_ptr);
 	cmds->io_fds = free_io(cmds->io_fds);
-	close_fds(cmds, false);
 	if (flag == true)
 	{
 		if (data && data->current_dir)

@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:10:01 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/24 18:37:53 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/24 21:28:38 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,11 +101,13 @@ int	execute(t_data *data)
 			here_doc(current_cmd->args, should_print, 0);
 			current_cmd->args = remove_heredoc_args(current_cmd->args);
 		}
-		redirect_io(data->cmd_lst->io_fds, 0);
+		// redirect_io(data->cmd_lst->io_fds, 0);
 		ret = execute_built_ins(data, data->cmd_lst);
-		restore_io(data->cmd_lst->io_fds);
 		if (ret != COMMAND_NOT_FOUND)
+		{
+			// restore_io(data->cmd_lst->io_fds);
 			return (ret);
+		}
 	}
 	i = 0;
 	while (current_cmd)
@@ -119,7 +121,7 @@ int	execute(t_data *data)
 		current_cmd = current_cmd->next;
 	}
 	ret = create_children(data);
-	restore_io(data->cmd_lst->io_fds);
-	close_fds(data->cmd_lst, true);
+	// restore_io(data->cmd_lst->io_fds);
+	// close_fds(data->cmd_lst, true);
 	return (ret);
 }

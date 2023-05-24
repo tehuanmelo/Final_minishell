@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 10:03:35 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/24 18:39:44 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/24 21:03:15 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,7 +219,7 @@ int					ft_export_built_in(t_data *data, char **args);
 int					ft_pwd_built_in(t_data *data, char **args);
 int					ft_unset_built_in(t_data *data, char **args);
 int					ft_exit_built_in(t_data *data, char **args);
-
+void close_fd();
 //# ----------------------------------------------
 //# ~~~~~~~~~~~~~ ENV MANIPUlATION ~~~~~~~~~~~~~
 //# ----------------------------------------------

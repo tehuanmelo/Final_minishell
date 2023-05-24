@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 22:26:41 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/24 18:20:03 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/24 21:17:24 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ int	main(int argc, char **argv, char **env)
 			set_data(&g_data, str);
 			expand_env(&g_data);
 			init_shell(&g_data);
+			// close_fd();
 		}
 	}
+	
 	return (0);
 }

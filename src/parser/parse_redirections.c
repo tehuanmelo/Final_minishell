@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:32:30 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/24 18:05:01 by tde-melo         ###   ########.fr       */
+/*   Updated: 2023/05/24 20:27:43 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,25 @@ int	is_redirection_operator(const char *s)
 {
 	return (ft_strcmp(s, ">") == 0 || ft_strcmp(s, ">>") == 0 || ft_strcmp(s,
 			"<") == 0);
+}
+
+int	handle_outfile_utils(t_cmd *cmd, int index)
+{
+	if (cmd->io_fds->fd_out == -1)
+	{
+		g_data.exit_code = error_msg_commad(cmd->args[index + 1], NULL,
+				strerror(errno), 1);
+		return (g_data.exit_code);
+	}
+	if (cmd->args[index + 2] != NULL
+		&& !is_redirection_operator(cmd->args[index + 2]))
+	{
+		write(cmd->io_fds->fd_out, cmd->args[index + 2],
+			ft_strlen(cmd->args[index + 2]));
+		free(cmd->args[index + 2]);
+		cmd->args[index + 2] = NULL;
+	}
+	return (g_data.exit_code);
 }
 
 int	handle_outfile_redirection(t_cmd *cmd, int index)
@@ -34,20 +53,8 @@ int	handle_outfile_redirection(t_cmd *cmd, int index)
 	if (cmd->io_fds->fd_out != -1)
 		close(cmd->io_fds->fd_out);
 	cmd->io_fds->fd_out = open(cmd->args[index + 1], open_flag, 0644);
-	if (cmd->io_fds->fd_out == -1)
-	{
-		g_data.exit_code = error_msg_commad(cmd->args[index + 1], NULL,
-				strerror(errno), 1);
-		return (g_data.exit_code);
-	}
-	if (cmd->args[index + 2] != NULL
-		&& !is_redirection_operator(cmd->args[index + 2]))
-	{
-		write(cmd->io_fds->fd_out, cmd->args[index + 2],
-			ft_strlen(cmd->args[index + 2]));
-		free(cmd->args[index + 2]);
-		cmd->args[index + 2] = NULL;
-	}
+	printf("out-fd  %d\n", cmd->io_fds->fd_out);
+	g_data.exit_code = handle_outfile_utils(cmd, index);
 	free(cmd->args[index]);
 	cmd->args[index] = NULL;
 	free(cmd->args[index + 1]);
@@ -74,8 +81,7 @@ int	handle_infile_redirection(t_cmd *cmd, int index)
 		missing_filename = ft_strdup(cmd->args[index + 1]);
 		g_data.exit_code = error_msg_commad(missing_filename, NULL,
 				strerror(errno), 1);
-		free(missing_filename);
-		return (g_data.exit_code);
+		return (free(missing_filename), g_data.exit_code);
 	}
 	cmd->io_fds->fd_in = last_fd_in;
 	free(cmd->args[index]);
@@ -83,6 +89,31 @@ int	handle_infile_redirection(t_cmd *cmd, int index)
 	free(cmd->args[index + 1]);
 	cmd->args[index + 1] = NULL;
 	return (EXIT_SUCCESS);
+}
+
+int call_heredoc_outfile(t_cmd *cmd, int *i, int *error_occurred)
+{
+	if (handle_outfile_redirection(cmd, *i) != EXIT_SUCCESS)
+			{
+				*error_occurred = 1;
+				return (1) ;
+			}
+			*i += 2;
+	return (0);
+}
+
+int call_heredoc_infile(t_cmd *cmd, int *i, int *error_occurred)
+{
+	if (handle_infile_redirection(cmd, *i) != EXIT_SUCCESS)
+		{
+			*error_occurred = 1;
+			return (EXIT_FAILURE) ;
+		}
+		if (cmd->args[*i + 2] && !is_redirection_operator(cmd->args[*i + 2]))
+			*i += 3;
+		else
+			*i += 2;
+		return (0);
 }
 
 int	parse_redirection(t_cmd *cmd)
@@ -97,27 +128,32 @@ int	parse_redirection(t_cmd *cmd)
 		if (ft_strcmp(cmd->args[i], ">") == 0 || ft_strcmp(cmd->args[i],
 				">>") == 0)
 		{
-			if (handle_outfile_redirection(cmd, i) != EXIT_SUCCESS)
-			{
-				error_occurred = 1;
-				break ;
-			}
-			i += 2;
+			if(call_heredoc_outfile(cmd, &i, &error_occurred) == 1)
+				break;
+			// if (handle_outfile_redirection(cmd, i) != EXIT_SUCCESS)
+			// {
+			// 	error_occurred = 1;
+			// 	break ;
+			// }
+			// i += 2;
 		}
 		else if (ft_strcmp(cmd->args[i], "<") == 0)
 		{
-			if (handle_infile_redirection(cmd, i) != EXIT_SUCCESS)
-			{
-				error_occurred = 1;
-				break ;
-			}
-			if (cmd->args[i + 2] && !is_redirection_operator(cmd->args[i + 2]))
-				i += 3;
-			else
-				i += 2;
+			if (call_heredoc_infile(cmd, &i, &error_occurred) == 1)
+				break;
+			// if (handle_infile_redirection(cmd, i) != EXIT_SUCCESS)
+			// {
+			// 	error_occurred = 1;
+			// 	break ;
+			// }
+			// if (cmd->args[i + 2] && !is_redirection_operator(cmd->args[i + 2]))
+			// 	i += 3;
+			// else
+			// 	i += 2;
 		}
 		else
 			i++;
 	}
+	// close(cmd->io_fds->fd_out);
 	return (error_occurred);
 }
