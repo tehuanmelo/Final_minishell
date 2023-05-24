@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sintax_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
+/*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 12:27:07 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/24 15:37:40 by tehuanmelo       ###   ########.fr       */
+/*   Updated: 2023/05/24 17:12:17 by tde-melo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ int	check_redir(t_elem *tokens)
 	tmp_next = get_list_next_bound(tokens);
 	if (tmp_next)
 	{
-		if ((tmp_next->type == WORD || tmp_next->type == ENV || tmp_next->type == PIPE))
+		if ((tmp_next->type == WORD || tmp_next->type == ENV
+				|| tmp_next->type == PIPE))
 			return (EXIT_SUCCESS);
 	}
 	syntax_error_message(tokens->content);
@@ -60,7 +61,7 @@ int	check_pipe(t_elem *tokens)
 	{
 		if ((tmp_prev->type == WORD || tmp_prev->type == ENV
 				|| (is_redir(tmp_prev->type) && tmp_prev->next->type == PIPE))
-				&& (tmp_next->type == WORD || tmp_next->type == ENV
+			&& (tmp_next->type == WORD || tmp_next->type == ENV
 				|| is_redir(tmp_next->type)))
 			return (EXIT_SUCCESS);
 	}

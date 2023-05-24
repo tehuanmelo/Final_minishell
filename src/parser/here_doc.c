@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 13:16:07 by tde-melo          #+#    #+#             */
-/*   Updated: 2023/05/24 16:51:31 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/24 17:17:28 by tde-melo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int heredoc_readline(char **input)
+int	heredoc_readline(char **input)
 {
 	*input = readline(HD_PROMPT);
 	if (!*input)
@@ -20,7 +20,7 @@ int heredoc_readline(char **input)
 	return (EXIT_SUCCESS);
 }
 
-void write_heredoc_file(char **delimiter, int nbr_heredocs, t_data *data)
+void	write_heredoc_file(char **delimiter, int nbr_heredocs, t_data *data)
 {
 	int		line_writen;
 	int		nl_writen;
@@ -49,7 +49,7 @@ void write_heredoc_file(char **delimiter, int nbr_heredocs, t_data *data)
 		free(line);
 }
 
-int execute_heredoc(char **delimiter, int command_index, int nbr_heredocs)
+int	execute_heredoc(char **delimiter, int command_index, int nbr_heredocs)
 {
 	t_data	*new_data;
 	char	*str1;
@@ -74,7 +74,7 @@ int execute_heredoc(char **delimiter, int command_index, int nbr_heredocs)
 	return (EXIT_SUCCESS);
 }
 
-void here_doc(char **args, int should_print, int command_index)
+void	here_doc(char **args, int should_print, int command_index)
 {
 	char	**delimiter;
 	int		status;

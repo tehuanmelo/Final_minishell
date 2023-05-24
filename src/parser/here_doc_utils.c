@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
+/*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 13:16:07 by tde-melo          #+#    #+#             */
-/*   Updated: 2023/05/24 15:37:07 by tehuanmelo       ###   ########.fr       */
+/*   Updated: 2023/05/24 17:16:21 by tde-melo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int check_here_doc(char **args)
+int	check_here_doc(char **args)
 {
 	while (*args)
 	{
@@ -24,10 +24,10 @@ int check_here_doc(char **args)
 	return (1);
 }
 
-char **get_delimiter(char **input, int nbr_heredocs)
+char	**get_delimiter(char **input, int nbr_heredocs)
 {
-	char **delimiter;
-	int i;
+	char	**delimiter;
+	int		i;
 
 	delimiter = ft_calloc(nbr_heredocs + 1, sizeof(char *));
 	i = 0;
@@ -42,7 +42,8 @@ char **get_delimiter(char **input, int nbr_heredocs)
 	return (delimiter);
 }
 
-void checking_delimiter_index(int *nbr_heredocs, int *i, char **delimiter, char *line)
+void	checking_delimiter_index(int *nbr_heredocs, int *i, char **delimiter,
+		char *line)
 {
 	if (ft_strcmp(line, delimiter[*i]) == 0)
 	{
@@ -51,9 +52,9 @@ void checking_delimiter_index(int *nbr_heredocs, int *i, char **delimiter, char 
 	}
 }
 
-void free_delimiter(char **delimiter)
+void	free_delimiter(char **delimiter)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (delimiter[i])
@@ -61,10 +62,10 @@ void free_delimiter(char **delimiter)
 	free(delimiter);
 }
 
-int get_heredoc_nbr(char **args)
+int	get_heredoc_nbr(char **args)
 {
-	int i;
-	int nbr_heredocs;
+	int	i;
+	int	nbr_heredocs;
 
 	i = 0;
 	nbr_heredocs = 0;

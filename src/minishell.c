@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
+/*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 13:34:47 by tde-melo          #+#    #+#             */
-/*   Updated: 2023/05/24 15:13:10 by tehuanmelo       ###   ########.fr       */
+/*   Updated: 2023/05/24 17:37:38 by tde-melo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,30 +44,28 @@ int	_readline_(char **input)
 
 void	init_shell(t_data *data)
 {
+	int		i;
+	char	*str1;
+	char	*str;
+
 	if (!sintax_error(data))
 	{
 		data->cmd_lst = parser(data);
 		data->exit_code = execute(data);
-		// if(access())
-		int i = 0;
+		i = 0;
 		while (i <= data->command_index)
 		{
-			char *str1 = ft_itoa(i); 
-			char *str = ft_strjoin("/tmp/.here_doc", str1);
+			str1 = ft_itoa(i);
+			str = ft_strjoin("/tmp/.here_doc", str1);
 			if (access(str, F_OK) == 0)
 				unlink(str);
 			i++;
 			free(str1);
 			free(str);
 		}
-		
-		// printf("%d\n", data->command_index);
 		free_data(data, data->cmd_lst, false);
 		free_commands(data->cmd_lst);
 	}
 	else
-	{
-		free(data->input);
-		return ;
-	}
+		return (free(data->input));
 }

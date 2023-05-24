@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:33:34 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/20 19:50:09 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/24 17:33:22 by tde-melo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ void	exit_shell3(t_data *data, int exno)
 {
 	if (data)
 	{
-		if (data && data->input)
-		{
-			free(data->input);
-			data->input = NULL;
-		}
+		// if (data && data->input)
+		// {
+		// 	free(data->input);
+		// 	data->input = NULL;
+		// }
 		if (data && data->tokens)
 			lstclear_token(&data->tokens, &free_ptr);
 		if (data && data->current_dir)
