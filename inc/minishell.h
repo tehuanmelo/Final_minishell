@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 10:03:35 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/24 18:10:31 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/24 18:39:44 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,9 +226,8 @@ int					ft_exit_built_in(t_data *data, char **args);
 int					count_env_variables(char **env);
 char				*fetch_env_variable_char(char **env, char *var);
 int					fetch_env_variable_index(char **env, char *var);
-bool	create_the_new_env_var(t_data *data,
-							char *env_key,
-							char *value);
+bool				create_the_new_env_var(t_data *data,
+						char *env_key, char *value);
 bool				check_for_the_env_key(char *var);
 bool				delete_the_env_variables(t_data *data, int index);
 

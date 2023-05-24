@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:09:53 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/24 17:55:49 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/24 18:36:50 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,8 @@ static int	execute_system_binaries(t_data *data, t_cmd *cmd)
 	cmd->path = fetch_command_path(data, cmd->command);
 	if (!cmd->path)
 		return (COMMAND_NOT_FOUND);
-	printf("The execev is getting through here \n");
-	printf("Standard input %d\n", cmd->io_fds->fd_in);
 	if (execve(cmd->path, cmd->args, data->env) == -1)
-	{
 		error_msg_commad("execve: ", NULL, strerror(errno), errno);
-	}
 	return (EXIT_FAILURE);
 }
 
@@ -58,14 +54,9 @@ static int	execute_local_bin(t_data *data, t_cmd *cmd)
 
 	result = check_command_not_found(data, cmd);
 	if (result != 0)
-	{
-		printf("Exit 2\n");
 		exit_shell(data, result);
-	}
 	if (execve(cmd->path, cmd->args, data->env) == -1)
-	{
 		error_msg_commad("execve: ", NULL, strerror(errno), errno);
-	}
 	return (EXIT_FAILURE);
 }
 
