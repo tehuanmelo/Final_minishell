@@ -6,7 +6,7 @@
 /*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 21:07:15 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/24 17:22:13 by tde-melo         ###   ########.fr       */
+/*   Updated: 2023/05/24 18:08:37 by tde-melo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,19 +91,3 @@ int	count_args(t_elem **head)
 	return (i);
 }
 
-// void free_commands(t_cmd *cmds)
-// {
-// 	t_cmd *tmp_cmd;
-// 	char **tmp_str;
-
-// 	while (cmds)
-// 	{
-// 		tmp_cmd = cmds;
-// 		tmp_str = cmds->args;
-// 		while (*(cmds->args))
-// 			free(*(cmds->args)++);
-// 		free(tmp_str);
-// 		cmds = cmds->next;
-// 		free(tmp_cmd);
-// 	}
-// }
