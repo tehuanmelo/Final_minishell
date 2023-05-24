@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
+/*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 10:03:35 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/24 15:33:52 by tehuanmelo       ###   ########.fr       */
+/*   Updated: 2023/05/24 17:41:13 by tde-melo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # define COLOR_RESET "\033[0m"
 
 # include "../src/libft/inc/libft.h"
-# include "parsing.h"
 # include <errno.h>
 # include <execinfo.h>
 # include <fcntl.h>
@@ -138,8 +137,8 @@ int					is_redir(enum e_type type);
 int					is_quote(enum e_type type);
 int					is_pipe(enum e_type type);
 void				syntax_error_message(char *str);
-t_elem 				*get_list_prev_bound(t_elem *tokens);
-t_elem 				*get_list_next_bound(t_elem *tokens);
+t_elem				*get_list_prev_bound(t_elem *tokens);
+t_elem				*get_list_next_bound(t_elem *tokens);
 
 // ------------ free list ----------------
 void				free_tokens_list(t_elem *tokens);
@@ -163,18 +162,19 @@ void				append_command(t_cmd **head, t_cmd *new);
 void				free_commands(t_cmd *cmds);
 int					parse_redirection(t_cmd *cmd);
 char				*join_string(char *s1, char *s2);
+int					check_if_is_redir(char *content);
 
 // ------------- here-doc ---------------
 int					check_here_doc(char **args);
 char				**remove_heredoc_args(char **args);
-// void here_doc(char **input, int should_print);
 void				here_doc(char **args, int should_print, int command_index);
 void				print_file_contents(const char *filename);
-int check_here_doc(char **args);
-char **get_delimiter(char **input, int nbr_heredocs);
-void checking_delimiter_index(int *nbr_heredocs, int *i, char **delimiter, char *line);
-void free_delimiter(char **delimiter);
-int get_heredoc_nbr(char **args);
+int					check_here_doc(char **args);
+char				**get_delimiter(char **input, int nbr_heredocs);
+void				checking_delimiter_index(int *nbr_heredocs, int *i,
+						char **delimiter, char *line);
+void				free_delimiter(char **delimiter);
+int					get_heredoc_nbr(char **args);
 
 // #######################################
 //              SIGNALS-DIR
@@ -226,8 +226,9 @@ int					ft_exit_built_in(t_data *data, char **args);
 int					count_env_variables(char **env);
 char				*fetch_env_variable_char(char **env, char *var);
 int					fetch_env_variable_index(char **env, char *var);
-bool				create_the_new_env_var(t_data *data,
-						char *env_key, char *value);
+bool	create_the_new_env_var(t_data *data,
+							char *env_key,
+							char *value);
 bool				check_for_the_env_key(char *var);
 bool				delete_the_env_variables(t_data *data, int index);
 
@@ -263,7 +264,6 @@ int					error_msg_commad(char *command, char *detail,
 						char *error_message, int error_nb);
 void				free_ptr(void *ptr);
 void				free_data(t_data *data, t_cmd *cmds, bool flag);
-// char    *ft_join_string(char *str, char *add);
 void				free_str_tab(char **tab);
 void				close_pipe_fds(t_cmd *cmds, t_cmd *skip_cmd);
 void				close_fds(t_cmd *cmds, bool close_backups);

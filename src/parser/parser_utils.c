@@ -3,14 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
+/*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 21:07:15 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/07 15:31:29 by tehuanmelo       ###   ########.fr       */
+/*   Updated: 2023/05/24 17:22:13 by tde-melo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+int	check_if_is_redir(char *content)
+{
+	if (ft_strcmp(content, ">") == 0)
+		return (0);
+	else if (ft_strcmp(content, "<") == 0)
+		return (0);
+	else if (ft_strcmp(content, "<<") == 0)
+		return (0);
+	else if (ft_strcmp(content, ">>") == 0)
+		return (0);
+	return (1);
+}
 
 t_cmd	*new_command(void)
 {
