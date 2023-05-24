@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 10:03:35 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/24 17:41:13 by tde-melo         ###   ########.fr       */
+/*   Updated: 2023/05/24 17:59:09 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -276,4 +276,5 @@ void				exit_shell2(t_data *data, int exno);
 void				exit_shell3(t_data *data, int exno);
 void				lstclear_token(t_elem **lst, void (*del)(void *));
 void				free_commands_0(t_cmd *cmds);
+void				free_heredoc_args(char **args, int i);
 #endif

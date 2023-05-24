@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:33:34 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/24 17:33:22 by tde-melo         ###   ########.fr       */
+/*   Updated: 2023/05/24 17:53:59 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ void	exit_shell(t_data *data, int exno)
 {
 	if (data)
 	{
-		// printf("Here doc fd %d\n", data->heredoc_fd);
-		// if(data->heredoc_fd != -1)
+		if (data->heredoc_fd != -1)
 			close(data->heredoc_fd);
 		if (data->cmd_lst)
 			close_fds(data->cmd_lst, true);
@@ -49,11 +48,6 @@ void	exit_shell3(t_data *data, int exno)
 {
 	if (data)
 	{
-		// if (data && data->input)
-		// {
-		// 	free(data->input);
-		// 	data->input = NULL;
-		// }
 		if (data && data->tokens)
 			lstclear_token(&data->tokens, &free_ptr);
 		if (data && data->current_dir)

@@ -71,9 +71,9 @@ void	free_commands(t_cmd *cmds)
 	}
 }
 
-void free_heredoc_args(char **args, int i)
+void	free_heredoc_args(char **args, int i)
 {
-    while (args[i])
+	while (args[i])
 		free(args[i++]);
 	free(args);
 }

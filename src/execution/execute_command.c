@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:09:53 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/23 13:59:24 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/24 17:55:49 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,7 @@ char	**remove_heredoc_args(char **args)
 	}
 	new_args[j] = NULL;
 	i = 0;
-	while (args[i])
-	{
-		free(args[i++]);
-	}
-	free(args);
+	free_heredoc_args(args, i);
 	return (new_args);
 }
 

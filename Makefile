@@ -7,7 +7,7 @@ BUILT_INS = cd.c echo.c env.c export.c pwd.c unset.c exit.c
 EXECUTION = env_variable.c execute_command.c executives_utils.c main_execution.c our_env_var.c path_finder.c
 REDPI = file_input_output.c pipes.c
 DEBUGGER = debugger_print.c
-UTILS =  clean.c error.c exit_shell.c initialize.c 
+UTILS =  clean.c error.c exit_shell.c initialize.c frees.c
 MAIN = main.c  minishell.c 
 
 CC = gcc
