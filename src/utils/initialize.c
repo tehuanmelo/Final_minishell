@@ -3,20 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:33:37 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/23 14:28:48 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/25 19:27:33 by tde-melo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-/* init_env:
-*	Initializes a data variable with the contents of the environment
-*	variables inherited from the original shell.
-*	Returns 0 on failure, 1 on success.
-*/
 static bool	init_env(t_data *data, char **env)
 {
 	int	i;
@@ -35,12 +30,6 @@ static bool	init_env(t_data *data, char **env)
 	return (true);
 }
 
-/* init_wds:
-*	Initializes working directory variables as a safeguard against
-*	environment PWD and OLDPWD being unset or otherwise not present
-*	in the environment. Used for cd builtin.
-*	Returns true if successful, false in case of error.
-*/
 static bool	init_wds(t_data *data)
 {
 	char	buff[PATH_MAX];
@@ -66,10 +55,6 @@ static bool	init_wds(t_data *data)
 	return (true);
 }
 
-/* init_data:
-*	Initializes the data structure used in parsing and executing user input.
-*	Returns true if successful, false in case of error.
-*/
 bool	init_data(t_data *data, char **env)
 {
 	if (!init_env(data, env))
@@ -94,10 +79,6 @@ bool	init_data(t_data *data, char **env)
 	return (true);
 }
 
-/* init_io:
-*	Initializes a structure with default values to contain
-*	infile and outfile information for a command.
-*/
 void	init_io(t_cmd *cmd)
 {
 	cmd->io_fds = malloc(sizeof(t_io_fds));

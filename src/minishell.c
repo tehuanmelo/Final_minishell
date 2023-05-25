@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 13:34:47 by tde-melo          #+#    #+#             */
-/*   Updated: 2023/05/25 18:53:39 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/25 19:13:52 by tde-melo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	_readline_(char **input)
 		ft_putstr("exit\n");
 		exit_shell3(&g_data, g_data.exit_code);
 	}
-	if (strcmp(*input, "") == 0)
+	if (ft_strcmp(*input, "") == 0)
 	{
 		free(*input);
 		return (1);

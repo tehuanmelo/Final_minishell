@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:12:20 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/10 14:16:11 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/25 19:17:07 by tde-melo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	ft_cd_built_in(t_data *data, char **args)
 	if (args[2])
 		return (error_msg_commad("cd", NULL, "too many arguments",
 				EXIT_FAILURE));
-	if (strncmp(args[1], "-", 2) == 0)
+	if (ft_strncmp(args[1], "-", 2) == 0)
 	{
 		path = fetch_env_variable_char(data->env, "OLDPWD");
 		if (!path)
