@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tehuanmelo <tehuanmelo@student.42.fr>      +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 11:59:22 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/01/29 20:01:23 by tehuanmelo       ###   ########.fr       */
+/*   Updated: 2023/05/25 19:03:18 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ int	ft_atoi(const char *str)
 	return (res * sign);
 }
 
-int	main(void)
-{
-	printf("%d\n", ft_atoi("    9223372036854775806   "));
-	printf("%d\n", atoi("    9223372036854775807   "));
-	printf("%d\n", ft_atoi("	-9223372036854775808  "));
-	printf("%d\n", atoi("	-9223372036854775808    "));
-	printf("%d\n", ft_atoi("-+42"));
-	printf("%d\n", atoi("-+42"));
-	printf("%d\n", ft_atoi("--1"));
-	printf("%d\n", atoi("--1"));
-}
+// int	main(void)
+// {
+// 	printf("%d\n", ft_atoi("    9223372036854775806   "));
+// 	printf("%d\n", atoi("    9223372036854775807   "));
+// 	printf("%d\n", ft_atoi("	-9223372036854775808  "));
+// 	printf("%d\n", atoi("	-9223372036854775808    "));
+// 	printf("%d\n", ft_atoi("-+42"));
+// 	printf("%d\n", atoi("-+42"));
+// 	printf("%d\n", ft_atoi("--1"));
+// 	printf("%d\n", atoi("--1"));
+// }

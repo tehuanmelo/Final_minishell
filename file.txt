@@ -1,0 +1,13 @@
+123.txt
+Makefile
+check_leaks.sh
+file.txt
+inc
+ll
+lll
+lol.txt
+ls
+minishell
+obj
+src
+valgrind_readline_leaks_ignore.txt

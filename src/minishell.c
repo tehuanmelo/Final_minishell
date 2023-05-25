@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 13:34:47 by tde-melo          #+#    #+#             */
-/*   Updated: 2023/05/24 21:20:56 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/25 18:53:39 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,18 @@ int	_readline_(char **input)
 		add_history(*input);
 	return (0);
 }
-void close_fd()
+
+void	close_fd(void)
 {
-	t_cmd *temp = g_data.cmd_lst;
+	t_cmd	*temp;
+
+	temp = g_data.cmd_lst;
 	while (temp->next)
-	{
 		temp = temp->next;
-	}
-	if(temp->io_fds->fd_out != -1)
+	if (temp->io_fds->fd_out != -1)
 		close(temp->io_fds->fd_out);
+	if (temp->io_fds->fd_in != -1)
+		close(temp->io_fds->fd_in);
 }
 
 void	init_shell(t_data *data)
@@ -73,7 +76,6 @@ void	init_shell(t_data *data)
 			free(str1);
 			free(str);
 		}
-		// printf("THe value of the fd__Out is ---- [%d]", g_data.cmd_lst->io_fds->fd_out);
 		close_fd();
 		free_data(data, data->cmd_lst, false);
 		free_commands(data->cmd_lst);

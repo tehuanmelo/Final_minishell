@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:33:26 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/24 21:29:42 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/25 17:18:15 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,12 @@ void	free_str_tab(char **tab)
 void	close_fds(t_cmd *cmds, bool close_backups)
 {
 	(void)close_backups;
-	
 	if (cmds->io_fds)
 	{
 		if (cmds->io_fds->fd_in != -1 && cmds->io_fds->fd_in != STDIN_FILENO)
 			close(cmds->io_fds->fd_in);
 		if (cmds->io_fds->fd_out != -1 && cmds->io_fds->fd_out != STDOUT_FILENO)
 			close(cmds->io_fds->fd_out);
-		// if (close_backups)
-		// 	restore_io(cmds->io_fds);
 	}
 	if (g_data.heredoc_fd != -1)
 	{

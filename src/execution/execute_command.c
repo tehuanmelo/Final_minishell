@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:09:53 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/24 21:26:15 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/25 18:16:34 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,54 +60,33 @@ static int	execute_local_bin(t_data *data, t_cmd *cmd)
 	return (EXIT_FAILURE);
 }
 
-char	**remove_heredoc_args(char **args)
+void	free_you_damn_persistent_fds(t_cmd *temp)
 {
-	char	**new_args;
-	int		i;
-	int		j;
-
-	i = 0;
-	while (args[i] != NULL)
-		i++;
-	new_args = (char **)malloc((i + 1) * sizeof(char *));
-	i = 0;
-	j = 0;
-	while (args[i] != NULL)
+	while (temp->prev)
+		temp = temp->prev;
+	while (temp)
 	{
-		if (ft_strcmp(args[i], "<<") != 0 && (i == 0 || ft_strcmp(args[i - 1],
-					"<<") != 0))
-		{
-			new_args[j] = ft_strdup(args[i]);
-			j++;
-		}
-		i++;
+		if (temp->io_fds->fd_out != -1)
+			close(temp->io_fds->fd_out);
+		if (temp->io_fds->fd_in != -1)
+			close(temp->io_fds->fd_in);
+		temp = temp->next;
 	}
-	new_args[j] = NULL;
-	i = 0;
-	free_heredoc_args(args, i);
-	return (new_args);
 }
 
 int	execute_commands(t_data *data, t_cmd *cmd, int command_index)
 {
-	int	ret;
-	(void)command_index;
-	t_cmd *temp = cmd;
+	int		ret;
+	t_cmd	*temp;
+
+	temp = cmd;
 	if (data->exit_code != EXIT_SUCCESS)
 		exit_shell(data, data->exit_code);
 	if (!check_infile_outfile(cmd->io_fds))
 		exit_shell(data, EXIT_FAILURE);
 	set_pipe_fds(data->cmd_lst, cmd);
 	redirect_io(cmd->io_fds, command_index);
-	// close_fds(cmd, false);
-	while(temp->prev)
-		temp = temp->prev;
-	while(temp)
-	{
-		if(temp->io_fds->fd_out != -1)
-			close(temp->io_fds->fd_out);
-		temp = temp->next;
-	}
+	free_you_damn_persistent_fds(temp);
 	ret = execute_built_ins(data, cmd);
 	if (ret != COMMAND_NOT_FOUND)
 		exit_shell(data, ret);
@@ -118,6 +97,8 @@ int	execute_commands(t_data *data, t_cmd *cmd, int command_index)
 	ret = execute_local_bin(data, cmd);
 	if (cmd->io_fds->fd_out != -1)
 		close(cmd->io_fds->fd_out);
+	if (cmd->io_fds->fd_in != -1)
+		close(cmd->io_fds->fd_in);
 	exit_shell(data, ret);
 	return (ret);
 }

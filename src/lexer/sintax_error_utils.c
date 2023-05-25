@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sintax_error_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-melo <tde-melo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 12:27:07 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/24 17:48:58 by tde-melo         ###   ########.fr       */
+/*   Updated: 2023/05/25 18:49:19 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,5 @@ void	syntax_error_message(char *str)
 		ft_putstr("`>>'\n");
 	else
 		ft_putstr("`<<'\n");
+	free_tokens_list(g_data.tokens);
 }

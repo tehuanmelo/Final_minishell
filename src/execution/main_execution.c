@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:10:01 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/24 21:28:38 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/25 18:51:36 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,37 +78,10 @@ static int	execution_prep(t_data *data)
 	return (COMMAND_NOT_FOUND);
 }
 
-int	execute(t_data *data)
+void	call_heredoc_more_than_one(t_cmd *current_cmd)
 {
-	int		ret;
-	t_cmd	*current_cmd;
-	int		should_print;
-	int		i;
+	int	i;
 
-	current_cmd = data->cmd_lst;
-	ret = execution_prep(data);
-	if (ret != COMMAND_NOT_FOUND)
-		return (ret);
-	if (!data->cmd_lst->next && !data->cmd_lst->prev
-		&& check_infile_outfile(data->cmd_lst->io_fds))
-	{
-		if (!check_here_doc(current_cmd->args))
-		{
-			should_print = 1;
-			if (current_cmd->next)
-				if (!check_here_doc(current_cmd->next->args))
-					should_print = 0;
-			here_doc(current_cmd->args, should_print, 0);
-			current_cmd->args = remove_heredoc_args(current_cmd->args);
-		}
-		// redirect_io(data->cmd_lst->io_fds, 0);
-		ret = execute_built_ins(data, data->cmd_lst);
-		if (ret != COMMAND_NOT_FOUND)
-		{
-			// restore_io(data->cmd_lst->io_fds);
-			return (ret);
-		}
-	}
 	i = 0;
 	while (current_cmd)
 	{
@@ -120,8 +93,32 @@ int	execute(t_data *data)
 		i++;
 		current_cmd = current_cmd->next;
 	}
+}
+
+int	execute(t_data *data)
+{
+	int		ret;
+	t_cmd	*cur_cmd;
+	int		should_print;
+
+	cur_cmd = data->cmd_lst;
+	ret = execution_prep(data);
+	if (ret != COMMAND_NOT_FOUND)
+		return (ret);
+	if (!data->cmd_lst->next && !data->cmd_lst->prev
+		&& check_infile_outfile(data->cmd_lst->io_fds))
+	{
+		if (!check_here_doc(cur_cmd->args))
+		{
+			should_print = 1;
+			if (cur_cmd->next && !check_here_doc(cur_cmd->next->args))
+				should_print = 0;
+			here_doc(cur_cmd->args, should_print, 0);
+			cur_cmd->args = remove_heredoc_args(cur_cmd->args);
+		}
+		ret = execute_built_ins(data, data->cmd_lst);
+	}
+	call_heredoc_more_than_one(cur_cmd);
 	ret = create_children(data);
-	// restore_io(data->cmd_lst->io_fds);
-	// close_fds(data->cmd_lst, true);
 	return (ret);
 }

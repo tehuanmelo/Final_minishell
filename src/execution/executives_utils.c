@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:09:57 by mbin-nas          #+#    #+#             */
-/*   Updated: 2023/05/16 14:17:33 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/25 16:58:24 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,34 @@ bool	cmd_is_dir(char *cmd)
 	ft_memset(&command_status, 0, sizeof(command_status));
 	stat(cmd, &command_status);
 	return (S_ISDIR(command_status.st_mode));
+}
+
+char	**remove_heredoc_args(char **args)
+{
+	char	**new_args;
+	int		i;
+	int		j;
+
+	i = 0;
+	while (args[i] != NULL)
+		i++;
+	new_args = (char **)malloc((i + 1) * sizeof(char *));
+	i = 0;
+	j = 0;
+	while (args[i] != NULL)
+	{
+		if (ft_strcmp(args[i], "<<") != 0 && (i == 0 || ft_strcmp(args[i - 1],
+					"<<") != 0))
+		{
+			new_args[j] = ft_strdup(args[i]);
+			j++;
+		}
+		i++;
+	}
+	new_args[j] = NULL;
+	i = 0;
+	free_heredoc_args(args, i);
+	return (new_args);
 }
 
 int	check_command_not_found(t_data *data, t_cmd *cmd)

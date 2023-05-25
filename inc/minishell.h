@@ -6,7 +6,7 @@
 /*   By: mbin-nas <mbin-nas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 10:03:35 by tehuanmelo        #+#    #+#             */
-/*   Updated: 2023/05/24 21:03:15 by mbin-nas         ###   ########.fr       */
+/*   Updated: 2023/05/25 19:02:23 by mbin-nas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,8 @@ t_elem				*get_list_next_bound(t_elem *tokens);
 // ------------ free list ----------------
 void				free_tokens_list(t_elem *tokens);
 char				**remove_heredoc_args(char **args);
+int					is_redirection_operator(const char *s);
+int					handle_outfile_utils(t_cmd *cmd, int index);
 
 // ------------- expansions --------------
 void				expand_env(t_data *data);
@@ -163,6 +165,8 @@ void				free_commands(t_cmd *cmds);
 int					parse_redirection(t_cmd *cmd);
 char				*join_string(char *s1, char *s2);
 int					check_if_is_redir(char *content);
+int					handle_outfile_utils(t_cmd *cmd, int index);
+int					infile_call(t_cmd *cmd, int index);
 
 // ------------- here-doc ---------------
 int					check_here_doc(char **args);
@@ -219,7 +223,7 @@ int					ft_export_built_in(t_data *data, char **args);
 int					ft_pwd_built_in(t_data *data, char **args);
 int					ft_unset_built_in(t_data *data, char **args);
 int					ft_exit_built_in(t_data *data, char **args);
-void close_fd();
+void				close_fd(void);
 //# ----------------------------------------------
 //# ~~~~~~~~~~~~~ ENV MANIPUlATION ~~~~~~~~~~~~~
 //# ----------------------------------------------
@@ -255,6 +259,7 @@ int					execute_built_ins(t_data *data, t_cmd *check_cmd);
 int					execute_commands(t_data *data, t_cmd *cmd,
 						int command_index);
 int					execute(t_data *data);
+char				**remove_heredoc_args(char **args);
 
 //# ----------------------------------------------
 //# ~~~~~~~~~~~~~ FREES & CLEANUPS ~~~~~~~~~~~~~
