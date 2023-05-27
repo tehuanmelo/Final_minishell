@@ -251,7 +251,7 @@ bool				restore_io(t_io_fds *io);
 bool				check_infile_outfile(t_io_fds *io);
 bool				set_pipe_fds(t_cmd *cmds, t_cmd *c);
 bool				redirect_io(t_io_fds *io, int command_index);
-
+bool				main_redirect_io(t_io_fds *io);
 //# ----------------------------------------------
 //# ~~~~~~~~~~~~~ EXECUTION ~~~~~~~~~~~~~
 //# ----------------------------------------------

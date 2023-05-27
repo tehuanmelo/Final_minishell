@@ -116,7 +116,11 @@ int	execute(t_data *data)
 			here_doc(cur_cmd->args, should_print, 0);
 			cur_cmd->args = remove_heredoc_args(cur_cmd->args);
 		}
+		main_redirect_io(data->cmd_lst->io_fds);
 		ret = execute_built_ins(data, data->cmd_lst);
+		restore_io(data->cmd_lst->io_fds);
+		if(ret != COMMAND_NOT_FOUND)
+			return (ret);
 	}
 	call_heredoc_more_than_one(cur_cmd);
 	ret = create_children(data);

@@ -52,11 +52,6 @@ int	handle_infile_redirection(t_cmd *cmd, int index)
 	if (last_fd_in == -1)
 		return (infile_call(cmd, index));
 	cmd->io_fds->fd_in = last_fd_in;
-	if (last_fd_in != -1)
-	{
-		close(last_fd_in);
-		last_fd_in = -1;
-	}
 	free(cmd->args[index]);
 	cmd->args[index] = NULL;
 	free(cmd->args[index + 1]);
